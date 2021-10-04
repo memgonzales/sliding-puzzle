@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/black_pattern"
+    tools:context=".NPuzzleActivity">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/caesar_dressing"
+        android:text="Sliding Puzzle"
+        android:textColor="@color/btn_first"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.38" />
+
+    <TextView
+        android:id="@+id/tv_move"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cairo_bold"
+        android:text="Move Number: "
+        android:textColor="@color/stats_text"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tv_fewest"
+        app:layout_constraintStart_toStartOf="@+id/gl_left_button"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        app:layout_constraintVertical_bias="0.45"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tv_move_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cairo_semibold"
+        android:text="45"
+        android:textColor="@color/stats_text"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_move"
+        app:layout_constraintStart_toEndOf="@+id/tv_move"
+        app:layout_constraintTop_toTopOf="@+id/tv_move" />
+
+    <TextView
+        android:id="@+id/tv_fewest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/outline_extension_24"
+        android:drawablePadding="4dp"
+        android:fontFamily="@font/cairo_bold"
+        android:text="Fewest: "
+        android:textColor="@color/stats_text"
+        android:textSize="15sp"
+        app:drawableTint="@color/stats_text"
+        app:layout_constraintBottom_toTopOf="@+id/spinner"
+        app:layout_constraintStart_toStartOf="@+id/tv_move"
+        app:layout_constraintTop_toBottomOf="@+id/tv_move" />
+
+    <TextView
+        android:id="@+id/tv_fewest_moves"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cairo_semibold"
+        android:text="40"
+        android:textColor="@color/stats_text"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_fewest"
+        app:layout_constraintStart_toEndOf="@+id/tv_fewest"
+        app:layout_constraintTop_toTopOf="@+id/tv_fewest" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cairo_bold"
+        android:text="Time Taken: "
+        android:textColor="@color/stats_text"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_fastest"
+        app:layout_constraintEnd_toStartOf="@+id/tv_time_taken"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/tv_move_number"
+        app:layout_constraintTop_toTopOf="@+id/tv_move"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tv_time_taken"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cairo_semibold"
+        android:text="23s"
+        android:textColor="@color/stats_text"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_time"
+        app:layout_constraintEnd_toStartOf="@+id/gl_right_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_time"
+        app:layout_constraintTop_toTopOf="@+id/tv_time" />
+
+    <TextView
+        android:id="@+id/tv_fastest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/outline_timer_24"
+        android:drawablePadding="4dp"
+        android:fontFamily="@font/cairo_bold"
+        android:text="Fastest: "
+        android:textColor="@color/stats_text"
+        android:textSize="15sp"
+        app:drawableTint="@color/stats_text"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_fewest"
+        app:layout_constraintEnd_toStartOf="@+id/tv_fastest_time"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/tv_fewest_moves"
+        app:layout_constraintStart_toStartOf="@+id/tv_time"
+        app:layout_constraintTop_toBottomOf="@+id/tv_time" />
+
+    <TextView
+        android:id="@+id/tv_fastest_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cairo_semibold"
+        android:text="20s"
+        android:textColor="@color/stats_text"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_fastest"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_fastest"
+        app:layout_constraintTop_toBottomOf="@+id/tv_time" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_top_puzzle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_left_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.2" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_right_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.8" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_left_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_right_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <Button
+        android:id="@+id/btn_shuffle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/btn_first"
+        android:fontFamily="@font/cairo_bold"
+        android:padding="8dp"
+        android:text="Shuffle"
+        android:textColor="@color/btn_first_text"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gl_right_button"
+        app:layout_constraintStart_toStartOf="@+id/gl_left_button"
+        app:layout_constraintTop_toBottomOf="@+id/cl_puzzle"
+        app:layout_constraintVertical_bias="0.15" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:max="9"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:progress="5"
+        android:scaleY="5"
+        android:translationZ="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_shuffle"
+        app:layout_constraintEnd_toEndOf="@id/btn_shuffle"
+        app:layout_constraintStart_toStartOf="@id/btn_shuffle"
+        app:layout_constraintTop_toTopOf="@+id/btn_shuffle" />
+
+    <Button
+        android:id="@+id/btn_upload"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/btn_second"
+        android:fontFamily="@font/cairo_bold"
+        android:padding="8dp"
+        android:text="Upload Picture"
+        android:textColor="@color/btn_second_text"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gl_right_button"
+        app:layout_constraintStart_toStartOf="@+id/gl_left_button"
+        app:layout_constraintTop_toBottomOf="@+id/btn_shuffle"
+        app:layout_constraintVertical_bias="0.02" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:background="@drawable/spinner_background"
+        app:layout_constraintBottom_toTopOf="@+id/cl_puzzle"
+        app:layout_constraintEnd_toStartOf="@+id/gl_right_spinner"
+        app:layout_constraintStart_toStartOf="@+id/gl_left_spinner"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_puzzle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@android:color/white"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gl_top_puzzle">
+
+        <com.gonzales.mark.n_puzzle.GridViewGesture
+            android:id="@+id/gvg_puzzle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numColumns="3"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </com.gonzales.mark.n_puzzle.GridViewGesture>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
