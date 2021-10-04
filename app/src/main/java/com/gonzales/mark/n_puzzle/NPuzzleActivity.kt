@@ -2,9 +2,12 @@ package com.gonzales.mark.n_puzzle
 
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.View
 import android.view.ViewConfiguration
 import android.view.ViewTreeObserver
+import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
@@ -16,20 +19,25 @@ class NPuzzleActivity : AppCompatActivity() {
         const val MAX_NUM_NEIGHBORS = 4
         const val BORDER_OFFSET = 6
         const val PLACEHOLDER_ID = R.drawable.placeholder
+
         const val NO_TILE = -1
+        const val INIT_BLANK_TILE_POS = PuzzleUtil.NUM_TILES - 1
     }
 
     private lateinit var clRoot: ConstraintLayout
     private lateinit var gvgPuzzle: GridViewGesture
+    private lateinit var btnShuffle: Button
+    private lateinit var pbShuffle: ProgressBar
 
     private var tileDimen: Int = 0
     private var puzzleDimen: Int = 0
 
     private lateinit var imageChunks: ArrayList<Bitmap>
     private lateinit var tileImages: ArrayList<ImageButton>
+    private lateinit var placeholder: Bitmap
 
     private lateinit var puzzleState: ArrayList<Int>
-    private var blankTilePos: Int = PuzzleUtil.NUM_TILES - 1
+    private var blankTilePos: Int = INIT_BLANK_TILE_POS
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +51,13 @@ class NPuzzleActivity : AppCompatActivity() {
     private fun initComponents() {
         clRoot = findViewById(R.id.cl_root)
         gvgPuzzle = findViewById(R.id.gvg_puzzle)
+
+        btnShuffle = findViewById(R.id.btn_shuffle)
+        btnShuffle.setOnClickListener {
+            shuffle()
+        }
+
+        pbShuffle = findViewById(R.id.pb_shuffle)
     }
 
     private fun initStateAndTileImages() {
@@ -93,14 +108,14 @@ class NPuzzleActivity : AppCompatActivity() {
             puzzleDimen, puzzleDimen
         )
 
-        imageChunks = ImageUtil.splitBitmap(image, tileDimen - BORDER_OFFSET)
-        imageChunks[imageChunks.size - 1] = ImageUtil.resizeToBitmap(
-            ImageUtil.drawableToBitmap(
-                this@NPuzzleActivity,
-                PLACEHOLDER_ID
-            ), tileDimen - BORDER_OFFSET,
+        placeholder = ImageUtil.resizeToBitmap(
+            ImageUtil.drawableToBitmap(this@NPuzzleActivity, PLACEHOLDER_ID),
+            tileDimen - BORDER_OFFSET,
             tileDimen - BORDER_OFFSET
         )
+
+        imageChunks = ImageUtil.splitBitmap(image, tileDimen - BORDER_OFFSET)
+        imageChunks[imageChunks.size - 1] = placeholder
 
         displayPuzzle()
     }
@@ -124,7 +139,6 @@ class NPuzzleActivity : AppCompatActivity() {
             displayPuzzle()
         }
     }
-
 
     private fun canMoveTile(direction: FlingDirection, position: Int): Boolean {
         return Pair(direction, position) in getValidFlings(getNeighborsBlank())
@@ -188,6 +202,28 @@ class NPuzzleActivity : AppCompatActivity() {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) hideSystemUI()
+    }
+
+    private fun shuffle() {
+        pbShuffle.visibility = View.VISIBLE
+        btnShuffle.text = getString(R.string.randomizing)
+
+        clearPuzzleGrid()
+        getValidShuffledState()
+        displayPuzzle()
+    }
+
+    private fun clearPuzzleGrid() {
+        for (i in 0 until PuzzleUtil.NUM_TILES) {
+            tileImages[i].setImageBitmap(placeholder)
+        }
+    }
+
+    private fun getValidShuffledState() {
+        puzzleState.shuffle()
+
+
+        blankTilePos = puzzleState.indexOf(INIT_BLANK_TILE_POS)
     }
 
     private fun hideSystemUI() {
