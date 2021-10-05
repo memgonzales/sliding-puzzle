@@ -21,11 +21,7 @@ class NPuzzleActivity : AppCompatActivity() {
         private const val NUM_COLUMNS = 3
         private const val NUM_TILES = NUM_COLUMNS * NUM_COLUMNS
 
-        private const val MAX_NUM_NEIGHBORS = 4
         private const val BORDER_OFFSET = 6
-        private const val PLACEHOLDER_ID = R.drawable.placeholder
-
-        private const val NO_TILE = -1
         private const val BLANK_TILE_MARKER = NUM_TILES - 1
     }
 
@@ -40,7 +36,6 @@ class NPuzzleActivity : AppCompatActivity() {
     private lateinit var imageChunks: ArrayList<Bitmap>
     private lateinit var blankImageChunks: ArrayList<Bitmap>
     private lateinit var tileImages: ArrayList<ImageButton>
-    private lateinit var placeholder: Bitmap
 
     private lateinit var puzzleState: ArrayList<Int>
     private var blankTilePos: Int = BLANK_TILE_MARKER
@@ -121,12 +116,6 @@ class NPuzzleActivity : AppCompatActivity() {
             puzzleDimen, puzzleDimen
         )
 
-        placeholder = ImageUtil.resizeToBitmap(
-            ImageUtil.drawableToBitmap(this@NPuzzleActivity, PLACEHOLDER_ID),
-            tileDimen - BORDER_OFFSET,
-            tileDimen - BORDER_OFFSET
-        )
-
         imageChunks =
             ImageUtil.splitBitmap(image, tileDimen - BORDER_OFFSET, NUM_TILES, NUM_COLUMNS).first
         blankImageChunks =
@@ -141,12 +130,11 @@ class NPuzzleActivity : AppCompatActivity() {
         }
 
         tileImages[blankTilePos].setImageBitmap(blankImageChunks[blankTilePos])
-
         gvgPuzzle.adapter = TileAdapter(tileImages, tileDimen, tileDimen)
     }
 
     private fun moveTile(direction: FlingDirection, position: Int) {
-        if (canMoveTile(direction, position)) {
+        if (MoveUtil.canMoveTile(direction, position, blankTilePos, NUM_COLUMNS)) {
             /* Swap the flung tile and the blank tile via Kotlin's also idiom. */
             puzzleState[position] = puzzleState[blankTilePos].also {
                 puzzleState[blankTilePos] = puzzleState[position]
@@ -155,65 +143,6 @@ class NPuzzleActivity : AppCompatActivity() {
 
             displayPuzzle()
         }
-    }
-
-    private fun canMoveTile(direction: FlingDirection, position: Int): Boolean {
-        return Pair(direction, position) in getValidFlings(getNeighborsBlank())
-    }
-
-    private fun getValidFlings(neighbors: ArrayList<Int>): ArrayList<Pair<FlingDirection, Int>> {
-        val validFlings = ArrayList<Pair<FlingDirection, Int>>(MAX_NUM_NEIGHBORS)
-        val directions = FlingDirection.values()
-
-        for (fling in directions.zip(neighbors)) {
-            validFlings.add(Pair(fling.first, fling.second))
-        }
-
-        return validFlings
-    }
-
-    private fun getNeighborsBlank(): ArrayList<Int> {
-        val neighbors = ArrayList<Int>(MAX_NUM_NEIGHBORS)
-
-        /*
-         * The order of addition into the neighbors ArrayList is important in the implementation
-         * of getValidFlings().
-         *
-         * The diametrically opposite direction is added following the order of elements
-         *     in the FlingDirection enumeration class. To illustrate: since the first
-         *     element in the FlingDirection enumeration class is UP, the first neighbor
-         *     added is the bottom one.
-         */
-
-        /* Bottom neighbor */
-        neighbors.add(blankTilePos + NUM_COLUMNS)
-
-        /* Top neighbor */
-        neighbors.add(blankTilePos - NUM_COLUMNS)
-
-        /* Right neighbor */
-        if (!isRightEdgeTile(blankTilePos)) {
-            neighbors.add(blankTilePos + 1)
-        } else {
-            neighbors.add(NO_TILE)
-        }
-
-        /* Left neighbor */
-        if (!isLeftEdgeTile(blankTilePos)) {
-            neighbors.add(blankTilePos - 1)
-        } else {
-            neighbors.add(NO_TILE)
-        }
-
-        return neighbors
-    }
-
-    private fun isLeftEdgeTile(position: Int): Boolean {
-        return position % NUM_COLUMNS == 0
-    }
-
-    private fun isRightEdgeTile(position: Int): Boolean {
-        return position % NUM_COLUMNS == NUM_COLUMNS - 1
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -232,9 +161,9 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun clearPuzzleGrid() {
-        for (i in 0 until NUM_TILES) {
-            tileImages[i].setImageBitmap(placeholder)
-        }
+//        for (i in 0 until NUM_TILES) {
+//            tileImages[i].setImageBitmap(placeholder)
+//        }
     }
 
     private fun getValidShuffledState() {
