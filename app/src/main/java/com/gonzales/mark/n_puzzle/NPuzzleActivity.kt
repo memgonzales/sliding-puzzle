@@ -126,10 +126,13 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private fun displayPuzzle() {
         for ((i, tile) in puzzleState.withIndex()) {
-            tileImages[i].setImageBitmap(imageChunks[tile])
+            if (i == blankTilePos) {
+                tileImages[blankTilePos].setImageBitmap(blankImageChunks[blankTilePos])
+            } else {
+                tileImages[i].setImageBitmap(imageChunks[tile])
+            }
         }
 
-        tileImages[blankTilePos].setImageBitmap(blankImageChunks[blankTilePos])
         gvgPuzzle.adapter = TileAdapter(tileImages, tileDimen, tileDimen)
     }
 

@@ -3,7 +3,6 @@ package com.gonzales.mark.n_puzzle
 class MoveUtil {
     companion object {
         private const val MAX_NUM_NEIGHBORS = 4
-        private const val NO_TILE = -1
 
         fun canMoveTile(
             direction: FlingDirection,
@@ -11,60 +10,26 @@ class MoveUtil {
             blankTilePos: Int,
             numColumns: Int
         ): Boolean {
-            return Pair(direction, position) in getValidFlings(
-                getNeighborsBlank(
-                    blankTilePos,
-                    numColumns
-                )
-            )
+            return direction == FlingDirection.UP && canMoveUp(position, blankTilePos, numColumns)
+                    || direction == FlingDirection.DOWN && canMoveDown(position, blankTilePos, numColumns)
+                    || direction == FlingDirection.LEFT && canMoveLeft(position, blankTilePos, numColumns)
+                    || direction == FlingDirection.RIGHT && canMoveRight(position, blankTilePos, numColumns)
         }
 
-        private fun getValidFlings(neighbors: ArrayList<Int>): ArrayList<Pair<FlingDirection, Int>> {
-            val validFlings =
-                ArrayList<Pair<FlingDirection, Int>>(MAX_NUM_NEIGHBORS)
-            val directions = FlingDirection.values()
-
-            for (fling in directions.zip(neighbors)) {
-                validFlings.add(Pair(fling.first, fling.second))
-            }
-
-            return validFlings
+        private fun canMoveUp(position: Int, blankTilePos: Int, numColumns: Int): Boolean {
+            return position == blankTilePos + numColumns
         }
 
-        private fun getNeighborsBlank(blankTilePos: Int, numColumns: Int): ArrayList<Int> {
-            val neighbors = ArrayList<Int>(MAX_NUM_NEIGHBORS)
+        private fun canMoveDown(position: Int, blankTilePos: Int, numColumns: Int): Boolean {
+            return position == blankTilePos - numColumns
+        }
 
-            /*
-             * The order of addition into the neighbors ArrayList is important in the implementation
-             * of getValidFlings().
-             *
-             * The diametrically opposite direction is added following the order of elements
-             *     in the FlingDirection enumeration class. To illustrate: since the first
-             *     element in the FlingDirection enumeration class is UP, the first neighbor
-             *     added is the bottom one.
-             */
+        private fun canMoveLeft(position: Int, blankTilePos: Int, numColumns: Int): Boolean {
+            return !isRightEdgeTile(blankTilePos, numColumns) && position == blankTilePos + 1
+        }
 
-            /* Bottom neighbor */
-            neighbors.add(blankTilePos + numColumns)
-
-            /* Top neighbor */
-            neighbors.add(blankTilePos - numColumns)
-
-            /* Right neighbor */
-            if (!isRightEdgeTile(blankTilePos, numColumns)) {
-                neighbors.add(blankTilePos + 1)
-            } else {
-                neighbors.add(NO_TILE)
-            }
-
-            /* Left neighbor */
-            if (!isLeftEdgeTile(blankTilePos, numColumns)) {
-                neighbors.add(blankTilePos - 1)
-            } else {
-                neighbors.add(NO_TILE)
-            }
-
-            return neighbors
+        private fun canMoveRight(position: Int, blankTilePos: Int, numColumns: Int): Boolean {
+            return !isLeftEdgeTile(blankTilePos, numColumns) && position == blankTilePos - 1
         }
 
         private fun isLeftEdgeTile(position: Int, numColumns: Int): Boolean {
