@@ -16,7 +16,7 @@ class ShuffleUtil {
         }
 
         private fun countInversions(puzzleState: ArrayList<Int>, blankTileMarker: Int): Int {
-            var numInversions: Int = 0
+            var numInversions = 0
 
             for (i in 0 until puzzleState.size - 1) {
                 for (j in i + 1 until puzzleState.size) {
@@ -36,7 +36,7 @@ class ShuffleUtil {
         }
 
         private fun swapTiles(puzzleState: ArrayList<Int>, blankTileMarker: Int) {
-            var i: Int = 0
+            var i = 0
 
             while (isBlankTile(i, puzzleState, blankTileMarker)
                 || isBlankTile(i + 1, puzzleState, blankTileMarker)) {

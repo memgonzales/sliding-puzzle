@@ -38,13 +38,14 @@ class NPuzzleActivity : AppCompatActivity() {
     private var puzzleDimen: Int = 0
 
     private lateinit var imageChunks: ArrayList<Bitmap>
+    private lateinit var blankImageChunks: ArrayList<Bitmap>
     private lateinit var tileImages: ArrayList<ImageButton>
     private lateinit var placeholder: Bitmap
 
     private lateinit var puzzleState: ArrayList<Int>
     private var blankTilePos: Int = BLANK_TILE_MARKER
 
-    private lateinit var runnable: ShufflingRunnable
+    private lateinit var runnable: ShuffleRunnable
     private lateinit var scheduler: ScheduledExecutorService
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -114,7 +115,6 @@ class NPuzzleActivity : AppCompatActivity() {
         gvgPuzzle.setTouchSlopThreshold(ViewConfiguration.get(this).scaledTouchSlop)
     }
 
-
     private fun initChunks() {
         val image: Bitmap = ImageUtil.resizeToBitmap(
             ImageUtil.drawableToBitmap(this@NPuzzleActivity, R.drawable.shoob1),
@@ -128,8 +128,9 @@ class NPuzzleActivity : AppCompatActivity() {
         )
 
         imageChunks =
-            ImageUtil.splitBitmap(image, tileDimen - BORDER_OFFSET, NUM_TILES, NUM_COLUMNS)
-        imageChunks[imageChunks.size - 1] = placeholder
+            ImageUtil.splitBitmap(image, tileDimen - BORDER_OFFSET, NUM_TILES, NUM_COLUMNS).first
+        blankImageChunks =
+            ImageUtil.splitBitmap(image, tileDimen - BORDER_OFFSET, NUM_TILES, NUM_COLUMNS).second
 
         displayPuzzle()
     }
@@ -138,6 +139,8 @@ class NPuzzleActivity : AppCompatActivity() {
         for ((i, tile) in puzzleState.withIndex()) {
             tileImages[i].setImageBitmap(imageChunks[tile])
         }
+
+        tileImages[blankTilePos].setImageBitmap(blankImageChunks[blankTilePos])
 
         gvgPuzzle.adapter = TileAdapter(tileImages, tileDimen, tileDimen)
     }

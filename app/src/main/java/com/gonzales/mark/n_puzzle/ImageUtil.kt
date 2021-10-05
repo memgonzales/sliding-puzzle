@@ -1,8 +1,8 @@
 package com.gonzales.mark.n_puzzle
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.graphics.*
+
 
 class ImageUtil {
     companion object {
@@ -19,22 +19,36 @@ class ImageUtil {
             chunkDimen: Int,
             numTiles: Int,
             numColumns: Int
-        ): ArrayList<Bitmap> {
+        ): Pair<ArrayList<Bitmap>, ArrayList<Bitmap>> {
             val chunks: ArrayList<Bitmap> = ArrayList(numTiles)
+            val blankChunks: ArrayList<Bitmap> = ArrayList(numTiles)
 
             for (i in 0 until numTiles) {
-                chunks.add(
-                    Bitmap.createBitmap(
-                        picture,
-                        (i % numColumns) * chunkDimen,
-                        (i / numColumns) * chunkDimen,
-                        chunkDimen,
-                        chunkDimen
-                    )
+                val chunk: Bitmap =  Bitmap.createBitmap(
+                    picture,
+                    (i % numColumns) * chunkDimen,
+                    (i / numColumns) * chunkDimen,
+                    chunkDimen,
+                    chunkDimen
                 )
+
+                chunks.add(chunk)
+                blankChunks.add(darkenBitmap(chunk))
             }
 
-            return chunks
+            return Pair(chunks, blankChunks)
+        }
+
+        private fun darkenBitmap(picture: Bitmap): Bitmap {
+            val darkPicture: Bitmap = picture.copy(picture.config, true)
+            val canvas = Canvas(darkPicture)
+
+            val paint = Paint(Color.RED)
+            paint.colorFilter = LightingColorFilter(0xFF2F4F4F.toInt(), 0x00000000)
+
+            canvas.drawBitmap(darkPicture, Matrix(), paint)
+
+            return darkPicture
         }
     }
 }
