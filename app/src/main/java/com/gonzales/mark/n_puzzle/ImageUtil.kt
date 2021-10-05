@@ -14,15 +14,20 @@ class ImageUtil {
             return Bitmap.createScaledBitmap(picture, dstWidth, dstHeight, true)
         }
 
-        fun splitBitmap(picture: Bitmap, chunkDimen: Int): ArrayList<Bitmap> {
-            val chunks: ArrayList<Bitmap> = ArrayList(PuzzleUtil.NUM_TILES)
+        fun splitBitmap(
+            picture: Bitmap,
+            chunkDimen: Int,
+            numTiles: Int,
+            numColumns: Int
+        ): ArrayList<Bitmap> {
+            val chunks: ArrayList<Bitmap> = ArrayList(numTiles)
 
-            for (i in 0 until PuzzleUtil.NUM_TILES) {
+            for (i in 0 until numTiles) {
                 chunks.add(
                     Bitmap.createBitmap(
                         picture,
-                        (i % PuzzleUtil.NUM_COLUMNS) * chunkDimen,
-                        (i / PuzzleUtil.NUM_COLUMNS) * chunkDimen,
+                        (i % numColumns) * chunkDimen,
+                        (i / numColumns) * chunkDimen,
                         chunkDimen,
                         chunkDimen
                     )

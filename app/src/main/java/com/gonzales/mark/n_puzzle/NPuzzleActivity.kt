@@ -13,15 +13,20 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
 
 class NPuzzleActivity : AppCompatActivity() {
     companion object {
-        const val MAX_NUM_NEIGHBORS = 4
-        const val BORDER_OFFSET = 6
-        const val PLACEHOLDER_ID = R.drawable.placeholder
+        private const val NUM_COLUMNS = 3
+        private const val NUM_TILES = NUM_COLUMNS * NUM_COLUMNS
 
-        const val NO_TILE = -1
-        const val INIT_BLANK_TILE_POS = PuzzleUtil.NUM_TILES - 1
+        private const val MAX_NUM_NEIGHBORS = 4
+        private const val BORDER_OFFSET = 6
+        private const val PLACEHOLDER_ID = R.drawable.placeholder
+
+        private const val NO_TILE = -1
+        private const val BLANK_TILE_MARKER = NUM_TILES - 1
     }
 
     private lateinit var clRoot: ConstraintLayout
@@ -37,13 +42,17 @@ class NPuzzleActivity : AppCompatActivity() {
     private lateinit var placeholder: Bitmap
 
     private lateinit var puzzleState: ArrayList<Int>
-    private var blankTilePos: Int = INIT_BLANK_TILE_POS
+    private var blankTilePos: Int = BLANK_TILE_MARKER
+
+    private lateinit var runnable: ShufflingRunnable
+    private lateinit var scheduler: ScheduledExecutorService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_n_puzzle)
 
         initComponents()
+        initScheduler()
         initStateAndTileImages()
         initPuzzle()
     }
@@ -60,11 +69,15 @@ class NPuzzleActivity : AppCompatActivity() {
         pbShuffle = findViewById(R.id.pb_shuffle)
     }
 
-    private fun initStateAndTileImages() {
-        puzzleState = ArrayList(PuzzleUtil.NUM_TILES)
-        tileImages = ArrayList(PuzzleUtil.NUM_TILES)
+    private fun initScheduler() {
+        scheduler = Executors.newScheduledThreadPool(NUM_TILES)
+    }
 
-        for (i in 0 until PuzzleUtil.NUM_TILES) {
+    private fun initStateAndTileImages() {
+        puzzleState = ArrayList(NUM_TILES)
+        tileImages = ArrayList(NUM_TILES)
+
+        for (i in 0 until NUM_TILES) {
             puzzleState.add(i)
             tileImages.add(ImageButton(this))
         }
@@ -90,7 +103,7 @@ class NPuzzleActivity : AppCompatActivity() {
             override fun onGlobalLayout() {
                 gvgPuzzle.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 puzzleDimen = gvgPuzzle.measuredWidth
-                tileDimen = puzzleDimen / PuzzleUtil.NUM_COLUMNS
+                tileDimen = puzzleDimen / NUM_COLUMNS
 
                 initChunks()
             }
@@ -114,7 +127,8 @@ class NPuzzleActivity : AppCompatActivity() {
             tileDimen - BORDER_OFFSET
         )
 
-        imageChunks = ImageUtil.splitBitmap(image, tileDimen - BORDER_OFFSET)
+        imageChunks =
+            ImageUtil.splitBitmap(image, tileDimen - BORDER_OFFSET, NUM_TILES, NUM_COLUMNS)
         imageChunks[imageChunks.size - 1] = placeholder
 
         displayPuzzle()
@@ -149,7 +163,7 @@ class NPuzzleActivity : AppCompatActivity() {
         val directions = FlingDirection.values()
 
         for (fling in directions.zip(neighbors)) {
-            validFlings.add(Pair(fling.component1(), fling.component2()))
+            validFlings.add(Pair(fling.first, fling.second))
         }
 
         return validFlings
@@ -169,10 +183,10 @@ class NPuzzleActivity : AppCompatActivity() {
          */
 
         /* Bottom neighbor */
-        neighbors.add(blankTilePos + PuzzleUtil.NUM_COLUMNS)
+        neighbors.add(blankTilePos + NUM_COLUMNS)
 
         /* Top neighbor */
-        neighbors.add(blankTilePos - PuzzleUtil.NUM_COLUMNS)
+        neighbors.add(blankTilePos - NUM_COLUMNS)
 
         /* Right neighbor */
         if (!isRightEdgeTile(blankTilePos)) {
@@ -192,11 +206,11 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun isLeftEdgeTile(position: Int): Boolean {
-        return position % PuzzleUtil.NUM_COLUMNS == 0
+        return position % NUM_COLUMNS == 0
     }
 
     private fun isRightEdgeTile(position: Int): Boolean {
-        return position % PuzzleUtil.NUM_COLUMNS == PuzzleUtil.NUM_COLUMNS - 1
+        return position % NUM_COLUMNS == NUM_COLUMNS - 1
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -206,6 +220,7 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private fun shuffle() {
         pbShuffle.visibility = View.VISIBLE
+        pbShuffle.progress = 0
         btnShuffle.text = getString(R.string.randomizing)
 
         clearPuzzleGrid()
@@ -214,16 +229,17 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun clearPuzzleGrid() {
-        for (i in 0 until PuzzleUtil.NUM_TILES) {
+        for (i in 0 until NUM_TILES) {
             tileImages[i].setImageBitmap(placeholder)
         }
     }
 
     private fun getValidShuffledState() {
-        puzzleState.shuffle()
+        val shuffledState: Pair<ArrayList<Int>, Int> =
+            ShuffleUtil.getValidShuffledState(puzzleState, BLANK_TILE_MARKER)
 
-
-        blankTilePos = puzzleState.indexOf(INIT_BLANK_TILE_POS)
+        puzzleState = shuffledState.first
+        blankTilePos = shuffledState.second
     }
 
     private fun hideSystemUI() {
