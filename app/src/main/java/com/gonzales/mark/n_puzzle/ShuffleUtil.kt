@@ -36,21 +36,20 @@ class ShuffleUtil {
         }
 
         private fun swapTiles(puzzleState: ArrayList<Int>, blankTileMarker: Int) {
-            var i = 0
-
-            while (isBlankTile(i, puzzleState, blankTileMarker)
-                || isBlankTile(i + 1, puzzleState, blankTileMarker)) {
-                i++
+            var position = 0
+            while (isBlankTile(position, puzzleState, blankTileMarker)
+                || isBlankTile(position + 1, puzzleState, blankTileMarker)) {
+                position++
             }
 
-            /* Swap the flung tile and the blank tile via Kotlin's also idiom. */
-            puzzleState[i] = puzzleState[i + 1].also {
-                puzzleState[i + 1] = puzzleState[i]
+            /* Swap the two tiles via Kotlin's also idiom. */
+            puzzleState[position] = puzzleState[position + 1].also {
+                puzzleState[position + 1] = puzzleState[position]
             }
         }
 
-        private fun isBlankTile(tile: Int, puzzleState: ArrayList<Int>, blankTileMarker: Int): Boolean {
-            return puzzleState[tile] == blankTileMarker
+        private fun isBlankTile(position: Int, puzzleState: ArrayList<Int>, blankTileMarker: Int): Boolean {
+            return puzzleState[position] == blankTileMarker
         }
     }
 }

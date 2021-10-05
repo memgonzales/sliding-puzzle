@@ -198,7 +198,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2.25dp"
-        android:max="9"
+        android:max="8"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:progress="0"

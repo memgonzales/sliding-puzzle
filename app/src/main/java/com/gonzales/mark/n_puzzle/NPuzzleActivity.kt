@@ -2,6 +2,9 @@ package com.gonzales.mark.n_puzzle
 
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.ViewTreeObserver
@@ -15,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 
 class NPuzzleActivity : AppCompatActivity() {
     companion object {
@@ -23,6 +27,9 @@ class NPuzzleActivity : AppCompatActivity() {
 
         private const val BORDER_OFFSET = 6
         private const val BLANK_TILE_MARKER = NUM_TILES - 1
+
+        private const val ANIMATION_UPPER_BOUND = 3000
+        private const val ANIMATION_OFFSET = 300
     }
 
     private lateinit var clRoot: ConstraintLayout
@@ -40,15 +47,19 @@ class NPuzzleActivity : AppCompatActivity() {
     private lateinit var puzzleState: ArrayList<Int>
     private var blankTilePos: Int = BLANK_TILE_MARKER
 
-    private lateinit var runnable: ShuffleRunnable
-    private lateinit var scheduler: ScheduledExecutorService
+    private lateinit var shuffleRunnable: ShuffleRunnable
+    private lateinit var shuffleScheduler: ScheduledExecutorService
+    private lateinit var shuffleHandler: Handler
+
+    private var isPuzzleGridFrozen: Boolean = false
+    private var shuffleProgress: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_n_puzzle)
 
         initComponents()
-        initScheduler()
+        initShuffleConcurrency()
         initStateAndTileImages()
         initPuzzle()
     }
@@ -65,16 +76,28 @@ class NPuzzleActivity : AppCompatActivity() {
         pbShuffle = findViewById(R.id.pb_shuffle)
     }
 
-    private fun initScheduler() {
-        scheduler = Executors.newScheduledThreadPool(NUM_TILES)
+    private fun initShuffleConcurrency() {
+        shuffleScheduler = Executors.newScheduledThreadPool(NUM_TILES)
+        shuffleHandler = object : Handler(Looper.getMainLooper()) {
+            override fun handleMessage(message: Message) {
+                super.handleMessage(message)
+
+                showTileAt(message.data.getInt(Key.KEY_TILE_POSITION.name))
+                pbShuffle.progress = message.data.getInt(Key.KEY_PROGRESS.name)
+
+                if (isShuffleDone()) {
+                    enableClickables()
+                }
+            }
+        }
     }
 
     private fun initStateAndTileImages() {
         puzzleState = ArrayList(NUM_TILES)
         tileImages = ArrayList(NUM_TILES)
 
-        for (i in 0 until NUM_TILES) {
-            puzzleState.add(i)
+        for (tile in 0 until NUM_TILES) {
+            puzzleState.add(tile)
             tileImages.add(ImageButton(this))
         }
     }
@@ -125,11 +148,11 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun displayPuzzle() {
-        for ((i, tile) in puzzleState.withIndex()) {
-            if (i == blankTilePos) {
+        for ((position, tile) in puzzleState.withIndex()) {
+            if (position == blankTilePos) {
                 tileImages[blankTilePos].setImageBitmap(blankImageChunks[blankTilePos])
             } else {
-                tileImages[i].setImageBitmap(imageChunks[tile])
+                tileImages[position].setImageBitmap(imageChunks[tile])
             }
         }
 
@@ -137,14 +160,16 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun moveTile(direction: FlingDirection, position: Int) {
-        if (MoveUtil.canMoveTile(direction, position, blankTilePos, NUM_COLUMNS)) {
-            /* Swap the flung tile and the blank tile via Kotlin's also idiom. */
-            puzzleState[position] = puzzleState[blankTilePos].also {
-                puzzleState[blankTilePos] = puzzleState[position]
-                blankTilePos = position
-            }
+        if (!isPuzzleGridFrozen) {
+            if (MoveUtil.canMoveTile(direction, position, blankTilePos, NUM_COLUMNS)) {
+                /* Swap the flung tile and the blank tile via Kotlin's also idiom. */
+                puzzleState[position] = puzzleState[blankTilePos].also {
+                    puzzleState[blankTilePos] = puzzleState[position]
+                    blankTilePos = position
+                }
 
-            displayPuzzle()
+                displayPuzzle()
+            }
         }
     }
 
@@ -153,20 +178,61 @@ class NPuzzleActivity : AppCompatActivity() {
         if (hasFocus) hideSystemUI()
     }
 
+    private fun isShuffleDone(): Boolean {
+        shuffleProgress++
+
+        /* Subtract 1 to take blank tile into account. */
+        if (shuffleProgress >= NUM_TILES - 1) {
+            shuffleProgress = 0
+            return true
+        }
+
+        return false
+    }
+
     private fun shuffle() {
         pbShuffle.visibility = View.VISIBLE
         pbShuffle.progress = 0
         btnShuffle.text = getString(R.string.randomizing)
 
-        clearPuzzleGrid()
+        disableClickables()
         getValidShuffledState()
-        displayPuzzle()
+        displayBlankPuzzle()
+        startShowingTiles()
     }
 
-    private fun clearPuzzleGrid() {
-//        for (i in 0 until NUM_TILES) {
-//            tileImages[i].setImageBitmap(placeholder)
-//        }
+    private fun disableClickables() {
+        isPuzzleGridFrozen = true
+        btnShuffle.isEnabled = false
+    }
+
+    private fun enableClickables() {
+        isPuzzleGridFrozen = false
+        btnShuffle.isEnabled = true
+    }
+
+    private fun displayBlankPuzzle() {
+        for ((position, tile) in puzzleState.withIndex()) {
+            tileImages[position].setImageBitmap(blankImageChunks[tile])
+        }
+
+        gvgPuzzle.adapter = TileAdapter(tileImages, tileDimen, tileDimen)
+    }
+
+    private fun showTileAt(position: Int) {
+        tileImages[position].setImageBitmap(imageChunks[puzzleState[position]])
+        gvgPuzzle.adapter = TileAdapter(tileImages, tileDimen, tileDimen)
+    }
+
+    private fun startShowingTiles() {
+        for (position in 0 until tileImages.size) {
+            if (position != blankTilePos) {
+                val delay: Long = ((0..ANIMATION_UPPER_BOUND).random() + ANIMATION_OFFSET).toLong()
+
+                shuffleRunnable = ShuffleRunnable(shuffleHandler, position, NUM_TILES)
+                shuffleScheduler.schedule(shuffleRunnable, delay, TimeUnit.MILLISECONDS)
+            }
+        }
     }
 
     private fun getValidShuffledState() {

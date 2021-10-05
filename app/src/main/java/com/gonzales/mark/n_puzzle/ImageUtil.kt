@@ -6,7 +6,7 @@ import android.graphics.*
 
 class ImageUtil {
     companion object {
-        const val DARK_SLATE_GRAY_FILTER = 0xFF2F4F4F
+        private const val DARK_SLATE_GRAY_FILTER = 0xFF2F4F4F
 
         fun drawableToBitmap(context: Context, drawableId: Int): Bitmap {
             return BitmapFactory.decodeResource(context.resources, drawableId)
