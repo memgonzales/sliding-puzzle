@@ -22,13 +22,9 @@ class ShuffleRunnable(
         bundle.putInt(Key.KEY_PROGRESS.name, progress.incrementAndGet())
 
         /* Subtract 1 to take blank tile into account. */
-        if (progress.toInt() >= numTiles - 1) {
-            progress.set(0)
-        }
+        progress.compareAndSet(numTiles - 1, 0)
 
         message.data = bundle
-
         handler.sendMessage(message)
     }
-
 }

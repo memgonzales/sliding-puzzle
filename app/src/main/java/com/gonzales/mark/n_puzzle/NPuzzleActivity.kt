@@ -84,10 +84,7 @@ class NPuzzleActivity : AppCompatActivity() {
 
                 showTileAt(message.data.getInt(Key.KEY_TILE_POSITION.name))
                 pbShuffle.progress = message.data.getInt(Key.KEY_PROGRESS.name)
-
-                if (isShuffleDone()) {
-                    enableClickables()
-                }
+                updateUIComponents()
             }
         }
     }
@@ -178,18 +175,6 @@ class NPuzzleActivity : AppCompatActivity() {
         if (hasFocus) hideSystemUI()
     }
 
-    private fun isShuffleDone(): Boolean {
-        shuffleProgress++
-
-        /* Subtract 1 to take blank tile into account. */
-        if (shuffleProgress >= NUM_TILES - 1) {
-            shuffleProgress = 0
-            return true
-        }
-
-        return false
-    }
-
     private fun shuffle() {
         pbShuffle.visibility = View.VISIBLE
         pbShuffle.progress = 0
@@ -199,6 +184,23 @@ class NPuzzleActivity : AppCompatActivity() {
         getValidShuffledState()
         displayBlankPuzzle()
         startShowingTiles()
+    }
+
+    private fun updateUIComponents() {
+        when (pbShuffle.progress) {
+            (NUM_TILES - 1) / 2 -> halfwayShuffling()
+            (NUM_TILES - 1) -> finishShuffling()
+        }
+    }
+
+    private fun halfwayShuffling() {
+        btnShuffle.text = getString(R.string.inversions)
+    }
+
+    private fun finishShuffling() {
+        btnShuffle.text = getString(R.string.randomized)
+        pbShuffle.visibility = View.GONE
+        enableClickables()
     }
 
     private fun disableClickables() {
