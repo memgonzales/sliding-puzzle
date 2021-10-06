@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">N-Puzzle</string>
+    <string name="app_name">8-Puzzle</string>
     <string name="randomizing">Randomizing</string>
     <string name="inversions">Counting Inversions</string>
     <string name="randomized">Solve</string>
