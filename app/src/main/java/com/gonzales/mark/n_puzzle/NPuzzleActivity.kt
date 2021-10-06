@@ -11,6 +11,7 @@ import android.view.ViewTreeObserver
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
@@ -52,7 +53,7 @@ class NPuzzleActivity : AppCompatActivity() {
     private lateinit var shuffleHandler: Handler
 
     private var isPuzzleGridFrozen: Boolean = false
-    private var shuffleProgress: Int = 0
+    private var isGameInSession: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,13 +65,33 @@ class NPuzzleActivity : AppCompatActivity() {
         initPuzzle()
     }
 
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            hideSystemUI()
+        }
+    }
+
+    private fun hideSystemUI() {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsControllerCompat(window, clRoot).let {
+            it.hide(WindowInsetsCompat.Type.systemBars())
+            it.systemBarsBehavior =
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+    }
+
     private fun initComponents() {
         clRoot = findViewById(R.id.cl_root)
         gvgPuzzle = findViewById(R.id.gvg_puzzle)
 
         btnShuffle = findViewById(R.id.btn_shuffle)
         btnShuffle.setOnClickListener {
-            shuffle()
+           if (!isGameInSession) {
+                shuffle()
+            } else {
+                solve()
+           }
         }
 
         pbShuffle = findViewById(R.id.pb_shuffle)
@@ -84,7 +105,7 @@ class NPuzzleActivity : AppCompatActivity() {
 
                 showTileAt(message.data.getInt(Key.KEY_TILE_POSITION.name))
                 pbShuffle.progress = message.data.getInt(Key.KEY_PROGRESS.name)
-                updateUIComponents()
+                updateComponents()
             }
         }
     }
@@ -103,6 +124,10 @@ class NPuzzleActivity : AppCompatActivity() {
         setTouchSlopThreshold()
         setOnFlingListener()
         setDimensions()
+    }
+
+    private fun setTouchSlopThreshold() {
+        gvgPuzzle.setTouchSlopThreshold(ViewConfiguration.get(this).scaledTouchSlop)
     }
 
     private fun setOnFlingListener() {
@@ -124,10 +149,6 @@ class NPuzzleActivity : AppCompatActivity() {
                 initChunks()
             }
         })
-    }
-
-    private fun setTouchSlopThreshold() {
-        gvgPuzzle.setTouchSlopThreshold(ViewConfiguration.get(this).scaledTouchSlop)
     }
 
     private fun initChunks() {
@@ -170,11 +191,6 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) hideSystemUI()
-    }
-
     private fun shuffle() {
         pbShuffle.visibility = View.VISIBLE
         pbShuffle.progress = 0
@@ -186,7 +202,7 @@ class NPuzzleActivity : AppCompatActivity() {
         startShowingTiles()
     }
 
-    private fun updateUIComponents() {
+    private fun updateComponents() {
         when (pbShuffle.progress) {
             (NUM_TILES - 1) / 2 -> halfwayShuffling()
             (NUM_TILES - 1) -> finishShuffling()
@@ -201,6 +217,8 @@ class NPuzzleActivity : AppCompatActivity() {
         btnShuffle.text = getString(R.string.randomized)
         pbShuffle.visibility = View.GONE
         enableClickables()
+
+        isGameInSession = true
     }
 
     private fun disableClickables() {
@@ -245,12 +263,7 @@ class NPuzzleActivity : AppCompatActivity() {
         blankTilePos = shuffledState.second
     }
 
-    private fun hideSystemUI() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsControllerCompat(window, clRoot).let {
-            it.hide(WindowInsetsCompat.Type.systemBars())
-            it.systemBarsBehavior =
-                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        }
+    private fun solve() {
+        Toast.makeText(this@NPuzzleActivity, "To be implemented", Toast.LENGTH_SHORT).show()
     }
 }
