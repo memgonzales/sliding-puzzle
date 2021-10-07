@@ -119,7 +119,7 @@ class NPuzzleActivity : AppCompatActivity() {
         tvTitle = findViewById(R.id.tv_title)
         tvSuccess = findViewById(R.id.tv_success)
         tvSuccess.setOnClickListener {
-            removeSuccessMessage()
+            tvSuccess.visibility = View.GONE
         }
         tvTrivia = findViewById(R.id.tv_trivia)
     }
@@ -241,10 +241,12 @@ class NPuzzleActivity : AppCompatActivity() {
                     trackMove()
 
                     if (puzzleState == correctPuzzleState) {
-                        prepareForNewGame()
+                        prepareForNewGame(SolveStatus.USER_SOLVED)
                     }
                 }
             }
+
+            tvSuccess.visibility = View.GONE
         }
     }
 
@@ -264,6 +266,7 @@ class NPuzzleActivity : AppCompatActivity() {
 
         btnUpload.visibility = View.INVISIBLE
         tvTrivia.visibility = View.VISIBLE
+        tvSuccess.visibility = View.GONE
 
         disableClickables()
         resetGameStats()
@@ -351,17 +354,11 @@ class NPuzzleActivity : AppCompatActivity() {
      ******************************/
 
     private fun solve() {
-        prepareForNewGame()
+        prepareForNewGame(SolveStatus.COMPUTER_SOLVED)
     }
 
-    private fun prepareForNewGame() {
-        tvSuccess.visibility = View.VISIBLE
-        isPuzzleGridFrozen = true
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            removeSuccessMessage()
-        }, AnimationUtil.SUCCESS_DISPLAY.toLong())
-
+    private fun prepareForNewGame(solveStatus: SolveStatus) {
+        displaySuccessMessage(solveStatus)
         tvTitle.setTextColor(ContextCompat.getColor(applicationContext, R.color.btn_first))
 
         btnShuffle.setBackgroundColor(
@@ -378,9 +375,12 @@ class NPuzzleActivity : AppCompatActivity() {
         updateGameStats()
     }
 
-    private fun removeSuccessMessage() {
-        isPuzzleGridFrozen = false
-        tvSuccess.visibility = View.GONE
+    private fun displaySuccessMessage(solveStatus: SolveStatus) {
+        tvSuccess.visibility = View.VISIBLE
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            tvSuccess.visibility = View.GONE
+        }, AnimationUtil.SUCCESS_DISPLAY.toLong())
     }
 
     private fun updateGameStats() {
