@@ -227,6 +227,8 @@ class NPuzzleActivity : AppCompatActivity() {
      ***********************************/
 
     private fun moveTile(direction: FlingDirection, position: Int) {
+        var gameOver = false
+
         if (!isPuzzleGridFrozen) {
             if (MoveUtil.canMoveTile(direction, position, blankTilePos, NUM_COLUMNS)) {
                 /* Swap the flung tile and the blank tile via Kotlin's also idiom. */
@@ -241,12 +243,15 @@ class NPuzzleActivity : AppCompatActivity() {
                     trackMove()
 
                     if (puzzleState == correctPuzzleState) {
+                        gameOver = true
                         prepareForNewGame(SolveStatus.USER_SOLVED)
                     }
                 }
             }
 
-            tvSuccess.visibility = View.GONE
+            if (!gameOver) {
+                tvSuccess.visibility = View.GONE
+            }
         }
     }
 
@@ -271,6 +276,8 @@ class NPuzzleActivity : AppCompatActivity() {
         disableClickables()
         resetGameStats()
 
+//        puzzleState = arrayListOf(0, 1, 2, 3, 4, 8, 6, 7, 5)
+//        blankTilePos = 5
         getValidShuffledState()
         displayBlankPuzzle()
         startShowingTiles()
@@ -377,6 +384,12 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private fun displaySuccessMessage(solveStatus: SolveStatus) {
         tvSuccess.visibility = View.VISIBLE
+
+        tvSuccess.text = when (solveStatus) {
+            SolveStatus.USER_SOLVED -> getString(R.string.user_solved)
+            SolveStatus.HIGH_SCORE -> getString(R.string.high_score)
+            SolveStatus.COMPUTER_SOLVED -> getString(R.string.computer_solved)
+        }
 
         Handler(Looper.getMainLooper()).postDelayed({
             tvSuccess.visibility = View.GONE

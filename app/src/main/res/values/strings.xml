@@ -12,8 +12,8 @@
     <string name="tv_time_taken">00:00:00</string>
     <string name="btn_shuffle">Shuffle</string>
     <string name="btn_upload">Upload Picture</string>
-    <string name="tv_success">Great!</string>
-    <string name="tv_high_score">Divine!</string>
-    <string name="tv_solved">Voila!</string>
+    <string name="user_solved">Great!</string>
+    <string name="high_score">Divine!</string>
+    <string name="computer_solved">Voila!</string>
     <string name="tv_trivia">Trivia goes here</string>
 </resources>

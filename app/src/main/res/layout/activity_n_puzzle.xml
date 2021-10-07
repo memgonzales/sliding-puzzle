@@ -306,7 +306,7 @@
                 android:padding="6dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                android:text="@string/tv_success"
+                android:text="@string/user_solved"
                 android:textColor="@color/success_text"
                 android:textSize="60sp"
                 android:visibility="gone"
