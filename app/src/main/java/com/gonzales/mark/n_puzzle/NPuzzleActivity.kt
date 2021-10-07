@@ -177,6 +177,18 @@ class NPuzzleActivity : AppCompatActivity() {
         gvgPuzzle.adapter = TileAdapter(tileImages, tileDimen, tileDimen)
     }
 
+    private fun displayBlankPuzzle() {
+        for ((position, tile) in puzzleState.withIndex()) {
+            if (position == blankTilePos) {
+                tileImages[blankTilePos].setImageBitmap(blankImageChunks[blankTilePos])
+            } else {
+                tileImages[position].setImageBitmap(blankImageChunks[tile])
+            }
+        }
+
+        gvgPuzzle.adapter = TileAdapter(tileImages, tileDimen, tileDimen)
+    }
+
     private fun moveTile(direction: FlingDirection, position: Int) {
         if (!isPuzzleGridFrozen) {
             if (MoveUtil.canMoveTile(direction, position, blankTilePos, NUM_COLUMNS)) {
@@ -229,14 +241,6 @@ class NPuzzleActivity : AppCompatActivity() {
     private fun enableClickables() {
         isPuzzleGridFrozen = false
         btnShuffle.isEnabled = true
-    }
-
-    private fun displayBlankPuzzle() {
-        for ((position, tile) in puzzleState.withIndex()) {
-            tileImages[position].setImageBitmap(blankImageChunks[tile])
-        }
-
-        gvgPuzzle.adapter = TileAdapter(tileImages, tileDimen, tileDimen)
     }
 
     private fun showTileAt(position: Int) {

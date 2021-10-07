@@ -2,8 +2,6 @@ package com.gonzales.mark.n_puzzle
 
 class MoveUtil {
     companion object {
-        private const val MAX_NUM_NEIGHBORS = 4
-
         fun canMoveTile(
             direction: FlingDirection,
             position: Int,
