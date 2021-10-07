@@ -43,6 +43,7 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private lateinit var tvTitle: TextView
     private lateinit var tvSuccess: TextView
+    private lateinit var tvTrivia: TextView
 
     private var tileDimen: Int = 0
     private var puzzleDimen: Int = 0
@@ -120,6 +121,7 @@ class NPuzzleActivity : AppCompatActivity() {
         tvSuccess.setOnClickListener {
             removeSuccessMessage()
         }
+        tvTrivia = findViewById(R.id.tv_trivia)
     }
 
     private fun initShuffleConcurrency() {
@@ -259,7 +261,9 @@ class NPuzzleActivity : AppCompatActivity() {
         pbShuffle.visibility = View.VISIBLE
         pbShuffle.progress = 0
         btnShuffle.text = getString(R.string.randomizing)
-        btnUpload.visibility = View.GONE
+
+        btnUpload.visibility = View.INVISIBLE
+        tvTrivia.visibility = View.VISIBLE
 
         disableClickables()
         resetGameStats()
@@ -367,7 +371,9 @@ class NPuzzleActivity : AppCompatActivity() {
             )
         )
         btnShuffle.text = getString(R.string.btn_shuffle)
+
         btnUpload.visibility = View.VISIBLE
+        tvTrivia.visibility = View.GONE
 
         updateGameStats()
     }
