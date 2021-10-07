@@ -1,5 +1,7 @@
 package com.gonzales.mark.n_puzzle
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
@@ -29,6 +31,10 @@ class NPuzzleActivity : AppCompatActivity() {
         private const val BLANK_TILE_MARKER = NUM_TILES - 1
     }
 
+    /***************************
+     * View-Related Properties *
+     ***************************/
+
     private lateinit var clRoot: ConstraintLayout
     private lateinit var gvgPuzzle: GridViewGesture
 
@@ -45,31 +51,59 @@ class NPuzzleActivity : AppCompatActivity() {
     private lateinit var tvSuccess: TextView
     private lateinit var tvTrivia: TextView
 
+    /**********************
+     * Shared Preferences *
+     **********************/
+
+    private lateinit var sp: SharedPreferences
+
+    /***************
+     * Dimensions *
+     **************/
+
     private var tileDimen: Int = 0
     private var puzzleDimen: Int = 0
 
-    private lateinit var imageChunks: ArrayList<Bitmap>
-    private lateinit var blankImageChunks: ArrayList<Bitmap>
-    private lateinit var tileImages: ArrayList<ImageButton>
+    /*********
+     * State *
+     *********/
 
     private lateinit var correctPuzzleState: ArrayList<Int>
     private lateinit var puzzleState: ArrayList<Int>
     private var blankTilePos: Int = BLANK_TILE_MARKER
 
+    private var isPuzzleGridFrozen: Boolean = false
+    private var isGameInSession: Boolean = false
+
+    /**********
+     * Images *
+     **********/
+
+    private lateinit var imageChunks: ArrayList<Bitmap>
+    private lateinit var blankImageChunks: ArrayList<Bitmap>
+    private lateinit var tileImages: ArrayList<ImageButton>
+
+    /******************************
+     * Shuffle-Related Properties *
+     ******************************/
+
     private lateinit var shuffleRunnable: ShuffleRunnable
     private lateinit var shuffleScheduler: ScheduledExecutorService
     private lateinit var shuffleHandler: Handler
 
-    private var isPuzzleGridFrozen: Boolean = false
-    private var isGameInSession: Boolean = false
+    /**************
+     * Statistics *
+     **************/
 
     private var numMoves: Int = 0
+    private var fewestMoves: Int = Integer.MAX_VALUE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_n_puzzle)
 
         initComponents()
+        initSharedPreferences()
         initShuffleConcurrency()
         initStateAndTileImages()
         initPuzzle()
@@ -124,6 +158,13 @@ class NPuzzleActivity : AppCompatActivity() {
         tvTrivia = findViewById(R.id.tv_trivia)
     }
 
+    private fun initSharedPreferences() {
+        sp = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        fewestMoves = sp.getInt(Key.KEY_FEWEST_MOVES.name, Integer.MAX_VALUE)
+
+        displayStats()
+    }
+
     private fun initShuffleConcurrency() {
         shuffleScheduler = Executors.newScheduledThreadPool(NUM_TILES)
         shuffleHandler = object : Handler(Looper.getMainLooper()) {
@@ -153,6 +194,22 @@ class NPuzzleActivity : AppCompatActivity() {
         setTouchSlopThreshold()
         setOnFlingListener()
         setDimensions()
+    }
+
+    /***********************************************
+     * Methods Related to Initial Display of Stats *
+     ***********************************************/
+
+    private fun displayStats() {
+        displayFewestMoves()
+    }
+
+    private fun displayFewestMoves() {
+        tvFewestMoves.text = if (fewestMoves == Int.MAX_VALUE) {
+            "-"
+        } else {
+            fewestMoves.toString()
+        }
     }
 
     /********************************************
@@ -227,7 +284,7 @@ class NPuzzleActivity : AppCompatActivity() {
      ***********************************/
 
     private fun moveTile(direction: FlingDirection, position: Int) {
-        var gameOver = false
+        var flag = false
 
         if (!isPuzzleGridFrozen) {
             if (MoveUtil.canMoveTile(direction, position, blankTilePos, NUM_COLUMNS)) {
@@ -238,26 +295,48 @@ class NPuzzleActivity : AppCompatActivity() {
                 }
 
                 displayPuzzle()
-
-                if (isGameInSession) {
-                    trackMove()
-
-                    if (puzzleState == correctPuzzleState) {
-                        gameOver = true
-                        prepareForNewGame(SolveStatus.USER_SOLVED)
-                    }
-                }
+                flag = updateGameStatus()
             }
 
-            if (!gameOver) {
+            if (!flag) {
                 tvSuccess.visibility = View.GONE
             }
         }
     }
 
+    private fun updateGameStatus(): Boolean {
+        if (isGameInSession) {
+            trackMove()
+
+            if (puzzleState == correctPuzzleState) {
+                saveStats()
+                prepareForNewGame(SolveStatus.USER_SOLVED)
+                return true
+            }
+        }
+
+        return false
+    }
+
     private fun trackMove() {
         numMoves++
         tvMoveNumber.text = numMoves.toString()
+    }
+
+    private fun saveStats() {
+        saveFewestMoves()
+    }
+
+    private fun saveFewestMoves() {
+        if (numMoves < fewestMoves) {
+            fewestMoves = numMoves
+            tvFewestMoves.text = fewestMoves.toString()
+
+            with (sp.edit()) {
+                putInt(Key.KEY_FEWEST_MOVES.name, fewestMoves)
+                apply()
+            }
+        }
     }
 
     /********************************
@@ -274,11 +353,11 @@ class NPuzzleActivity : AppCompatActivity() {
         tvSuccess.visibility = View.GONE
 
         disableClickables()
-        resetGameStats()
+        resetDisplayedStats()
 
-//        puzzleState = arrayListOf(0, 1, 2, 3, 4, 8, 6, 7, 5)
-//        blankTilePos = 5
-        getValidShuffledState()
+        puzzleState = arrayListOf(0, 1, 2, 3, 4, 8, 6, 7, 5)
+        blankTilePos = 5
+        //getValidShuffledState()
         displayBlankPuzzle()
         startShowingTiles()
     }
@@ -351,7 +430,7 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
-    private fun resetGameStats() {
+    private fun resetDisplayedStats() {
         numMoves = 0
         tvMoveNumber.text = numMoves.toString()
     }
