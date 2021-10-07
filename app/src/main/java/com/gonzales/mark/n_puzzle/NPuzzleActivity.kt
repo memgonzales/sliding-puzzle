@@ -11,6 +11,7 @@ import android.view.ViewTreeObserver
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -26,14 +27,12 @@ class NPuzzleActivity : AppCompatActivity() {
 
         private const val BORDER_OFFSET = 6
         private const val BLANK_TILE_MARKER = NUM_TILES - 1
-
-        private const val ANIMATION_UPPER_BOUND = 3000
-        private const val ANIMATION_OFFSET = 300
     }
 
     private lateinit var clRoot: ConstraintLayout
     private lateinit var gvgPuzzle: GridViewGesture
 
+    private lateinit var btnUpload: Button
     private lateinit var btnShuffle: Button
     private lateinit var pbShuffle: ProgressBar
 
@@ -41,6 +40,9 @@ class NPuzzleActivity : AppCompatActivity() {
     private lateinit var tvFewestMoves: TextView
     private lateinit var tvTimeTaken: TextView
     private lateinit var tvFastestTime: TextView
+
+    private lateinit var tvTitle: TextView
+    private lateinit var tvSuccess: TextView
 
     private var tileDimen: Int = 0
     private var puzzleDimen: Int = 0
@@ -96,6 +98,7 @@ class NPuzzleActivity : AppCompatActivity() {
         clRoot = findViewById(R.id.cl_root)
         gvgPuzzle = findViewById(R.id.gvg_puzzle)
 
+        btnUpload = findViewById(R.id.btn_upload)
         btnShuffle = findViewById(R.id.btn_shuffle)
         btnShuffle.setOnClickListener {
             if (!isGameInSession) {
@@ -111,6 +114,12 @@ class NPuzzleActivity : AppCompatActivity() {
         tvFewestMoves = findViewById(R.id.tv_fewest_moves)
         tvTimeTaken = findViewById(R.id.tv_time_taken)
         tvFastestTime = findViewById(R.id.tv_fastest_time)
+
+        tvTitle = findViewById(R.id.tv_title)
+        tvSuccess = findViewById(R.id.tv_success)
+        tvSuccess.setOnClickListener {
+            removeSuccessMessage()
+        }
     }
 
     private fun initShuffleConcurrency() {
@@ -230,8 +239,7 @@ class NPuzzleActivity : AppCompatActivity() {
                     trackMove()
 
                     if (puzzleState == correctPuzzleState) {
-                        Toast.makeText(this@NPuzzleActivity, "Congratulations!", Toast.LENGTH_SHORT)
-                            .show()
+                        prepareForNewGame()
                     }
                 }
             }
@@ -251,11 +259,22 @@ class NPuzzleActivity : AppCompatActivity() {
         pbShuffle.visibility = View.VISIBLE
         pbShuffle.progress = 0
         btnShuffle.text = getString(R.string.randomizing)
+        btnUpload.visibility = View.GONE
 
         disableClickables()
+        resetGameStats()
+
         getValidShuffledState()
         displayBlankPuzzle()
         startShowingTiles()
+    }
+
+    private fun getValidShuffledState() {
+        val shuffledState: Pair<ArrayList<Int>, Int> =
+            ShuffleUtil.getValidShuffledState(puzzleState, BLANK_TILE_MARKER)
+
+        puzzleState = shuffledState.first
+        blankTilePos = shuffledState.second
     }
 
     private fun updateComponents() {
@@ -270,6 +289,19 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun finishShuffling() {
+        tvTitle.setTextColor(
+            ContextCompat.getColor(
+                applicationContext,
+                R.color.btn_first_variant
+            )
+        )
+
+        btnShuffle.setBackgroundColor(
+            ContextCompat.getColor(
+                applicationContext,
+                R.color.btn_first_variant
+            )
+        )
         btnShuffle.text = getString(R.string.randomized)
         pbShuffle.visibility = View.GONE
         enableClickables()
@@ -295,7 +327,9 @@ class NPuzzleActivity : AppCompatActivity() {
     private fun startShowingTiles() {
         for (position in 0 until tileImages.size) {
             if (position != blankTilePos) {
-                val delay: Long = ((0..ANIMATION_UPPER_BOUND).random() + ANIMATION_OFFSET).toLong()
+                val delay: Long =
+                    ((0..AnimationUtil.SHUFFLING_ANIMATION_UPPER_BOUND).random()
+                            + AnimationUtil.SHUFFLING_ANIMATION_OFFSET).toLong()
 
                 shuffleRunnable = ShuffleRunnable(shuffleHandler, position, NUM_TILES)
                 shuffleScheduler.schedule(shuffleRunnable, delay, TimeUnit.MILLISECONDS)
@@ -303,15 +337,47 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
-    private fun getValidShuffledState() {
-        val shuffledState: Pair<ArrayList<Int>, Int> =
-            ShuffleUtil.getValidShuffledState(puzzleState, BLANK_TILE_MARKER)
-
-        puzzleState = shuffledState.first
-        blankTilePos = shuffledState.second
+    private fun resetGameStats() {
+        numMoves = 0
+        tvMoveNumber.text = numMoves.toString()
     }
 
+    /******************************
+     * Methods Related to Solving *
+     ******************************/
+
     private fun solve() {
-        Toast.makeText(this@NPuzzleActivity, "To be implemented", Toast.LENGTH_SHORT).show()
+        prepareForNewGame()
+    }
+
+    private fun prepareForNewGame() {
+        tvSuccess.visibility = View.VISIBLE
+        isPuzzleGridFrozen = true
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            removeSuccessMessage()
+        }, AnimationUtil.SUCCESS_DISPLAY.toLong())
+
+        tvTitle.setTextColor(ContextCompat.getColor(applicationContext, R.color.btn_first))
+
+        btnShuffle.setBackgroundColor(
+            ContextCompat.getColor(
+                applicationContext,
+                R.color.btn_first
+            )
+        )
+        btnShuffle.text = getString(R.string.btn_shuffle)
+        btnUpload.visibility = View.VISIBLE
+
+        updateGameStats()
+    }
+
+    private fun removeSuccessMessage() {
+        isPuzzleGridFrozen = false
+        tvSuccess.visibility = View.GONE
+    }
+
+    private fun updateGameStats() {
+        isGameInSession = false
     }
 }

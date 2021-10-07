@@ -14,4 +14,6 @@
     <string name="btn_shuffle">Shuffle</string>
     <string name="btn_upload">Upload Picture</string>
     <string name="tv_fastest_time"></string>
+    <string name="tv_success">Awesome!</string>
+    <string name="tv_trivia">Trivia goes here</string>
 </resources>

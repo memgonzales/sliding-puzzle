@@ -218,6 +218,7 @@
         android:padding="8dp"
         android:text="@string/btn_upload"
         android:textColor="@color/btn_second_text"
+        android:visibility="visible"
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/gl_right_button"
@@ -235,6 +236,22 @@
         app:layout_constraintStart_toStartOf="@+id/gl_left_spinner"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/tv_trivia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/cairo_semibold"
+        android:text="@string/tv_trivia"
+        android:textColor="@color/stats_text"
+        android:textSize="15sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/gl_right_button"
+        app:layout_constraintStart_toStartOf="@+id/gl_left_button"
+        app:layout_constraintTop_toBottomOf="@+id/btn_shuffle"
+        app:layout_constraintVertical_bias="0.02" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_puzzle"
@@ -259,6 +276,22 @@
             app:layout_constraintTop_toTopOf="parent">
 
         </com.gonzales.mark.n_puzzle.GridViewGesture>
+
+        <TextView
+            android:id="@+id/tv_success"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/success"
+            android:fontFamily="@font/caesar_dressing"
+            android:gravity="center"
+            android:text="@string/tv_success"
+            android:textColor="@color/success_text"
+            android:textSize="60sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/gvg_puzzle"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
