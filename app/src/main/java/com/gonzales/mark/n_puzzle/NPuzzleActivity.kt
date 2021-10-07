@@ -8,15 +8,13 @@ import android.os.Message
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.ViewTreeObserver
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -35,8 +33,14 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private lateinit var clRoot: ConstraintLayout
     private lateinit var gvgPuzzle: GridViewGesture
+
     private lateinit var btnShuffle: Button
     private lateinit var pbShuffle: ProgressBar
+
+    private lateinit var tvMoveNumber: TextView
+    private lateinit var tvFewestMoves: TextView
+    private lateinit var tvTimeTaken: TextView
+    private lateinit var tvFastestTime: TextView
 
     private var tileDimen: Int = 0
     private var puzzleDimen: Int = 0
@@ -45,6 +49,7 @@ class NPuzzleActivity : AppCompatActivity() {
     private lateinit var blankImageChunks: ArrayList<Bitmap>
     private lateinit var tileImages: ArrayList<ImageButton>
 
+    private lateinit var correctPuzzleState: ArrayList<Int>
     private lateinit var puzzleState: ArrayList<Int>
     private var blankTilePos: Int = BLANK_TILE_MARKER
 
@@ -54,6 +59,8 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private var isPuzzleGridFrozen: Boolean = false
     private var isGameInSession: Boolean = false
+
+    private var numMoves: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,20 +88,29 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    /**************************
+     * Initialization Methods *
+     **************************/
+
     private fun initComponents() {
         clRoot = findViewById(R.id.cl_root)
         gvgPuzzle = findViewById(R.id.gvg_puzzle)
 
         btnShuffle = findViewById(R.id.btn_shuffle)
         btnShuffle.setOnClickListener {
-           if (!isGameInSession) {
+            if (!isGameInSession) {
                 shuffle()
             } else {
                 solve()
-           }
+            }
         }
 
         pbShuffle = findViewById(R.id.pb_shuffle)
+
+        tvMoveNumber = findViewById(R.id.tv_move_number)
+        tvFewestMoves = findViewById(R.id.tv_fewest_moves)
+        tvTimeTaken = findViewById(R.id.tv_time_taken)
+        tvFastestTime = findViewById(R.id.tv_fastest_time)
     }
 
     private fun initShuffleConcurrency() {
@@ -111,10 +127,12 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun initStateAndTileImages() {
+        correctPuzzleState = ArrayList(NUM_TILES)
         puzzleState = ArrayList(NUM_TILES)
         tileImages = ArrayList(NUM_TILES)
 
         for (tile in 0 until NUM_TILES) {
+            correctPuzzleState.add(tile)
             puzzleState.add(tile)
             tileImages.add(ImageButton(this))
         }
@@ -125,6 +143,10 @@ class NPuzzleActivity : AppCompatActivity() {
         setOnFlingListener()
         setDimensions()
     }
+
+    /********************************************
+     * Methods Related to Puzzle State and Grid *
+     ********************************************/
 
     private fun setTouchSlopThreshold() {
         gvgPuzzle.setTouchSlopThreshold(ViewConfiguration.get(this).scaledTouchSlop)
@@ -189,6 +211,10 @@ class NPuzzleActivity : AppCompatActivity() {
         gvgPuzzle.adapter = TileAdapter(tileImages, tileDimen, tileDimen)
     }
 
+    /***********************************
+     * Methods Related to Moving Tiles *
+     ***********************************/
+
     private fun moveTile(direction: FlingDirection, position: Int) {
         if (!isPuzzleGridFrozen) {
             if (MoveUtil.canMoveTile(direction, position, blankTilePos, NUM_COLUMNS)) {
@@ -199,9 +225,27 @@ class NPuzzleActivity : AppCompatActivity() {
                 }
 
                 displayPuzzle()
+
+                if (isGameInSession) {
+                    trackMove()
+
+                    if (puzzleState == correctPuzzleState) {
+                        Toast.makeText(this@NPuzzleActivity, "Congratulations!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
             }
         }
     }
+
+    private fun trackMove() {
+        numMoves++
+        tvMoveNumber.text = numMoves.toString()
+    }
+
+    /********************************
+     * Methods Related to Shuffling *
+     ********************************/
 
     private fun shuffle() {
         pbShuffle.visibility = View.VISIBLE

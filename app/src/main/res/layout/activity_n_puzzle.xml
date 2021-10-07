@@ -27,16 +27,18 @@
         android:id="@+id/tv_move"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:drawablePadding="4dp"
         android:fontFamily="@font/cairo_bold"
         android:text="@string/tv_move"
         android:textColor="@color/stats_text"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tv_fewest"
+        app:drawableTint="@color/stats_text"
+        app:layout_constraintBottom_toTopOf="@+id/tv_time"
         app:layout_constraintStart_toStartOf="@+id/gl_left_button"
         app:layout_constraintTop_toBottomOf="@+id/tv_title"
-        app:layout_constraintVertical_bias="0.45"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_chainStyle="packed"
+        app:drawableStartCompat="@drawable/outline_extension_24" />
 
     <TextView
         android:id="@+id/tv_move_number"
@@ -54,16 +56,17 @@
         android:id="@+id/tv_fewest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawablePadding="4dp"
         android:fontFamily="@font/cairo_bold"
         android:text="@string/tv_fewest"
         android:textColor="@color/stats_text"
         android:textSize="15sp"
-        app:drawableTint="@color/stats_text"
-        app:layout_constraintBottom_toTopOf="@+id/spinner"
-        app:layout_constraintStart_toStartOf="@+id/tv_move"
-        app:layout_constraintTop_toBottomOf="@+id/tv_move"
-        app:drawableStartCompat="@drawable/outline_extension_24" />
+        app:layout_constraintBottom_toTopOf="@+id/tv_fastest"
+        app:layout_constraintEnd_toStartOf="@+id/tv_fewest_moves"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/tv_move_number"
+        app:layout_constraintTop_toTopOf="@+id/tv_move"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/tv_fewest_moves"
@@ -75,23 +78,25 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_fewest"
         app:layout_constraintStart_toEndOf="@+id/tv_fewest"
-        app:layout_constraintTop_toTopOf="@+id/tv_fewest" />
+        app:layout_constraintTop_toTopOf="@+id/tv_fewest"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:drawablePadding="4dp"
         android:fontFamily="@font/cairo_bold"
         android:text="@string/tv_time"
         android:textColor="@color/stats_text"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_fastest"
-        app:layout_constraintEnd_toStartOf="@+id/tv_time_taken"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:drawableTint="@color/stats_text"
+        app:layout_constraintBottom_toTopOf="@+id/spinner"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@+id/tv_move_number"
-        app:layout_constraintTop_toTopOf="@+id/tv_move"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintStart_toStartOf="@+id/tv_move"
+        app:layout_constraintTop_toBottomOf="@+id/tv_move"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:drawableStartCompat="@drawable/outline_timer_24" />
 
     <TextView
         android:id="@+id/tv_time_taken"
@@ -103,7 +108,7 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_time"
         app:layout_constraintEnd_toStartOf="@+id/gl_right_button"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tv_time"
         app:layout_constraintTop_toTopOf="@+id/tv_time" />
 
@@ -111,20 +116,13 @@
         android:id="@+id/tv_fastest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawablePadding="4dp"
         android:fontFamily="@font/cairo_bold"
         android:text="@string/tv_fastest"
         android:textColor="@color/stats_text"
         android:textSize="15sp"
-        app:drawableTint="@color/stats_text"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_fewest"
-        app:layout_constraintEnd_toStartOf="@+id/tv_fastest_time"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@+id/tv_fewest_moves"
-        app:layout_constraintStart_toStartOf="@+id/tv_time"
-        app:layout_constraintTop_toBottomOf="@+id/tv_time"
-        app:drawableStartCompat="@drawable/outline_timer_24" />
+        app:layout_constraintBottom_toBottomOf="@+id/tv_time"
+        app:layout_constraintStart_toStartOf="@+id/tv_fewest"
+        app:layout_constraintTop_toBottomOf="@+id/tv_fewest" />
 
     <TextView
         android:id="@+id/tv_fastest_time"
@@ -135,10 +133,9 @@
         android:textColor="@color/stats_text"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_fastest"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@+id/gl_right_button"
         app:layout_constraintStart_toEndOf="@+id/tv_fastest"
-        app:layout_constraintTop_toBottomOf="@+id/tv_time" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_fewest" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_top_puzzle"

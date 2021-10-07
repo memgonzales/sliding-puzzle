@@ -4,14 +4,14 @@
     <string name="inversions">Counting Inversions</string>
     <string name="randomized">Solve</string>
     <string name="tv_title">Sliding Puzzle</string>
-    <string name="tv_move">Move Number:&#xA0;</string>
-    <string name="tv_move_number">45</string>
+    <string name="tv_move">Move Count:&#xA0;</string>
+    <string name="tv_move_number">0</string>
     <string name="tv_fewest">Fewest:&#xA0;</string>
-    <string name="tv_fewest_moves">40</string>
-    <string name="tv_time">Time Taken:&#xA0;</string>
+    <string name="tv_fewest_moves"></string>
+    <string name="tv_time">Timer:&#xA0;</string>
     <string name="tv_fastest">Fastest:&#xA0;</string>
-    <string name="tv_time_taken">00:01:20</string>
+    <string name="tv_time_taken">00:00:00</string>
     <string name="btn_shuffle">Shuffle</string>
     <string name="btn_upload">Upload Picture</string>
-    <string name="tv_fastest_time">00:00:35</string>
+    <string name="tv_fastest_time"></string>
 </resources>
