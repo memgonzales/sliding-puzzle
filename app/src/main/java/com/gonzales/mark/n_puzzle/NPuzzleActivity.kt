@@ -102,6 +102,7 @@ class NPuzzleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_n_puzzle)
 
+        /* Initialize all the necessary components, properties, etc. */
         initComponents()
         initSharedPreferences()
         initShuffleConcurrency()
@@ -130,9 +131,11 @@ class NPuzzleActivity : AppCompatActivity() {
      **************************/
 
     private fun initComponents() {
+        /* Initialize the layout and grid view. */
         clRoot = findViewById(R.id.cl_root)
         gvgPuzzle = findViewById(R.id.gvg_puzzle)
 
+        /* Initialize the buttons. */
         btnUpload = findViewById(R.id.btn_upload)
         btnShuffle = findViewById(R.id.btn_shuffle)
         btnShuffle.setOnClickListener {
@@ -143,8 +146,10 @@ class NPuzzleActivity : AppCompatActivity() {
             }
         }
 
+        /* Initialize the progress bar. */
         pbShuffle = findViewById(R.id.pb_shuffle)
 
+        /* Initialize the text views. */
         tvMoveNumber = findViewById(R.id.tv_move_number)
         tvFewestMoves = findViewById(R.id.tv_fewest_moves)
         tvTimeTaken = findViewById(R.id.tv_time_taken)
@@ -160,6 +165,8 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private fun initSharedPreferences() {
         sp = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+
+        /* Retrieve data on the fewest moves and fastest time. */
         fewestMoves = sp.getInt(Key.KEY_FEWEST_MOVES.name, Integer.MAX_VALUE)
 
         displayStats()
@@ -171,6 +178,7 @@ class NPuzzleActivity : AppCompatActivity() {
             override fun handleMessage(message: Message) {
                 super.handleMessage(message)
 
+                /* Animate UI elements while shuffling. */
                 showTileAt(message.data.getInt(Key.KEY_TILE_POSITION.name))
                 pbShuffle.progress = message.data.getInt(Key.KEY_PROGRESS.name)
                 updateComponents()
@@ -186,6 +194,12 @@ class NPuzzleActivity : AppCompatActivity() {
         for (tile in 0 until NUM_TILES) {
             correctPuzzleState.add(tile)
             puzzleState.add(tile)
+
+            /*
+             * Initialize at activity creation to prevent potentially expensive creation
+             * of image button objects. Only the background resources of these image buttons
+             * are changed when the tiles are moved.
+             */
             tileImages.add(ImageButton(this))
         }
     }
@@ -205,6 +219,10 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun displayFewestMoves() {
+        /*
+         * Int.MAX_VALUE is the default value of fewestMoves, that is, its value before the user
+         * plays any game.
+         */
         tvFewestMoves.text = if (fewestMoves == Int.MAX_VALUE) {
             "-"
         } else {
@@ -233,6 +251,8 @@ class NPuzzleActivity : AppCompatActivity() {
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 gvgPuzzle.viewTreeObserver.removeOnGlobalLayoutListener(this)
+
+                /* Calculate the side length of each square tile. */
                 puzzleDimen = gvgPuzzle.measuredWidth
                 tileDimen = puzzleDimen / NUM_COLUMNS
 
@@ -247,6 +267,7 @@ class NPuzzleActivity : AppCompatActivity() {
             puzzleDimen, puzzleDimen
         )
 
+        /* Store copies of the tiles, alongside versions with dark filter applied (blank tiles). */
         imageChunks =
             ImageUtil.splitBitmap(image, tileDimen - BORDER_OFFSET, NUM_TILES, NUM_COLUMNS).first
         blankImageChunks =
@@ -256,7 +277,12 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun displayPuzzle() {
+        /*
+         * Once this loop finished executing, there should be 9 distinct image chunks:
+         * 8 tiles with no filter applied and 1 tile with dark filter applied (blank tile).
+         */
         for ((position, tile) in puzzleState.withIndex()) {
+            /* Properly reflect the blank tile depending on the puzzle state. */
             if (position == blankTilePos) {
                 tileImages[blankTilePos].setImageBitmap(blankImageChunks[blankTilePos])
             } else {
@@ -264,11 +290,18 @@ class NPuzzleActivity : AppCompatActivity() {
             }
         }
 
+        /* Set (or reset) the adapter of the grid view. */
         gvgPuzzle.adapter = TileAdapter(tileImages, tileDimen, tileDimen)
     }
 
     private fun displayBlankPuzzle() {
+        /*
+         * Once this loop finished executing, there should be 9 image chunks, all of which have
+         * dark filter applied. However, among these chunks, there should be be a tile that appears
+         * twice depending on which tile is the actual blank tile.
+         */
         for ((position, tile) in puzzleState.withIndex()) {
+            /* Properly reflect the blank tile depending on the puzzle state. */
             if (position == blankTilePos) {
                 tileImages[blankTilePos].setImageBitmap(blankImageChunks[blankTilePos])
             } else {
@@ -276,6 +309,7 @@ class NPuzzleActivity : AppCompatActivity() {
             }
         }
 
+        /* Set (or reset) the adapter of the grid view. */
         gvgPuzzle.adapter = TileAdapter(tileImages, tileDimen, tileDimen)
     }
 
@@ -284,20 +318,31 @@ class NPuzzleActivity : AppCompatActivity() {
      ***********************************/
 
     private fun moveTile(direction: FlingDirection, position: Int) {
+        /* Use a flag to keep track of whether the success message can be removed. */
         var flag = false
 
+        /* Move a tile only when the puzzle grid is clickable. */
         if (!isPuzzleGridFrozen) {
             if (MoveUtil.canMoveTile(direction, position, blankTilePos, NUM_COLUMNS)) {
-                /* Swap the flung tile and the blank tile via Kotlin's also idiom. */
+                /*
+                 * Swap the flung tile and the blank tile via Kotlin's also idiom.
+                 * This creates an effect akin to tile sliding.
+                 */
                 puzzleState[position] = puzzleState[blankTilePos].also {
                     puzzleState[blankTilePos] = puzzleState[position]
                     blankTilePos = position
                 }
 
+                /* Update the grid and the statistics. */
                 displayPuzzle()
                 flag = updateGameStatus()
             }
 
+            /*
+             * Remove the success message (if it is displayed). This scenario is triggered when
+             * the user moves a tile while the success message displayed is still displayed, right
+             * after completing a game.
+             */
             if (!flag) {
                 tvSuccess.visibility = View.GONE
             }
@@ -308,8 +353,8 @@ class NPuzzleActivity : AppCompatActivity() {
         if (isGameInSession) {
             trackMove()
 
+            /* Check if the puzzle has been solved. */
             if (puzzleState == correctPuzzleState) {
-                saveStats()
                 prepareForNewGame(SolveStatus.USER_SOLVED)
                 return true
             }
@@ -323,41 +368,41 @@ class NPuzzleActivity : AppCompatActivity() {
         tvMoveNumber.text = numMoves.toString()
     }
 
-    private fun saveStats() {
-        saveFewestMoves()
-    }
-
-    private fun saveFewestMoves() {
-        if (numMoves < fewestMoves) {
-            fewestMoves = numMoves
-            tvFewestMoves.text = fewestMoves.toString()
-
-            with (sp.edit()) {
-                putInt(Key.KEY_FEWEST_MOVES.name, fewestMoves)
-                apply()
-            }
-        }
-    }
-
     /********************************
      * Methods Related to Shuffling *
      ********************************/
 
     private fun shuffle() {
+        /* Display the progress bar, and update the message displayed */
         pbShuffle.visibility = View.VISIBLE
         pbShuffle.progress = 0
         btnShuffle.text = getString(R.string.randomizing)
 
+        /* Display trivia in place of the upload button. */
         btnUpload.visibility = View.INVISIBLE
         tvTrivia.visibility = View.VISIBLE
+
+        /*
+         * Handle the case when the shuffle button is clicked while the success message
+         * is still displayed.
+         */
         tvSuccess.visibility = View.GONE
 
+        /* During shuffling, no UI element should be clickable. */
         disableClickables()
+
+        /* Update the statistics displayed. */
         resetDisplayedStats()
 
+        /*
+         * Generate the shuffled state and apply dark filter to all the tiles before starting
+         * the animation.
+         */
+        //getValidShuffledState()
         puzzleState = arrayListOf(0, 1, 2, 3, 4, 8, 6, 7, 5)
         blankTilePos = 5
-        //getValidShuffledState()
+
+        /* Apply dark filter to all the tiles before starting the animation. */
         displayBlankPuzzle()
         startShowingTiles()
     }
@@ -382,6 +427,13 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun finishShuffling() {
+        /* Signal the start of a new game. */
+        isGameInSession = true
+
+        /*
+         * Change the colors of the game title and solve button, as well as the text displayed,
+         * to visually indicate the start of a new game.
+         */
         tvTitle.setTextColor(
             ContextCompat.getColor(
                 applicationContext,
@@ -395,11 +447,12 @@ class NPuzzleActivity : AppCompatActivity() {
                 R.color.btn_first_variant
             )
         )
+
         btnShuffle.text = getString(R.string.randomized)
+
+        /* Remove the progress bar, and re-enable interaction with UI elements. */
         pbShuffle.visibility = View.GONE
         enableClickables()
-
-        isGameInSession = true
     }
 
     private fun disableClickables() {
@@ -414,16 +467,22 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private fun showTileAt(position: Int) {
         tileImages[position].setImageBitmap(imageChunks[puzzleState[position]])
+
+        /* Set (or reset) the adapter of the grid view. */
         gvgPuzzle.adapter = TileAdapter(tileImages, tileDimen, tileDimen)
     }
 
     private fun startShowingTiles() {
+        /* Concurrently show the tiles with randomized delay and order of appearance. */
         for (position in 0 until tileImages.size) {
+            /* The blank tile should not be shown. */
             if (position != blankTilePos) {
+                /* Randomize the delay. */
                 val delay: Long =
                     ((0..AnimationUtil.SHUFFLING_ANIMATION_UPPER_BOUND).random()
                             + AnimationUtil.SHUFFLING_ANIMATION_OFFSET).toLong()
 
+                /* Schedule the concurrent tasks of showing the tiles. */
                 shuffleRunnable = ShuffleRunnable(shuffleHandler, position, NUM_TILES)
                 shuffleScheduler.schedule(shuffleRunnable, delay, TimeUnit.MILLISECONDS)
             }
@@ -431,6 +490,7 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun resetDisplayedStats() {
+        /* Reset the statistics (and display) for the number of moves. */
         numMoves = 0
         tvMoveNumber.text = numMoves.toString()
     }
@@ -444,7 +504,17 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun prepareForNewGame(solveStatus: SolveStatus) {
+        /* Signal that the game is over */
+        isGameInSession = false
+
+        /* Save the updated statistics, and display them alongside the success message. */
+        saveStats()
         displaySuccessMessage(solveStatus)
+
+        /*
+         * Revert the colors of the game title and solve button, as well as the text displayed,
+         * to visually indicate the start of a new game.
+         */
         tvTitle.setTextColor(ContextCompat.getColor(applicationContext, R.color.btn_first))
 
         btnShuffle.setBackgroundColor(
@@ -453,29 +523,43 @@ class NPuzzleActivity : AppCompatActivity() {
                 R.color.btn_first
             )
         )
+
         btnShuffle.text = getString(R.string.btn_shuffle)
 
+        /* Revert the visibility of the upload button (instead of the trivia). */
         btnUpload.visibility = View.VISIBLE
         tvTrivia.visibility = View.GONE
+    }
 
-        updateGameStats()
+    private fun saveStats() {
+        saveFewestMoves()
+    }
+
+    private fun saveFewestMoves() {
+        if (numMoves < fewestMoves) {
+            fewestMoves = numMoves
+            tvFewestMoves.text = fewestMoves.toString()
+
+            /* Store in the shared preferences file. */
+            with (sp.edit()) {
+                putInt(Key.KEY_FEWEST_MOVES.name, fewestMoves)
+                apply()
+            }
+        }
     }
 
     private fun displaySuccessMessage(solveStatus: SolveStatus) {
+        /* Display a message depending on how the goal state of the puzzle was reached. */
         tvSuccess.visibility = View.VISIBLE
-
         tvSuccess.text = when (solveStatus) {
             SolveStatus.USER_SOLVED -> getString(R.string.user_solved)
             SolveStatus.HIGH_SCORE -> getString(R.string.high_score)
             SolveStatus.COMPUTER_SOLVED -> getString(R.string.computer_solved)
         }
 
+        /* Make the success message disappear after a set number of seconds. */
         Handler(Looper.getMainLooper()).postDelayed({
             tvSuccess.visibility = View.GONE
         }, AnimationUtil.SUCCESS_DISPLAY.toLong())
-    }
-
-    private fun updateGameStats() {
-        isGameInSession = false
     }
 }

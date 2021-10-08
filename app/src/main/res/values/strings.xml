@@ -1,9 +1,15 @@
 <resources>
     <string name="app_name">8-Puzzle</string>
     <string name="preference_file_key">com.gonzales.mark.n_puzzle.PREFERENCE_FILE_KEY</string>
-    <string name="randomizing">Randomizing</string>
+
+    <string name="randomizing">Shuffling</string>
     <string name="inversions">Counting Inversions</string>
     <string name="randomized">Solve</string>
+
+    <string name="user_solved">Great!</string>
+    <string name="high_score">Bravo!</string>
+    <string name="computer_solved">Voila!</string>
+
     <string name="tv_title">Sliding Puzzle</string>
     <string name="tv_move">Move Count:&#xA0;</string>
     <string name="tv_move_number">0</string>
@@ -11,10 +17,7 @@
     <string name="tv_time">Timer:&#xA0;</string>
     <string name="tv_fastest">Fastest:&#xA0;</string>
     <string name="tv_time_taken">00:00:00</string>
-    <string name="btn_shuffle">Shuffle</string>
+    <string name="btn_shuffle">New Game</string>
     <string name="btn_upload">Upload Picture</string>
-    <string name="user_solved">Great!</string>
-    <string name="high_score">Bravo!</string>
-    <string name="computer_solved">Voila!</string>
     <string name="tv_trivia">Trivia goes here</string>
 </resources>
