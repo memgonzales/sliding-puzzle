@@ -355,7 +355,12 @@ class NPuzzleActivity : AppCompatActivity() {
 
             /* Check if the puzzle has been solved. */
             if (puzzleState == correctPuzzleState) {
-                prepareForNewGame(SolveStatus.USER_SOLVED)
+                if (isHighScore()) {
+                    prepareForNewGame(SolveStatus.HIGH_SCORE)
+                } else {
+                    prepareForNewGame(SolveStatus.USER_SOLVED)
+                }
+
                 return true
             }
         }
@@ -366,6 +371,10 @@ class NPuzzleActivity : AppCompatActivity() {
     private fun trackMove() {
         numMoves++
         tvMoveNumber.text = numMoves.toString()
+    }
+
+    private fun isHighScore(): Boolean {
+        return numMoves < fewestMoves
     }
 
     /********************************
@@ -508,7 +517,10 @@ class NPuzzleActivity : AppCompatActivity() {
         isGameInSession = false
 
         /* Save the updated statistics, and display them alongside the success message. */
-        saveStats()
+        if (solveStatus == SolveStatus.HIGH_SCORE) {
+            saveStats()
+        }
+
         displaySuccessMessage(solveStatus)
 
         /*
@@ -536,15 +548,13 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun saveFewestMoves() {
-        if (numMoves < fewestMoves) {
-            fewestMoves = numMoves
-            tvFewestMoves.text = fewestMoves.toString()
+        fewestMoves = numMoves
+        tvFewestMoves.text = fewestMoves.toString()
 
-            /* Store in the shared preferences file. */
-            with (sp.edit()) {
-                putInt(Key.KEY_FEWEST_MOVES.name, fewestMoves)
-                apply()
-            }
+        /* Store in the shared preferences file. */
+        with (sp.edit()) {
+            putInt(Key.KEY_FEWEST_MOVES.name, fewestMoves)
+            apply()
         }
     }
 
