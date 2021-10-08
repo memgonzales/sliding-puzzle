@@ -84,7 +84,7 @@ class FlingDetector {
         private fun getAngle(x1: Float, y1: Float, x2: Float, y2: Float): Double {
             /*
              * Add PI since it is more convenient to work with values in the range [0, 2pi]
-             * instead of atan2's default [-pi, pi].
+             * compared to those in atan2's default [-pi, pi].
              */
             return atan2((y1 - y2).toDouble(), (x2 - x1).toDouble()) + PI
         }

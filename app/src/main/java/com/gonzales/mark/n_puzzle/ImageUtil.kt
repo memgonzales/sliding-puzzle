@@ -3,7 +3,6 @@ package com.gonzales.mark.n_puzzle
 import android.content.Context
 import android.graphics.*
 
-
 class ImageUtil {
     companion object {
         private const val DARK_SLATE_GRAY_FILTER = 0xFF2F4F4F
