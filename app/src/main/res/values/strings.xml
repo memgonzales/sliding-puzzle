@@ -10,13 +10,16 @@
     <string name="high_score">Bravo!</string>
     <string name="computer_solved">Voila!</string>
 
+    <string name="default_fewest">-</string>
+    <string name="default_fastest">-:--:--</string>
+
     <string name="tv_title">Sliding Puzzle</string>
     <string name="tv_move">Move Count:&#xA0;</string>
     <string name="tv_move_number">0</string>
     <string name="tv_fewest">Fewest:&#xA0;</string>
     <string name="tv_time">Timer:&#xA0;</string>
     <string name="tv_fastest">Fastest:&#xA0;</string>
-    <string name="tv_time_taken">00:00:00</string>
+    <string name="tv_time_taken">0:00:00</string>
     <string name="btn_shuffle">New Game</string>
     <string name="btn_upload">Upload Picture</string>
     <string name="tv_trivia">Trivia goes here</string>

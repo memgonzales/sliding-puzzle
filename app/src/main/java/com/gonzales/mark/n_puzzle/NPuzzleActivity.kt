@@ -22,6 +22,7 @@ import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 
+
 class NPuzzleActivity : AppCompatActivity() {
     companion object {
         private const val NUM_COLUMNS = 3
@@ -29,6 +30,9 @@ class NPuzzleActivity : AppCompatActivity() {
 
         private const val BORDER_OFFSET = 6
         private const val BLANK_TILE_MARKER = NUM_TILES - 1
+
+        private const val DEFAULT_FEWEST_MOVES = Long.MAX_VALUE
+        private const val DEFAULT_FASTEST_TIME = Long.MAX_VALUE
     }
 
     /***************************
@@ -91,12 +95,23 @@ class NPuzzleActivity : AppCompatActivity() {
     private lateinit var shuffleScheduler: ScheduledExecutorService
     private lateinit var shuffleHandler: Handler
 
+    /****************************
+     * Timer-Related Properties *
+     ****************************/
+
+    private lateinit var timerHandler: Handler
+    private var isTimeStart: Boolean = false
+
+
     /**************
      * Statistics *
      **************/
 
-    private var numMoves: Int = 0
-    private var fewestMoves: Int = Integer.MAX_VALUE
+    private var numMoves: Long = 0
+    private var fewestMoves: Long = DEFAULT_FEWEST_MOVES
+
+    private var timeTaken: Long = 0
+    private var fastestTime: Long = DEFAULT_FASTEST_TIME
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,7 +120,7 @@ class NPuzzleActivity : AppCompatActivity() {
         /* Initialize all the necessary components, properties, etc. */
         initComponents()
         initSharedPreferences()
-        initShuffleConcurrency()
+        initHandlers()
         initStateAndTileImages()
         initPuzzle()
     }
@@ -166,13 +181,22 @@ class NPuzzleActivity : AppCompatActivity() {
     private fun initSharedPreferences() {
         sp = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
-        /* Retrieve data on the fewest moves and fastest time. */
-        fewestMoves = sp.getInt(Key.KEY_FEWEST_MOVES.name, Integer.MAX_VALUE)
+        /*
+         * Retrieve data on the fewest moves and fastest time.
+         * These data are stored as strings to prevent problems related to integer overflow.
+         */
+        fewestMoves =
+            sp.getString(Key.KEY_FEWEST_MOVES.name, DEFAULT_FEWEST_MOVES.toString())?.toLong()
+                ?: DEFAULT_FEWEST_MOVES
+        fastestTime =
+            sp.getString(Key.KEY_FASTEST_TIME.name, DEFAULT_FASTEST_TIME.toString())?.toLong()
+                ?: DEFAULT_FASTEST_TIME
 
         displayStats()
     }
 
-    private fun initShuffleConcurrency() {
+    private fun initHandlers() {
+        /* Initialize thread pool executor and handler related to the shuffling animation. */
         shuffleScheduler = Executors.newScheduledThreadPool(NUM_TILES)
         shuffleHandler = object : Handler(Looper.getMainLooper()) {
             override fun handleMessage(message: Message) {
@@ -184,6 +208,9 @@ class NPuzzleActivity : AppCompatActivity() {
                 updateComponents()
             }
         }
+
+        /* Initialize the handler related to the timer. */
+        timerHandler = Handler(Looper.getMainLooper())
     }
 
     private fun initStateAndTileImages() {
@@ -216,15 +243,20 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private fun displayStats() {
         displayFewestMoves()
+        displayFastestTime()
     }
 
     private fun displayFewestMoves() {
-        /*
-         * Int.MAX_VALUE is the default value of fewestMoves, that is, its value before the user
-         * plays any game.
-         */
-        tvFewestMoves.text = if (fewestMoves == Int.MAX_VALUE) {
-            "-"
+        tvFewestMoves.text = if (fewestMoves == DEFAULT_FEWEST_MOVES) {
+            getString(R.string.default_fewest)
+        } else {
+            fewestMoves.toString()
+        }
+    }
+
+    private fun displayFastestTime() {
+        tvFastestTime.text = if (fewestMoves == DEFAULT_FEWEST_MOVES) {
+            getString(R.string.default_fastest)
         } else {
             fewestMoves.toString()
         }
@@ -336,6 +368,11 @@ class NPuzzleActivity : AppCompatActivity() {
                 /* Update the grid and the statistics. */
                 displayPuzzle()
                 flag = updateGameStatus()
+
+                /* Launch the timer after the first move. */
+                if (numMoves == 1L) {
+                    launchTimer()
+                }
             }
 
             /*
@@ -373,6 +410,22 @@ class NPuzzleActivity : AppCompatActivity() {
         tvMoveNumber.text = numMoves.toString()
     }
 
+    private fun launchTimer() {
+        isTimeStart = true
+
+        timerHandler.post(object : Runnable {
+            override fun run() {
+                tvTimeTaken.text = TimeUtil.displayTime(timeTaken)
+                if (isTimeStart) {
+                    timeTaken++
+                    timerHandler.postDelayed(this, 1000)
+                } else {
+                    timerHandler.removeCallbacks(this)
+                }
+            }
+        })
+    }
+
     private fun isHighScore(): Boolean {
         return numMoves < fewestMoves
     }
@@ -400,7 +453,7 @@ class NPuzzleActivity : AppCompatActivity() {
         /* During shuffling, no UI element should be clickable. */
         disableClickables()
 
-        /* Update the statistics displayed. */
+        /* Reset the displayed move number and time taken. */
         resetDisplayedStats()
 
         /*
@@ -499,9 +552,13 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun resetDisplayedStats() {
-        /* Reset the statistics (and display) for the number of moves. */
+        /* Reset the statistics for the number of moves, and display them. */
         numMoves = 0
         tvMoveNumber.text = numMoves.toString()
+
+        /* Reset the statistics for the time taken, and display them. */
+        timeTaken = 0
+        tvTimeTaken.text = TimeUtil.displayTime(timeTaken)
     }
 
     /******************************
@@ -515,6 +572,7 @@ class NPuzzleActivity : AppCompatActivity() {
     private fun prepareForNewGame(solveStatus: SolveStatus) {
         /* Signal that the game is over */
         isGameInSession = false
+        isTimeStart = false
 
         /* Save the updated statistics, and display them alongside the success message. */
         if (solveStatus == SolveStatus.HIGH_SCORE) {
@@ -551,9 +609,12 @@ class NPuzzleActivity : AppCompatActivity() {
         fewestMoves = numMoves
         tvFewestMoves.text = fewestMoves.toString()
 
-        /* Store in the shared preferences file. */
-        with (sp.edit()) {
-            putInt(Key.KEY_FEWEST_MOVES.name, fewestMoves)
+        /*
+         * Store in the shared preferences file.
+         * These data are stored as strings to prevent problems related to integer overflow.
+         */
+        with(sp.edit()) {
+            putString(Key.KEY_FEWEST_MOVES.name, fewestMoves.toString())
             apply()
         }
     }
