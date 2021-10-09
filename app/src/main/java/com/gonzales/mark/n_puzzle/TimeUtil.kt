@@ -6,6 +6,7 @@ class TimeUtil {
     companion object {
         private const val HOURS_TO_SECONDS = 3600
         private const val MINUTES_TO_SECONDS = 60
+        const val SECONDS_TO_MILLISECONDS = 1000
 
         fun displayTime(seconds: Long): String {
             return String.format(

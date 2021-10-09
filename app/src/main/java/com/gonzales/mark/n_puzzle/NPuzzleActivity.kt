@@ -100,7 +100,7 @@ class NPuzzleActivity : AppCompatActivity() {
      ****************************/
 
     private lateinit var timerHandler: Handler
-    private var isTimeStart: Boolean = false
+    private var isTimerRunning: Boolean = false
 
 
     /**************
@@ -175,6 +175,7 @@ class NPuzzleActivity : AppCompatActivity() {
         tvSuccess.setOnClickListener {
             tvSuccess.visibility = View.GONE
         }
+
         tvTrivia = findViewById(R.id.tv_trivia)
     }
 
@@ -255,10 +256,10 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun displayFastestTime() {
-        tvFastestTime.text = if (fewestMoves == DEFAULT_FEWEST_MOVES) {
+        tvFastestTime.text = if (fastestTime == DEFAULT_FASTEST_TIME) {
             getString(R.string.default_fastest)
         } else {
-            fewestMoves.toString()
+            TimeUtil.displayTime(fastestTime)
         }
     }
 
@@ -392,8 +393,18 @@ class NPuzzleActivity : AppCompatActivity() {
 
             /* Check if the puzzle has been solved. */
             if (puzzleState == correctPuzzleState) {
-                if (isHighScore()) {
-                    prepareForNewGame(SolveStatus.HIGH_SCORE)
+                /*
+                 * Decrement to counter the effect of the last post-increment operation
+                 * before the timer was stopped.
+                 */
+                timeTaken--
+
+                if (numMoves < fewestMoves && timeTaken < fastestTime) {
+                    prepareForNewGame(SolveStatus.FEWEST_AND_FASTEST)
+                } else if (numMoves < fewestMoves) {
+                    prepareForNewGame(SolveStatus.FEWEST_MOVES)
+                } else if (timeTaken < fastestTime) {
+                    prepareForNewGame(SolveStatus.FASTEST_TIME)
                 } else {
                     prepareForNewGame(SolveStatus.USER_SOLVED)
                 }
@@ -411,23 +422,18 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun launchTimer() {
-        isTimeStart = true
+        isTimerRunning = true
 
         timerHandler.post(object : Runnable {
             override fun run() {
-                tvTimeTaken.text = TimeUtil.displayTime(timeTaken)
-                if (isTimeStart) {
-                    timeTaken++
-                    timerHandler.postDelayed(this, 1000)
+                if (isTimerRunning) {
+                    tvTimeTaken.text = TimeUtil.displayTime(timeTaken++)
+                    timerHandler.postDelayed(this, TimeUtil.SECONDS_TO_MILLISECONDS.toLong())
                 } else {
                     timerHandler.removeCallbacks(this)
                 }
             }
         })
-    }
-
-    private fun isHighScore(): Boolean {
-        return numMoves < fewestMoves
     }
 
     /********************************
@@ -460,9 +466,9 @@ class NPuzzleActivity : AppCompatActivity() {
          * Generate the shuffled state and apply dark filter to all the tiles before starting
          * the animation.
          */
-        //getValidShuffledState()
-        puzzleState = arrayListOf(0, 1, 2, 3, 4, 8, 6, 7, 5)
-        blankTilePos = 5
+        getValidShuffledState()
+//        puzzleState = arrayListOf(0, 1, 2, 3, 4, 8, 6, 7, 5)
+//        blankTilePos = 5
 
         /* Apply dark filter to all the tiles before starting the animation. */
         displayBlankPuzzle()
@@ -561,9 +567,9 @@ class NPuzzleActivity : AppCompatActivity() {
         tvTimeTaken.text = TimeUtil.displayTime(timeTaken)
     }
 
-    /******************************
-     * Methods Related to Solving *
-     ******************************/
+    /***********************************************
+     * Methods Related to Solving and Post-Solving *
+     ***********************************************/
 
     private fun solve() {
         prepareForNewGame(SolveStatus.COMPUTER_SOLVED)
@@ -572,11 +578,14 @@ class NPuzzleActivity : AppCompatActivity() {
     private fun prepareForNewGame(solveStatus: SolveStatus) {
         /* Signal that the game is over */
         isGameInSession = false
-        isTimeStart = false
+        isTimerRunning = false
 
         /* Save the updated statistics, and display them alongside the success message. */
-        if (solveStatus == SolveStatus.HIGH_SCORE) {
-            saveStats()
+        when (solveStatus) {
+            SolveStatus.FEWEST_MOVES -> saveFewestMoves()
+            SolveStatus.FASTEST_TIME -> saveFastestTime()
+            SolveStatus.FEWEST_AND_FASTEST -> saveFewestAndFastest()
+            else -> Unit
         }
 
         displaySuccessMessage(solveStatus)
@@ -601,8 +610,22 @@ class NPuzzleActivity : AppCompatActivity() {
         tvTrivia.visibility = View.GONE
     }
 
-    private fun saveStats() {
-        saveFewestMoves()
+    private fun saveFewestAndFastest() {
+        fewestMoves = numMoves
+        tvFewestMoves.text = fewestMoves.toString()
+
+        fastestTime = timeTaken
+        tvFastestTime.text = TimeUtil.displayTime(fastestTime)
+
+        /*
+         * Store in the shared preferences file.
+         * These data are stored as strings to prevent problems related to integer overflow.
+         */
+        with(sp.edit()) {
+            putString(Key.KEY_FEWEST_MOVES.name, fewestMoves.toString())
+            putString(Key.KEY_FASTEST_TIME.name, fastestTime.toString())
+            apply()
+        }
     }
 
     private fun saveFewestMoves() {
@@ -619,12 +642,28 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    private fun saveFastestTime() {
+        fastestTime = timeTaken
+        tvFastestTime.text = TimeUtil.displayTime(fastestTime)
+
+        /*
+         * Store in the shared preferences file.
+         * These data are stored as strings to prevent problems related to integer overflow.
+         */
+        with(sp.edit()) {
+            putString(Key.KEY_FASTEST_TIME.name, fastestTime.toString())
+            apply()
+        }
+    }
+
     private fun displaySuccessMessage(solveStatus: SolveStatus) {
         /* Display a message depending on how the goal state of the puzzle was reached. */
         tvSuccess.visibility = View.VISIBLE
         tvSuccess.text = when (solveStatus) {
             SolveStatus.USER_SOLVED -> getString(R.string.user_solved)
-            SolveStatus.HIGH_SCORE -> getString(R.string.high_score)
+            SolveStatus.FEWEST_MOVES, SolveStatus.FASTEST_TIME, SolveStatus.FEWEST_AND_FASTEST -> getString(
+                R.string.high_score
+            )
             SolveStatus.COMPUTER_SOLVED -> getString(R.string.computer_solved)
         }
 
