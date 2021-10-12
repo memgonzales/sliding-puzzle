@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.util.Log
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.ViewTreeObserver
@@ -71,7 +72,7 @@ class NPuzzleActivity : AppCompatActivity() {
      * State *
      *********/
 
-    private lateinit var correctPuzzleState: ArrayList<Int>
+    private lateinit var goalPuzzleState: ArrayList<Int>
     private lateinit var puzzleState: ArrayList<Int>
     private var blankTilePos: Int = BLANK_TILE_MARKER
 
@@ -86,9 +87,9 @@ class NPuzzleActivity : AppCompatActivity() {
     private lateinit var blankImageChunks: ArrayList<Bitmap>
     private lateinit var tileImages: ArrayList<ImageButton>
 
-    /******************************
-     * Shuffle-Related Properties *
-     ******************************/
+    /********************************
+     * Shuffling-Related Properties *
+     ********************************/
 
     private lateinit var shuffleRunnable: ShuffleRunnable
     private lateinit var shuffleScheduler: ScheduledExecutorService
@@ -101,7 +102,6 @@ class NPuzzleActivity : AppCompatActivity() {
     private lateinit var timerHandler: Handler
     private var isTimerRunning: Boolean = false
 
-
     /**************
      * Statistics *
      **************/
@@ -111,6 +111,12 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private var timeTaken: Long = 0
     private var fastestTime: Long = DEFAULT_FASTEST_TIME
+
+    /******************************
+     * Solving-Related Properties *
+     ******************************/
+
+    private var puzzleSolution: ArrayList<ArrayList<Int>>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -214,12 +220,12 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun initStateAndTileImages() {
-        correctPuzzleState = ArrayList(NUM_TILES)
+        goalPuzzleState = ArrayList(NUM_TILES)
         puzzleState = ArrayList(NUM_TILES)
         tileImages = ArrayList(NUM_TILES)
 
         for (tile in 0 until NUM_TILES) {
-            correctPuzzleState.add(tile)
+            goalPuzzleState.add(tile)
             puzzleState.add(tile)
 
             /*
@@ -391,7 +397,7 @@ class NPuzzleActivity : AppCompatActivity() {
             trackMove()
 
             /* Check if the puzzle has been solved. */
-            if (puzzleState == correctPuzzleState) {
+            if (SolveUtil.isSolved(puzzleState, goalPuzzleState)) {
                 /*
                  * Decrement to counter the effect of the last post-increment operation
                  * before the timer was stopped.
@@ -572,6 +578,9 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private fun solve() {
         endGame(SolveStatus.COMPUTER_SOLVED)
+        puzzleSolution = SolveUtil.solve(puzzleState, blankTilePos, goalPuzzleState, BLANK_TILE_MARKER)
+
+        Log.e("Hello", puzzleSolution.toString())
     }
 
     private fun endGame(solveStatus: SolveStatus) {
