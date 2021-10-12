@@ -22,7 +22,6 @@ import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 
-
 class NPuzzleActivity : AppCompatActivity() {
     companion object {
         private const val NUM_COLUMNS = 3
@@ -400,13 +399,13 @@ class NPuzzleActivity : AppCompatActivity() {
                 timeTaken--
 
                 if (numMoves < fewestMoves && timeTaken < fastestTime) {
-                    prepareForNewGame(SolveStatus.FEWEST_AND_FASTEST)
+                    endGame(SolveStatus.FEWEST_AND_FASTEST)
                 } else if (numMoves < fewestMoves) {
-                    prepareForNewGame(SolveStatus.FEWEST_MOVES)
+                    endGame(SolveStatus.FEWEST_MOVES)
                 } else if (timeTaken < fastestTime) {
-                    prepareForNewGame(SolveStatus.FASTEST_TIME)
+                    endGame(SolveStatus.FASTEST_TIME)
                 } else {
-                    prepareForNewGame(SolveStatus.USER_SOLVED)
+                    endGame(SolveStatus.USER_SOLVED)
                 }
 
                 return true
@@ -572,10 +571,10 @@ class NPuzzleActivity : AppCompatActivity() {
      ***********************************************/
 
     private fun solve() {
-        prepareForNewGame(SolveStatus.COMPUTER_SOLVED)
+        endGame(SolveStatus.COMPUTER_SOLVED)
     }
 
-    private fun prepareForNewGame(solveStatus: SolveStatus) {
+    private fun endGame(solveStatus: SolveStatus) {
         /* Signal that the game is over */
         isGameInSession = false
         isTimerRunning = false
@@ -590,6 +589,14 @@ class NPuzzleActivity : AppCompatActivity() {
 
         displaySuccessMessage(solveStatus)
 
+        if (solveStatus != SolveStatus.COMPUTER_SOLVED) {
+            prepareForNewGame()
+        } else {
+            prepareForSolution()
+        }
+    }
+
+    private fun prepareForNewGame() {
         /*
          * Revert the colors of the game title and solve button, as well as the text displayed,
          * to visually indicate the start of a new game.
@@ -603,6 +610,14 @@ class NPuzzleActivity : AppCompatActivity() {
             )
         )
 
+        btnShuffle.text = getString(R.string.btn_shuffle)
+
+        /* Revert the visibility of the upload button (instead of the trivia). */
+        btnUpload.visibility = View.VISIBLE
+        tvTrivia.visibility = View.GONE
+    }
+
+    private fun prepareForSolution() {
         btnShuffle.text = getString(R.string.btn_shuffle)
 
         /* Revert the visibility of the upload button (instead of the trivia). */

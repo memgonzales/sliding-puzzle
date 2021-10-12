@@ -8,6 +8,10 @@ class ShuffleUtil {
         ): Pair<ArrayList<Int>, Int> {
             puzzleState.shuffle()
 
+            /*
+             * If the 8-puzzle is not solvable, that is, it has an odd number of inversions,
+             * swap a pair of tiles to change the parity and, thus, guarantee solvability.
+             */
             if (!isSolvable(puzzleState, blankTileMarker)) {
                 swapTiles(puzzleState, blankTileMarker)
             }
@@ -22,7 +26,8 @@ class ShuffleUtil {
                 for (j in i + 1 until puzzleState.size) {
                     if (!isBlankTile(i, puzzleState, blankTileMarker)
                         && !isBlankTile(j, puzzleState, blankTileMarker)
-                        && puzzleState[i] > puzzleState[j]) {
+                        && puzzleState[i] > puzzleState[j]
+                    ) {
                         numInversions++
                     }
                 }
@@ -38,7 +43,8 @@ class ShuffleUtil {
         private fun swapTiles(puzzleState: ArrayList<Int>, blankTileMarker: Int) {
             var position = 0
             while (isBlankTile(position, puzzleState, blankTileMarker)
-                || isBlankTile(position + 1, puzzleState, blankTileMarker)) {
+                || isBlankTile(position + 1, puzzleState, blankTileMarker)
+            ) {
                 position++
             }
 
@@ -48,7 +54,11 @@ class ShuffleUtil {
             }
         }
 
-        private fun isBlankTile(position: Int, puzzleState: ArrayList<Int>, blankTileMarker: Int): Boolean {
+        private fun isBlankTile(
+            position: Int,
+            puzzleState: ArrayList<Int>,
+            blankTileMarker: Int
+        ): Boolean {
             return puzzleState[position] == blankTileMarker
         }
     }

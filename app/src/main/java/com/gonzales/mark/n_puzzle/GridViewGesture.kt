@@ -17,12 +17,12 @@ class GridViewGesture : GridView {
     /**
      * Detects gestures and events using the supplied <code>MotionEvent</code>s.
      */
-    private var gestureDetector: GestureDetector? = null
+    private lateinit var gestureDetector: GestureDetector
 
     /**
      * Responds to the detected fling gestures.
      */
-    private var flingListener: OnFlingListener? = null
+    private lateinit var flingListener: OnFlingListener
 
     /**
      * <code>true</code> is a fling gesture is occurring; <code>false</code>, otherwise.
@@ -154,7 +154,7 @@ class GridViewGesture : GridView {
                 ): Boolean {
                     val position: Int = pointToPosition(e1.x.roundToInt(), e1.y.roundToInt())
                     val direction: FlingDirection = FlingDetector.getDirection(e1, e2)
-                    flingListener!!.onFling(direction, position)
+                    flingListener.onFling(direction, position)
 
                     return super.onFling(e1, e2, velocityX, velocityY)
                 }
@@ -172,7 +172,7 @@ class GridViewGesture : GridView {
             performClick()
         }
 
-        return gestureDetector!!.onTouchEvent(ev)
+        return gestureDetector.onTouchEvent(ev)
     }
 
     /**
@@ -199,7 +199,7 @@ class GridViewGesture : GridView {
      * an <code>ACTION_CANCEL</code> event, and no further messages will be delivered here.
      */
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-        gestureDetector?.onTouchEvent(ev)
+        gestureDetector.onTouchEvent(ev)
 
         when (ev!!.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
