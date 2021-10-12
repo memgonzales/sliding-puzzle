@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">8-Puzzle</string>
+    <string name="app_title">Sliding Puzzle</string>
     <string name="preference_file_key">com.gonzales.mark.n_puzzle.PREFERENCE_FILE_KEY</string>
 
     <string name="randomizing">Shuffling</string>
     <string name="inversions">Counting Inversions</string>
     <string name="randomized">Solve</string>
+    <string name="new_game">New Game</string>
+    <string name="upload_picture">Upload Picture</string>
 
     <string name="user_solved">Great!</string>
     <string name="high_score">Bravo!</string>
@@ -12,15 +15,13 @@
 
     <string name="default_fewest">-</string>
     <string name="default_fastest">-:--:--</string>
+    <string name="move_number">0</string>
+    <string name="time_taken">0:00:00</string>
 
-    <string name="tv_title">Sliding Puzzle</string>
-    <string name="tv_move">Move Count:&#xA0;</string>
-    <string name="tv_move_number">0</string>
-    <string name="tv_fewest">Fewest:&#xA0;</string>
-    <string name="tv_time">Timer:&#xA0;</string>
-    <string name="tv_fastest">Fastest:&#xA0;</string>
-    <string name="tv_time_taken">0:00:00</string>
-    <string name="btn_shuffle">New Game</string>
-    <string name="btn_upload">Upload Picture</string>
-    <string name="tv_trivia">Trivia goes here</string>
+    <string name="move_count">Move Count:&#xA0;</string>
+    <string name="fewest_moves">Fewest:&#xA0;</string>
+    <string name="timer">Timer:&#xA0;</string>
+    <string name="fastest_time">Fastest:&#xA0;</string>
+
+    <string name="trivia">Trivia goes here</string>
 </resources>

@@ -610,7 +610,7 @@ class NPuzzleActivity : AppCompatActivity() {
             )
         )
 
-        btnShuffle.text = getString(R.string.btn_shuffle)
+        btnShuffle.text = getString(R.string.new_game)
 
         /* Revert the visibility of the upload button (instead of the trivia). */
         btnUpload.visibility = View.VISIBLE
@@ -618,7 +618,7 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun prepareForSolution() {
-        btnShuffle.text = getString(R.string.btn_shuffle)
+        btnShuffle.text = getString(R.string.new_game)
 
         /* Revert the visibility of the upload button (instead of the trivia). */
         btnUpload.visibility = View.VISIBLE
