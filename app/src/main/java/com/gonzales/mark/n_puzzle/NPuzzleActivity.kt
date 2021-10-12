@@ -614,14 +614,15 @@ class NPuzzleActivity : AppCompatActivity() {
 
         /* Revert the visibility of the upload button (instead of the trivia). */
         btnUpload.visibility = View.VISIBLE
+        btnUpload.text = getString(R.string.upload_picture)
         tvTrivia.visibility = View.GONE
     }
 
     private fun prepareForSolution() {
-        btnShuffle.text = getString(R.string.new_game)
+        btnShuffle.text = getString(R.string.pause)
 
-        /* Revert the visibility of the upload button (instead of the trivia). */
         btnUpload.visibility = View.VISIBLE
+        btnUpload.text = getString(R.string.skip)
         tvTrivia.visibility = View.GONE
     }
 

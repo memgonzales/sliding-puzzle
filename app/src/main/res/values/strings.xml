@@ -7,6 +7,8 @@
     <string name="inversions">Counting Inversions</string>
     <string name="randomized">Solve</string>
     <string name="new_game">New Game</string>
+    <string name="pause">Pause</string>
+    <string name="skip">Skip Solution</string>
     <string name="upload_picture">Upload Picture</string>
 
     <string name="user_solved">Great!</string>

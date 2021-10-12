@@ -9,7 +9,7 @@ class ShuffleUtil {
             puzzleState.shuffle()
 
             /*
-             * If the 8-puzzle is not solvable, that is, it has an odd number of inversions,
+             * If the 8-puzzle is not solvable (that is, it has an odd number of inversions),
              * swap a pair of tiles to change the parity and, thus, guarantee solvability.
              */
             if (!isSolvable(puzzleState, blankTileMarker)) {
