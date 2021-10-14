@@ -578,7 +578,13 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private fun solve() {
         endGame(SolveStatus.COMPUTER_SOLVED)
-        puzzleSolution = SolveUtil.solve(puzzleState, blankTilePos, goalPuzzleState, BLANK_TILE_MARKER)
+        puzzleSolution = SolveUtil.solve(
+            puzzleState,
+            blankTilePos,
+            goalPuzzleState,
+            NUM_COLUMNS,
+            BLANK_TILE_MARKER
+        )
 
         Log.e("Hello", puzzleSolution.toString())
     }

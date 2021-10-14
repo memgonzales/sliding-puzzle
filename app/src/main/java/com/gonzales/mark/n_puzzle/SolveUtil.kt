@@ -3,17 +3,31 @@ package com.gonzales.mark.n_puzzle
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
+import kotlin.math.abs
 
 class SolveUtil {
     companion object {
         private const val MAX_NUM_CHILDREN = 4
         private const val FRONTIER_INITIAL_CAPACITY = 11
-        private val childPositions: ArrayList<ArrayList<Int>> = getChildPositions()
 
+        private val childPositions: ArrayList<ArrayList<Int>> = getChildPositions()
+        private val manhattan: HashMap<Int, Int> = HashMap()
+
+        /**
+         * A* is an informed search algorithm introduced by Peter E. Hart, Nils J. Nilsson,
+         * and Bertram Raphael in the 1968 paper "A Formal Basis for the Heuristic Determination
+         * of Minimum Cost Paths," which was published in the IEEE Transactions on System Science
+         * and Cybernetics (Volume 4, Issue 2).
+         *
+         * The implementation of A* in this function is based on the discussion and pseudocode
+         * in the third edition of Artificial Intelligence: A Modern Approach by Stuart Russell
+         * and Peter Norvig (2010).
+         */
         fun solve(
             puzzleState: ArrayList<Int>,
             blankTilePos: Int,
             goalPuzzleState: ArrayList<Int>,
+            numColumns: Int,
             blankTileMarker: Int
         ): Stack<ArrayList<Int>>? {
             val frontier: PriorityQueue<Node> =
@@ -21,7 +35,14 @@ class SolveUtil {
             val frontierMap: HashMap<Int, Node> = HashMap()
             val explored: HashSet<ArrayList<Int>> = HashSet()
 
-            val startNode = Node(puzzleState, blankTilePos, null, 0, 0)
+            val startNode = Node(
+                puzzleState,
+                blankTilePos,
+                null,
+                0,
+                getManhattan(puzzleState, numColumns, blankTileMarker)
+            )
+
             frontier.add(startNode)
             frontierMap[startNode.hash()] = startNode
 
@@ -34,7 +55,14 @@ class SolveUtil {
 
                 explored.add(node.getState())
 
-                for (child in getChildNodes(node, node.getBlankTilePos())) {
+                val childNodes: ArrayList<Node> = getChildNodes(
+                    node,
+                    node.getBlankTilePos(),
+                    numColumns,
+                    blankTileMarker
+                )
+
+                for (child in childNodes) {
                     val childHash: Int = child.hash()
                     val childInFrontier: Node? = frontierMap[childHash]
 
@@ -71,6 +99,8 @@ class SolveUtil {
         private fun getChildNodes(
             node: Node,
             blankTilePos: Int,
+            numColumns: Int,
+            blankTileMarker: Int
         ): ArrayList<Node> {
             val childNodes: ArrayList<Node> = ArrayList(MAX_NUM_CHILDREN)
 
@@ -88,7 +118,15 @@ class SolveUtil {
                     childBlankTilePos = position
                 }
 
-                childNodes.add(Node(childState, childBlankTilePos, node, node.getG() + 1, 0))
+                childNodes.add(
+                    Node(
+                        childState,
+                        childBlankTilePos,
+                        node,
+                        node.getG() + 1,
+                        getManhattan(childState, numColumns, blankTileMarker)
+                    )
+                )
             }
 
             return childNodes
@@ -114,6 +152,32 @@ class SolveUtil {
             childPositions.add(arrayListOf(5, 7))
 
             return childPositions
+        }
+
+        private fun getManhattan(
+            puzzleState: ArrayList<Int>,
+            numColumns: Int,
+            blankTileMarker: Int
+        ): Int {
+            val hash: Int = Node.hashState(puzzleState)
+
+            if (manhattan[hash] != null) {
+                return manhattan[hash]!!
+            }
+
+            var sumManhattan = 0
+
+            for (i in 0 until puzzleState.size) {
+                if (puzzleState[i] != blankTileMarker) {
+                    sumManhattan +=
+                        abs(i / numColumns - puzzleState[i] / numColumns) +
+                                abs(i % numColumns - puzzleState[i] % numColumns)
+                }
+            }
+
+            manhattan[hash] = sumManhattan
+
+            return sumManhattan
         }
     }
 }

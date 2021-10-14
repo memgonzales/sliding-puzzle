@@ -7,6 +7,17 @@ class Node(
     private var g: Int,
     private var h: Int
 ) {
+    companion object {
+        fun hashState(puzzleState: ArrayList<Int>): Int {
+            var hash = 0
+            for (tile in puzzleState) {
+                hash = hash * 10 + tile
+            }
+
+            return hash
+        }
+    }
+
     fun getState(): ArrayList<Int> {
         return puzzleState
     }
@@ -27,21 +38,8 @@ class Node(
         return g + h
     }
 
-    fun setParent(parent: Node?) {
-        this.parent = parent
-    }
-
-    fun setH(h: Int) {
-        this.h = h
-    }
-
     fun hash(): Int {
-        var hash = 0
-        for (tile in puzzleState) {
-            hash = hash * 10 + tile
-        }
-
-        return hash
+        return hashState(puzzleState)
     }
 
     override fun equals(other: Any?): Boolean {
