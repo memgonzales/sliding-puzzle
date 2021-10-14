@@ -5,13 +5,16 @@ class Node(
     private val blankTilePos: Int,
     private var g: Int,
     private var h: Int
-) :
-    Comparator<Node> {
+) {
     fun getState(): ArrayList<Int> {
         return puzzleState
     }
 
-    private fun getF(): Int {
+    fun getBlankTilePos(): Int {
+        return blankTilePos
+    }
+
+    fun getF(): Int {
         return g + h
     }
 
@@ -27,19 +30,24 @@ class Node(
         this.h = h
     }
 
-    override fun compare(o1: Node?, o2: Node?): Int {
-        if (o1?.getF()!! < o2?.getF()!!) {
-            return -1
+    fun hash(): Int {
+        var hash = 0
+        for (tile in puzzleState) {
+            hash = hash * 10 + tile
         }
 
-        if (o1.getF() > o2.getF()) {
-            return 1
-        }
+        return hash
+    }
 
-        return 0
+    override fun equals(other: Any?): Boolean {
+        return this.puzzleState == (other as Node).puzzleState
+    }
+
+    override fun hashCode(): Int {
+        return hash()
     }
 
     override fun toString(): String {
-        return "$puzzleState\ng: $g h: $h\n"
+        return "\n$puzzleState\ng: $g h: $h\n"
     }
 }

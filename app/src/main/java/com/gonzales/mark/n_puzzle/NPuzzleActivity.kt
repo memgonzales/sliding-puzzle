@@ -116,7 +116,7 @@ class NPuzzleActivity : AppCompatActivity() {
      * Solving-Related Properties *
      ******************************/
 
-    private var puzzleSolution: ArrayList<ArrayList<Int>>? = null
+    private var puzzleSolution: Stack<ArrayList<Int>>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

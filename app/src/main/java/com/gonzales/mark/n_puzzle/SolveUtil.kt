@@ -2,41 +2,58 @@ package com.gonzales.mark.n_puzzle
 
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 import kotlin.collections.HashSet
 
 class SolveUtil {
     companion object {
-        private const val MAX_NUM_NEIGHBORS = 4
-        private val neighborPositions: ArrayList<ArrayList<Int>> = getNeighborPositions()
+        private const val MAX_NUM_CHILDREN = 4
+        private const val FRONTIER_INITIAL_CAPACITY = 11
+        private val childPositions: ArrayList<ArrayList<Int>> = getChildPositions()
 
         fun solve(
             puzzleState: ArrayList<Int>,
             blankTilePos: Int,
             goalPuzzleState: ArrayList<Int>,
             blankTileMarker: Int
-        ): ArrayList<ArrayList<Int>>? {
-            val frontierQueue: PriorityQueue<Node> = PriorityQueue()
-            val frontierSet: HashSet<Node> = HashSet()
-            val exploredSet: HashSet<ArrayList<Int>> = HashSet()
-            val cameFrom: HashMap<ArrayList<Int>, ArrayList<Int>> = HashMap()
+        ): Stack<ArrayList<Int>>? {
+            val frontier: PriorityQueue<Node> =
+                PriorityQueue(FRONTIER_INITIAL_CAPACITY, NodeComparator())
+            val frontierMap: HashMap<Int, Node> = HashMap()
+            val explored: HashSet<ArrayList<Int>> = HashSet()
 
-            val startNode = Node(puzzleState, 0, 0)
-            frontierQueue.add(startNode)
-            frontierSet.add(startNode)
+            val cameFrom: HashMap<Int, Node> = HashMap()
 
-            while (frontierQueue.isNotEmpty()) {
-                val currentNode: Node = frontierQueue.poll()!!
-                frontierSet.remove(currentNode)
+            val startNode = Node(puzzleState, blankTilePos, 0, 0)
+            frontier.add(startNode)
+            frontierMap[startNode.hash()] = startNode
 
-                if (isSolved(currentNode.getState(), goalPuzzleState)) {
-                    return null
+            while (frontier.isNotEmpty()) {
+                val node: Node = frontier.poll()!!
+
+                if (isSolved(node.getState(), goalPuzzleState)) {
+                    return backtrackPath(node, cameFrom)
                 }
 
-                exploredSet.add(currentNode.getState())
+                explored.add(node.getState())
 
+                for (child in getChildNodes(node, node.getBlankTilePos())) {
+                    val childInFrontier: Node? = frontierMap[child.hash()]
 
+                    if (childInFrontier == null && child.getState() !in explored) {
+                        frontier.add(child)
+                        frontierMap[child.hash()] = child
+
+                        cameFrom[child.hash()] = node
+                    } else if (childInFrontier != null && childInFrontier.getF() > child.getF()) {
+                        frontier.remove(childInFrontier)
+                        frontier.add(child)
+
+                        cameFrom[child.hash()] = node
+                        frontierMap[child.hash()] = child
+                    }
+                }
             }
+
 
             return null
         }
@@ -45,34 +62,49 @@ class SolveUtil {
             return puzzleState == goalPuzzleState
         }
 
-        private fun getNeighborNodes(
+        private fun backtrackPath(
+            node: Node,
+            cameFrom: HashMap<Int, Node>
+        ): Stack<ArrayList<Int>> {
+            val path: Stack<ArrayList<Int>> = Stack()
+            var current: Node? = node
+
+            while (current != null) {
+                path.push(current?.getState())
+                current = cameFrom[current.hash()]
+            }
+
+            return path
+        }
+
+        private fun getChildNodes(
             node: Node,
             blankTilePos: Int,
         ): ArrayList<Node> {
-            val neighborNodes: ArrayList<Node> = ArrayList(MAX_NUM_NEIGHBORS)
+            val childNodes: ArrayList<Node> = ArrayList(MAX_NUM_CHILDREN)
 
-            for (position in neighborPositions[blankTilePos]) {
-                val neighborState: ArrayList<Int> = ArrayList(node.getState().size)
-                val neighborBlankTilePos: Int
+            for (position in childPositions[blankTilePos]) {
+                val childState: ArrayList<Int> = ArrayList(node.getState().size)
+                val childBlankTilePos: Int
 
                 for (tile in node.getState()) {
-                    neighborState.add(tile)
+                    childState.add(tile)
                 }
 
                 /* Swap the blank tile with the tile in this position. */
-                neighborState[position] = neighborState[blankTilePos].also {
-                    neighborState[blankTilePos] = neighborState[position]
-                    neighborBlankTilePos = position
+                childState[position] = childState[blankTilePos].also {
+                    childState[blankTilePos] = childState[position]
+                    childBlankTilePos = position
                 }
 
-                neighborNodes.add(Node(neighborState, neighborBlankTilePos, node.getG() + 1, 0))
+                childNodes.add(Node(childState, childBlankTilePos, node.getG() + 1, 0))
             }
 
-            return neighborNodes
+            return childNodes
         }
 
-        private fun getNeighborPositions(): ArrayList<ArrayList<Int>> {
-            val neighbors: ArrayList<ArrayList<Int>> = ArrayList()
+        private fun getChildPositions(): ArrayList<ArrayList<Int>> {
+            val childPositions: ArrayList<ArrayList<Int>> = ArrayList()
 
             /*
              * The two-dimensional illustration of a puzzle grid is shown below:
@@ -80,17 +112,17 @@ class SolveUtil {
              *     3 4 5
              *     6 7 8
              */
-            neighbors.add(arrayListOf(1, 3))
-            neighbors.add(arrayListOf(0, 2, 4))
-            neighbors.add(arrayListOf(1, 5))
-            neighbors.add(arrayListOf(0, 4, 6))
-            neighbors.add(arrayListOf(1, 3, 5, 7))
-            neighbors.add(arrayListOf(2, 4, 8))
-            neighbors.add(arrayListOf(3, 7))
-            neighbors.add(arrayListOf(4, 6, 8))
-            neighbors.add(arrayListOf(5, 7))
+            childPositions.add(arrayListOf(1, 3))
+            childPositions.add(arrayListOf(0, 2, 4))
+            childPositions.add(arrayListOf(1, 5))
+            childPositions.add(arrayListOf(0, 4, 6))
+            childPositions.add(arrayListOf(1, 3, 5, 7))
+            childPositions.add(arrayListOf(2, 4, 8))
+            childPositions.add(arrayListOf(3, 7))
+            childPositions.add(arrayListOf(4, 6, 8))
+            childPositions.add(arrayListOf(5, 7))
 
-            return neighbors
+            return childPositions
         }
     }
 }
