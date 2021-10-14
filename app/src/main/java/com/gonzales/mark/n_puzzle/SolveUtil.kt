@@ -21,9 +21,7 @@ class SolveUtil {
             val frontierMap: HashMap<Int, Node> = HashMap()
             val explored: HashSet<ArrayList<Int>> = HashSet()
 
-            val cameFrom: HashMap<Int, Node> = HashMap()
-
-            val startNode = Node(puzzleState, blankTilePos, 0, 0)
+            val startNode = Node(puzzleState, blankTilePos, null, 0, 0)
             frontier.add(startNode)
             frontierMap[startNode.hash()] = startNode
 
@@ -31,29 +29,25 @@ class SolveUtil {
                 val node: Node = frontier.poll()!!
 
                 if (isSolved(node.getState(), goalPuzzleState)) {
-                    return backtrackPath(node, cameFrom)
+                    return backtrackPath(node)
                 }
 
                 explored.add(node.getState())
 
                 for (child in getChildNodes(node, node.getBlankTilePos())) {
-                    val childInFrontier: Node? = frontierMap[child.hash()]
+                    val childHash: Int = child.hash()
+                    val childInFrontier: Node? = frontierMap[childHash]
 
                     if (childInFrontier == null && child.getState() !in explored) {
                         frontier.add(child)
-                        frontierMap[child.hash()] = child
-
-                        cameFrom[child.hash()] = node
+                        frontierMap[childHash] = child
                     } else if (childInFrontier != null && childInFrontier.getF() > child.getF()) {
                         frontier.remove(childInFrontier)
                         frontier.add(child)
-
-                        cameFrom[child.hash()] = node
-                        frontierMap[child.hash()] = child
+                        frontierMap[childHash] = child
                     }
                 }
             }
-
 
             return null
         }
@@ -62,16 +56,13 @@ class SolveUtil {
             return puzzleState == goalPuzzleState
         }
 
-        private fun backtrackPath(
-            node: Node,
-            cameFrom: HashMap<Int, Node>
-        ): Stack<ArrayList<Int>> {
+        private fun backtrackPath(node: Node): Stack<ArrayList<Int>> {
             val path: Stack<ArrayList<Int>> = Stack()
             var current: Node? = node
 
             while (current != null) {
-                path.push(current?.getState())
-                current = cameFrom[current.hash()]
+                path.push(current.getState())
+                current = current.getParent()
             }
 
             return path
@@ -97,7 +88,7 @@ class SolveUtil {
                     childBlankTilePos = position
                 }
 
-                childNodes.add(Node(childState, childBlankTilePos, node.getG() + 1, 0))
+                childNodes.add(Node(childState, childBlankTilePos, node, node.getG() + 1, 0))
             }
 
             return childNodes

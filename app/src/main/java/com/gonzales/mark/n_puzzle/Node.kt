@@ -3,6 +3,7 @@ package com.gonzales.mark.n_puzzle
 class Node(
     private val puzzleState: ArrayList<Int>,
     private val blankTilePos: Int,
+    private var parent: Node?,
     private var g: Int,
     private var h: Int
 ) {
@@ -14,16 +15,20 @@ class Node(
         return blankTilePos
     }
 
-    fun getF(): Int {
-        return g + h
+    fun getParent(): Node? {
+        return parent
     }
 
     fun getG(): Int {
         return g
     }
 
-    fun setG(g: Int) {
-        this.g = g
+    fun getF(): Int {
+        return g + h
+    }
+
+    fun setParent(parent: Node?) {
+        this.parent = parent
     }
 
     fun setH(h: Int) {

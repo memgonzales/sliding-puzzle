@@ -5,7 +5,7 @@
 
     <string name="randomizing">Shuffling</string>
     <string name="inversions">Counting Inversions</string>
-    <string name="randomized">Solve</string>
+    <string name="randomized">Show Solution</string>
     <string name="new_game">New Game</string>
     <string name="pause">Pause</string>
     <string name="skip">Skip Solution</string>
