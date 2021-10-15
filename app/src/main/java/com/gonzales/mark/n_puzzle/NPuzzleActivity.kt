@@ -50,8 +50,19 @@ class NPuzzleActivity : AppCompatActivity() {
     private lateinit var tvTimeTaken: TextView
     private lateinit var tvFastestTime: TextView
 
+    /**
+     * Text view for the title of the app.
+     */
     private lateinit var tvTitle: TextView
+
+    /**
+     * Text view for the success message.
+     */
     private lateinit var tvSuccess: TextView
+
+    /**
+     * Text view for the trivia.
+     */
     private lateinit var tvTrivia: TextView
 
     /**********************

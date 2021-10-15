@@ -14,14 +14,25 @@ class SolveUtil {
         private val manhattan: HashMap<Int, Int> = HashMap()
 
         /**
+         * Returns the sequence of states from the current puzzle state to the goal state,
+         * as determined using the A* search algorithm with Manhattan distance as the heuristic.
+         *
          * A* is an informed search algorithm introduced by Peter E. Hart, Nils J. Nilsson,
          * and Bertram Raphael in the 1968 paper "A Formal Basis for the Heuristic Determination
-         * of Minimum Cost Paths," which was published in the IEEE Transactions on System Science
-         * and Cybernetics (Volume 4, Issue 2).
+         * of Minimum Cost Paths," which was published in the <i>IEEE Transactions on System Science
+         * and Cybernetics</i> (Volume 4, Issue 2).
          *
          * The implementation of A* in this function is based on the discussion and pseudocode
-         * in the third edition of Artificial Intelligence: A Modern Approach by Stuart Russell
-         * and Peter Norvig (2010).
+         * in the third edition of <i>Artificial Intelligence: A Modern Approach</i> by Stuart
+         * Russell and Peter Norvig (2010).
+         *
+         * @param puzzleState Current puzzle state (flattened into one dimension following row-major
+         * ordering).
+         * @param blankTilePos Position of the blank tile (with respect to the current puzzle state).
+         * @param goalPuzzleState Goal state.
+         * @param numColumns Number in columns in the puzzle grid.
+         * @param blankTileMarker Indicator that the tile is blank.
+         * @return Sequence of states from the current puzzle state to the goal state.
          */
         fun solve(
             puzzleState: ArrayList<Int>,
@@ -30,6 +41,20 @@ class SolveUtil {
             numColumns: Int,
             blankTileMarker: Int
         ): Stack<ArrayList<Int>>? {
+            /*
+             * Since the A* algorithm involves partial ordering of the frontier nodes and membership
+             * testing, they have to be stored in a data structure that supports both operations
+             * efficiently.
+             *
+             * To satisfy this requirement, two data structures are used:
+             *     a) a priority queue (min-heap) for partial ordering
+             *     b) a hash map for membership testing
+             *
+             * The decision to use a hash map instead of a hash set is motivated by the step wherein
+             * the f-value of the current child node is compared to the f-value of the frontier node
+             * that has the same state (should it exist). This necessitates the retrieval of the
+             * f-value of the latter, which is an operation not natively supported by a hash set.
+             */
             val frontier: PriorityQueue<Node> =
                 PriorityQueue(FRONTIER_INITIAL_CAPACITY, NodeComparator())
             val frontierMap: HashMap<Int, Node> = HashMap()
@@ -164,7 +189,6 @@ class SolveUtil {
             }
 
             var sumManhattan = 0
-
             for (i in 0 until puzzleState.size) {
                 if (puzzleState[i] != blankTileMarker) {
                     sumManhattan +=
