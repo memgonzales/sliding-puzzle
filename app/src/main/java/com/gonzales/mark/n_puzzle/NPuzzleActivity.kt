@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.util.Log
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.ViewTreeObserver
@@ -472,8 +471,6 @@ class NPuzzleActivity : AppCompatActivity() {
          * the animation.
          */
         getValidShuffledState()
-//        puzzleState = arrayListOf(0, 1, 2, 3, 4, 8, 6, 7, 5)
-//        blankTilePos = 5
 
         /* Apply dark filter to all the tiles before starting the animation. */
         displayBlankPuzzle()
@@ -585,23 +582,15 @@ class NPuzzleActivity : AppCompatActivity() {
             NUM_COLUMNS,
             BLANK_TILE_MARKER
         )
-
-        Log.e("Hello", puzzleSolution.toString())
     }
 
     private fun endGame(solveStatus: SolveStatus) {
-        /* Signal that the game is over */
+        /* Signal that the game is over. */
         isGameInSession = false
         isTimerRunning = false
 
         /* Save the updated statistics, and display them alongside the success message. */
-        when (solveStatus) {
-            SolveStatus.FEWEST_MOVES -> saveFewestMoves()
-            SolveStatus.FASTEST_TIME -> saveFastestTime()
-            SolveStatus.FEWEST_AND_FASTEST -> saveFewestAndFastest()
-            else -> Unit
-        }
-
+        saveStats(solveStatus)
         displaySuccessMessage(solveStatus)
 
         if (solveStatus != SolveStatus.COMPUTER_SOLVED) {
@@ -639,6 +628,15 @@ class NPuzzleActivity : AppCompatActivity() {
         btnUpload.visibility = View.VISIBLE
         btnUpload.text = getString(R.string.skip)
         tvTrivia.visibility = View.GONE
+    }
+
+    private fun saveStats(solveStatus: SolveStatus) {
+        when (solveStatus) {
+            SolveStatus.FEWEST_MOVES -> saveFewestMoves()
+            SolveStatus.FASTEST_TIME -> saveFastestTime()
+            SolveStatus.FEWEST_AND_FASTEST -> saveFewestAndFastest()
+            else -> Unit
+        }
     }
 
     private fun saveFewestAndFastest() {

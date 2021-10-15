@@ -133,25 +133,23 @@ class SolveUtil {
         }
 
         private fun getChildPositions(): ArrayList<ArrayList<Int>> {
-            val childPositions: ArrayList<ArrayList<Int>> = ArrayList()
-
             /*
              * The two-dimensional illustration of a puzzle grid is shown below:
              *     0 1 2
              *     3 4 5
              *     6 7 8
              */
-            childPositions.add(arrayListOf(1, 3))
-            childPositions.add(arrayListOf(0, 2, 4))
-            childPositions.add(arrayListOf(1, 5))
-            childPositions.add(arrayListOf(0, 4, 6))
-            childPositions.add(arrayListOf(1, 3, 5, 7))
-            childPositions.add(arrayListOf(2, 4, 8))
-            childPositions.add(arrayListOf(3, 7))
-            childPositions.add(arrayListOf(4, 6, 8))
-            childPositions.add(arrayListOf(5, 7))
-
-            return childPositions
+            return arrayListOf(
+                arrayListOf(1, 3),
+                arrayListOf(0, 2, 4),
+                arrayListOf(1, 5),
+                arrayListOf(0, 4, 6),
+                arrayListOf(1, 3, 5, 7),
+                arrayListOf(2, 4, 8),
+                arrayListOf(3, 7),
+                arrayListOf(4, 6, 8),
+                arrayListOf(5, 7)
+            )
         }
 
         private fun getManhattan(
