@@ -5,8 +5,23 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
 import kotlin.math.abs
 
+/**
+ * Utility class providing constants and methods related to solving an 8-puzzle.
+ *
+ * @constructor Creates an object that provides constants and methods related to solving an 8-puzzle.
+ */
 class SolveUtil {
+    /**
+     * Companion object containing constants and methods related to solving an 8-puzzle.
+     */
     companion object {
+        /**
+         * Maximum number of children of a node, that is, the maximum number of states than can be
+         * reached from a given state after exactly a single move.
+         *
+         * Following the mechanics of an 8-puzzle, this is equal to 4, corresponding to the four
+         * cardinal directions.
+         */
         private const val MAX_NUM_CHILDREN = 4
         private const val FRONTIER_INITIAL_CAPACITY = 11
 
@@ -26,9 +41,14 @@ class SolveUtil {
          * in the third edition of <i>Artificial Intelligence: A Modern Approach</i> by Stuart
          * Russell and Peter Norvig (2010).
          *
-         * @param puzzleState Current puzzle state (flattened into one dimension following row-major
-         * ordering).
-         * @param blankTilePos Position of the blank tile (with respect to the current puzzle state).
+         * Note that, although the position of the blank tile can be inferred from the puzzle state,
+         * it is passed as a parameter in the interest of efficiency (that is, to avoid linear
+         * searching).
+         *
+         * @param puzzleState Current puzzle state (flattened into one dimension, following row-major
+         * order).
+         * @param blankTilePos Position of the blank tile in the puzzle grid (zero-based, following
+         * row-major order).
          * @param goalPuzzleState Goal state.
          * @param numColumns Number in columns in the puzzle grid.
          * @param blankTileMarker Indicator that the tile is blank.
@@ -58,8 +78,17 @@ class SolveUtil {
             val frontier: PriorityQueue<Node> =
                 PriorityQueue(FRONTIER_INITIAL_CAPACITY, NodeComparator())
             val frontierMap: HashMap<Int, Node> = HashMap()
+
+            /*
+             * To prevent expanding already-explored nodes, keep track of them. Use a hash set for
+             * efficient membership testing.
+             */
             val explored: HashSet<ArrayList<Int>> = HashSet()
 
+            /*
+             * Set the parent of the start node to null and its g-value (path cost) to 0 since
+             * its depth is 0.
+             */
             val startNode = Node(
                 puzzleState,
                 blankTilePos,
@@ -68,16 +97,23 @@ class SolveUtil {
                 getManhattan(puzzleState, numColumns, blankTileMarker)
             )
 
+            /* Add the start node to the frontier. */
             frontier.add(startNode)
             frontierMap[startNode.hash()] = startNode
 
+            /*
+             * If there are no more frontier nodes but the solution has not yet been found,
+             * then the puzzle is unsolvable.
+             */
             while (frontier.isNotEmpty()) {
+                /* Consider the node with the least f-value. */
                 val node: Node = frontier.poll()!!
 
                 if (isSolved(node.getState(), goalPuzzleState)) {
                     return backtrackPath(node)
                 }
 
+                /* Expand the current node, and add it to the list of explored nodes. */
                 explored.add(node.getState())
 
                 val childNodes: ArrayList<Node> = getChildNodes(
@@ -88,13 +124,23 @@ class SolveUtil {
                 )
 
                 for (child in childNodes) {
+                    /* Store the hash into a variable for efficiency. */
                     val childHash: Int = child.hash()
                     val childInFrontier: Node? = frontierMap[childHash]
 
+                    /*
+                     * Add the node to the list of frontier nodes if it is neither in this list nor
+                     * in the list of already-explored nodes.
+                     */
                     if (childInFrontier == null && child.getState() !in explored) {
                         frontier.add(child)
                         frontierMap[childHash] = child
                     } else if (childInFrontier != null && childInFrontier.getF() > child.getF()) {
+                        /*
+                         * If a node with the same state is found in the list of frontier nodes
+                         * but with higher f-value, replace this frontier node with the child node,
+                         * as it represents a better (cheaper) path to the goal state.
+                         */
                         frontier.remove(childInFrontier)
                         frontier.add(child)
                         frontierMap[childHash] = child
@@ -102,6 +148,11 @@ class SolveUtil {
                 }
             }
 
+            /*
+             * Since the 8-puzzle grids generated in this app are guaranteed to be solvable
+             * (via the getValidShuffledState() method in ShuffleUtil), this code should be
+             * unreachable.
+             */
             return null
         }
 
@@ -163,6 +214,9 @@ class SolveUtil {
              *     0 1 2
              *     3 4 5
              *     6 7 8
+             *
+             * The first element in this array list refers to the child positions of 0;
+             * the second elements, to those of 1; and so on.
              */
             return arrayListOf(
                 arrayListOf(1, 3),

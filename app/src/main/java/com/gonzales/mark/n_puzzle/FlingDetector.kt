@@ -21,11 +21,11 @@ class FlingDetector {
          *
          * The direction of a fling gesture is registered as:
          * <ul>
-         *  <li> <code>FlingDirection.DOWN</code> if the angle is in [0.25<code>PI</code>, 0.75<code>PI</code>). </li>
-         *  <li> <code>FlingDirection.UP</code> if the angle is in [1.25<code>PI</code>, 1.75<code>PI</code>). </li>
-         *  <li> <code>FlingDirection.RIGHT</code> if the angle is in [0.75<code>PI</code>, 1.25<code>PI</code>). </li>
-         *  <li> <code>FlingDirection.LEFT</code> if the angle is in [0, 0.25<code>PI</code>)
-         *      or [1.75<code>PI</code>, 2<code>PI</code>). </li>
+         *  <li> <code>FlingDirection.DOWN</code> if the angle is in [0.25π, 0.75π). </li>
+         *  <li> <code>FlingDirection.UP</code> if the angle is in [1.25π, 1.75π). </li>
+         *  <li> <code>FlingDirection.RIGHT</code> if the angle is in [0.75π, 1.25π). </li>
+         *  <li> <code>FlingDirection.LEFT</code> if the angle is in [0, 0.25π)
+         *      or [1.75π, 2π). </li>
          * </ul>
          */
         private val BOUNDARY_ANGLES =
@@ -63,16 +63,16 @@ class FlingDetector {
                 return FlingDirection.RIGHT
             }
 
-            /* Should be unreachable */
+            /* Since the code covers all possible angles, this code should be unreachable. */
             return FlingDirection.INVALID
         }
 
         /**
          * Computes the angle (in radians) between the points defined by the given coordinates.
          *
-         * Internally, this method adds <code>PI</code> to the value returned by
+         * Internally, this method adds π to the value returned by
          * [<code>atan2</code>](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.math/atan2.html).
-         * Therefore, the angle returned by this method is in the range 0 to 2<code>PI</code> (inclusive),
+         * Therefore, the angle returned by this method is in the range 0 to 2π (inclusive),
          * provided that it is defined.
          *
          * @param x1 x-coordinate of the first down motion event that started the fling.
@@ -83,8 +83,8 @@ class FlingDetector {
          */
         private fun getAngle(x1: Float, y1: Float, x2: Float, y2: Float): Double {
             /*
-             * Add PI since it is more convenient to work with values in the range [0, 2pi]
-             * compared to those in atan2's default [-pi, pi].
+             * Add π since it is more convenient to work with values in the range [0, 2π]
+             * compared to those in atan2's default [-π, π].
              */
             return atan2((y1 - y2).toDouble(), (x2 - x1).toDouble()) + PI
         }
@@ -93,7 +93,7 @@ class FlingDetector {
          * Checks if the angle formed between the points defined by the coordinates of the pertinent
          * <code>MotionEvent</code>s is indicative of an upward gesture.
          *
-         * An upward gesture is registered if the angle is in [1.25<code>PI</code>, 1.75<code>PI</code>).
+         * An upward gesture is registered if the angle is in [1.25π, 1.75π).
          *
          * @param angle Angle (in radians) formed between the points defined by the coordinates of the
          * pertinent <code>MotionEvent</code>s.
@@ -108,7 +108,7 @@ class FlingDetector {
          * Checks if the angle formed between the points defined by the coordinates of the pertinent
          * <code>MotionEvent</code>s is indicative of a downward gesture.
          *
-         * A downward gesture is registered if the angle is in [0.25<code>PI</code>, 0.75<code>PI</code>).
+         * A downward gesture is registered if the angle is in [0.25π, 0.75π).
          *
          * @param angle Angle (in radians) formed between the points defined by the coordinates of the
          * pertinent <code>MotionEvent</code>s.
@@ -123,8 +123,8 @@ class FlingDetector {
          * Checks if the angle formed between the points defined by the coordinates of the pertinent
          * <code>MotionEvent</code>s is indicative of a left gesture.
          *
-         * A left gesture is registered if the angle is in [0, 0.25<code>PI</code>)
-         * or [1.75<code>PI</code>, 2<code>PI</code>).
+         * A left gesture is registered if the angle is in [0, 0.25π)
+         * or [1.75π, 2π).
          *
          * @param angle Angle (in radians) formed between the points defined by the coordinates of the
          * pertinent <code>MotionEvent</code>s.
@@ -140,7 +140,7 @@ class FlingDetector {
          * Checks if the angle formed between the points defined by the coordinates of the pertinent
          * <code>MotionEvent</code>s is indicative of a right gesture.
          *
-         * A right gesture is registered if the angle is in [0.75<code>PI</code>, 1.25<code>PI</code>).
+         * A right gesture is registered if the angle is in [0.75π, 1.25π).
          *
          * @param angle Angle (in radians) formed between the points defined by the coordinates of the
          * pertinent <code>MotionEvent</code>s.
