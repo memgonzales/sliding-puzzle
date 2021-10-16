@@ -1,8 +1,7 @@
 package com.gonzales.mark.n_puzzle
 
 class Node(
-    val puzzleState: ArrayList<Int>,
-    val blankTilePos: Int,
+    val puzzleStatePair: StatePair,
     val parent: Node?,
     var g: Int,
     private var h: Int
@@ -23,18 +22,14 @@ class Node(
     }
 
     fun hash(): Int {
-        return hashState(puzzleState)
+        return hashState(puzzleStatePair.puzzleState)
     }
 
     override fun equals(other: Any?): Boolean {
-        return this.puzzleState == (other as Node).puzzleState
+        return this.puzzleStatePair.puzzleState == (other as Node).puzzleStatePair.puzzleState
     }
 
     override fun hashCode(): Int {
         return hash()
-    }
-
-    override fun toString(): String {
-        return "\n$puzzleState\ng: $g h: $h\n"
     }
 }

@@ -5,7 +5,7 @@ class ShuffleUtil {
         fun getValidShuffledState(
             puzzleState: ArrayList<Int>,
             blankTileMarker: Int
-        ): Pair<ArrayList<Int>, Int> {
+        ): StatePair {
             puzzleState.shuffle()
 
             /*
@@ -16,7 +16,7 @@ class ShuffleUtil {
                 swapTiles(puzzleState, blankTileMarker)
             }
 
-            return Pair(puzzleState, puzzleState.indexOf(blankTileMarker))
+            return StatePair(puzzleState, puzzleState.indexOf(blankTileMarker))
         }
 
         private fun countInversions(puzzleState: ArrayList<Int>, blankTileMarker: Int): Int {

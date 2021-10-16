@@ -45,22 +45,23 @@ class SolveUtil {
          * it is passed as a parameter in the interest of efficiency (that is, to avoid linear
          * searching).
          *
-         * @param puzzleState Current puzzle state (flattened into one dimension, following row-major
-         * order).
-         * @param blankTilePos Position of the blank tile in the puzzle grid (zero-based, following
-         * row-major order).
+         * @param puzzleStatePair Current puzzle state (flattened into one dimension, following
+         * row-major order) and the position of the blank tile in the puzzle grid (zero-based,
+         * following row-major order).
          * @param goalPuzzleState Goal state.
          * @param numColumns Number in columns in the puzzle grid.
          * @param blankTileMarker Indicator that the tile is blank.
          * @return Sequence of states from the current puzzle state to the goal state.
          */
         fun solve(
-            puzzleState: ArrayList<Int>,
-            blankTilePos: Int,
+            puzzleStatePair: StatePair,
             goalPuzzleState: ArrayList<Int>,
             numColumns: Int,
             blankTileMarker: Int
-        ): Stack<ArrayList<Int>>? {
+        ): Stack<StatePair>? {
+            val puzzleState: ArrayList<Int> = puzzleStatePair.puzzleState
+            val blankTilePos: Int = puzzleStatePair.blankTilePos
+
             /*
              * Since the A* algorithm involves partial ordering of the frontier nodes and membership
              * testing, they have to be stored in a data structure that supports both operations
@@ -90,8 +91,7 @@ class SolveUtil {
              * its depth is 0.
              */
             val startNode = Node(
-                puzzleState,
-                blankTilePos,
+                StatePair(puzzleState, blankTilePos),
                 null,
                 0,
                 getManhattan(puzzleState, numColumns, blankTileMarker)
@@ -109,16 +109,16 @@ class SolveUtil {
                 /* Consider the node with the least f-value. */
                 val node: Node = frontier.poll()!!
 
-                if (isSolved(node.puzzleState, goalPuzzleState)) {
+                if (isSolved(node.puzzleStatePair.puzzleState, goalPuzzleState)) {
                     return backtrackPath(node)
                 }
 
                 /* Expand the current node, and add it to the list of explored nodes. */
-                explored.add(node.puzzleState)
+                explored.add(node.puzzleStatePair.puzzleState)
 
                 val childNodes: ArrayList<Node> = getChildNodes(
                     node,
-                    node.blankTilePos,
+                    node.puzzleStatePair.blankTilePos,
                     numColumns,
                     blankTileMarker
                 )
@@ -132,7 +132,7 @@ class SolveUtil {
                      * Add the node to the list of frontier nodes if it is neither in this list nor
                      * in the list of already-explored nodes.
                      */
-                    if (childInFrontier == null && child.puzzleState !in explored) {
+                    if (childInFrontier == null && child.puzzleStatePair.puzzleState !in explored) {
                         frontier.add(child)
                         frontierMap[childHash] = child
                     } else if (childInFrontier != null && childInFrontier.getF() > child.getF()) {
@@ -160,12 +160,12 @@ class SolveUtil {
             return puzzleState == goalPuzzleState
         }
 
-        private fun backtrackPath(node: Node): Stack<ArrayList<Int>> {
-            val path: Stack<ArrayList<Int>> = Stack()
+        private fun backtrackPath(node: Node): Stack<StatePair> {
+            val path: Stack<StatePair> = Stack()
             var current: Node? = node
 
             while (current != null) {
-                path.push(current.puzzleState)
+                path.push(current.puzzleStatePair)
                 current = current.parent
             }
 
@@ -181,10 +181,10 @@ class SolveUtil {
             val childNodes: ArrayList<Node> = ArrayList(MAX_NUM_CHILDREN)
 
             for (position in childPositions[blankTilePos]) {
-                val childState: ArrayList<Int> = ArrayList(node.puzzleState.size)
+                val childState: ArrayList<Int> = ArrayList(node.puzzleStatePair.puzzleState.size)
                 val childBlankTilePos: Int
 
-                for (tile in node.puzzleState) {
+                for (tile in node.puzzleStatePair.puzzleState) {
                     childState.add(tile)
                 }
 
@@ -196,8 +196,7 @@ class SolveUtil {
 
                 childNodes.add(
                     Node(
-                        childState,
-                        childBlankTilePos,
+                        StatePair(childState, childBlankTilePos),
                         node,
                         node.g + 1,
                         getManhattan(childState, numColumns, blankTileMarker)

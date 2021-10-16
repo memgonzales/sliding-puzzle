@@ -150,7 +150,7 @@ class NPuzzleActivity : AppCompatActivity() {
      * Its type is set to nullable only to conform with the data type of the return value
      * of the <code>solve()</code> method in the <code>SolveUtil</code> class.
      */
-    private var puzzleSolution: Stack<ArrayList<Int>>? = null
+    private var puzzleSolution: Stack<StatePair>? = null
     private lateinit var solveHandler: Handler
     private lateinit var solveDisplayHandler: Handler
 
@@ -536,11 +536,11 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun getValidShuffledState() {
-        val shuffledState: Pair<ArrayList<Int>, Int> =
+        val shuffledState: StatePair =
             ShuffleUtil.getValidShuffledState(puzzleState, BLANK_TILE_MARKER)
 
-        puzzleState = shuffledState.first
-        blankTilePos = shuffledState.second
+        puzzleState = shuffledState.puzzleState
+        blankTilePos = shuffledState.blankTilePos
     }
 
     private fun updateComponents() {
@@ -634,7 +634,7 @@ class NPuzzleActivity : AppCompatActivity() {
     private fun solve() {
         endGame(SolveStatus.COMPUTER_SOLVED)
 
-        if (puzzleSolution?.pop() == puzzleState) {
+        if (puzzleSolution?.pop()?.puzzleState == puzzleState) {
             displaySolution()
         } else {
             /*
@@ -645,8 +645,7 @@ class NPuzzleActivity : AppCompatActivity() {
              * included to ensure proper generation of the puzzle solution.
              */
             puzzleSolution = SolveUtil.solve(
-                puzzleState,
-                blankTilePos,
+                StatePair(puzzleState, blankTilePos),
                 goalPuzzleState,
                 NUM_COLUMNS,
                 BLANK_TILE_MARKER
@@ -657,8 +656,7 @@ class NPuzzleActivity : AppCompatActivity() {
     private fun generateSolution() {
         solveHandler.post {
             puzzleSolution = SolveUtil.solve(
-                puzzleState,
-                blankTilePos,
+                StatePair(puzzleState, blankTilePos),
                 goalPuzzleState,
                 NUM_COLUMNS,
                 BLANK_TILE_MARKER
@@ -667,12 +665,15 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun displaySolution() {
-        solveDisplayHandler.post (object : Runnable {
+        solveDisplayHandler.post(object : Runnable {
             override fun run() {
                 if (puzzleSolution?.isNotEmpty()!!) {
-                    puzzleState = puzzleSolution?.pop()!!
+                    val puzzleStatePair: StatePair = puzzleSolution?.pop()!!
+                    puzzleState = puzzleStatePair.puzzleState
+                    blankTilePos = puzzleStatePair.blankTilePos
+
                     displayPuzzle()
-                    solveDisplayHandler.postDelayed(this, TimeUtil.SECONDS_TO_MILLISECONDS.toLong())
+                    solveDisplayHandler.postDelayed(this, AnimationUtil.SOLUTION_ANIMATION.toLong())
                 } else {
                     timerHandler.removeCallbacks(this)
                 }

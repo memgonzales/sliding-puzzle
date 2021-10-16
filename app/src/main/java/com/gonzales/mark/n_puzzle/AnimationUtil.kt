@@ -42,5 +42,7 @@ class AnimationUtil {
          * (for example, clicking the shuffle button and moving a tile).
          */
         const val SUCCESS_DISPLAY = 5000
+
+        const val SOLUTION_ANIMATION = 750
     }
 }
