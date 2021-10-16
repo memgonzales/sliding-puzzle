@@ -24,10 +24,24 @@ import java.util.concurrent.TimeUnit
 
 class NPuzzleActivity : AppCompatActivity() {
     companion object {
+        /**
+         * Number of columns in the 8-puzzle grid.
+         */
         private const val NUM_COLUMNS = 3
+
+        /**
+         * Number of tiles in the 8-puzzle grid.
+         */
         private const val NUM_TILES = NUM_COLUMNS * NUM_COLUMNS
 
+        /**
+         * Thickness of the tile border (in pixels).
+         */
         private const val BORDER_OFFSET = 6
+
+        /**
+         * Indicator that the tile is blank.
+         */
         private const val BLANK_TILE_MARKER = NUM_TILES - 1
 
         private const val DEFAULT_FEWEST_MOVES = Long.MAX_VALUE
@@ -126,8 +140,31 @@ class NPuzzleActivity : AppCompatActivity() {
      * Solving-Related Properties *
      ******************************/
 
+    /**
+     * Sequence of states from the current puzzle state to the goal state.
+     *
+     * Since the 8-puzzle grids generated in this app are guaranteed to be solvable (via the
+     * getValidShuffledState() method in ShuffleUtil), the only time when the value of this stack
+     * is <code>null</code> is prior to the first time the Show Solution button is clicked.
+     *
+     * Its type is set to nullable only to conform with the data type of the return value
+     * of the <code>solve()</code> method in the <code>SolveUtil</code> class.
+     */
     private var puzzleSolution: Stack<ArrayList<Int>>? = null
+    private lateinit var solveHandler: Handler
+    private lateinit var solveDisplayHandler: Handler
 
+    /**
+     * Called when the activity is first created. This is where you should do all of your normal
+     * static set up: create views, bind data to lists, etc. This method also provides you with a
+     * Bundle containing the activity's previously frozen state, if there was one.
+     * Always followed by <code>onStart()</code>.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut
+     * down then this Bundle contains the data it most recently supplied in
+     * <code>onSaveInstanceState(Bundle)</code>. Note: Otherwise it is null. This value may be
+     * <code>null</code>.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_n_puzzle)
@@ -227,6 +264,10 @@ class NPuzzleActivity : AppCompatActivity() {
 
         /* Initialize the handler related to the timer. */
         timerHandler = Handler(Looper.getMainLooper())
+
+        /* Initialize the handler related to the puzzle solution. */
+        solveHandler = Handler(Looper.getMainLooper())
+        solveDisplayHandler = Handler(Looper.getMainLooper())
     }
 
     private fun initStateAndTileImages() {
@@ -478,10 +519,16 @@ class NPuzzleActivity : AppCompatActivity() {
         resetDisplayedStats()
 
         /*
-         * Generate the shuffled state and apply dark filter to all the tiles before starting
-         * the animation.
+         * Generate the shuffled state, and find the solution.
+         *
+         * Although the runtime for finding the solution to an 8-puzzle grid (following the
+         * implementation in the SolveUtil class) is less than a second, it is already being
+         * processed on a separate thread while the shuffling animation is playing in order
+         * to ensure that, when the Show Solution button is clicked, the solution is displayed
+         * almost instantaneously.
          */
         getValidShuffledState()
+        generateSolution()
 
         /* Apply dark filter to all the tiles before starting the animation. */
         displayBlankPuzzle()
@@ -586,13 +633,51 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private fun solve() {
         endGame(SolveStatus.COMPUTER_SOLVED)
-        puzzleSolution = SolveUtil.solve(
-            puzzleState,
-            blankTilePos,
-            goalPuzzleState,
-            NUM_COLUMNS,
-            BLANK_TILE_MARKER
-        )
+
+        if (puzzleSolution?.pop() == puzzleState) {
+            displaySolution()
+        } else {
+            /*
+             * Since the solution is processed in a separate thread while the shuffling animation
+             * is playing, this code should be unreachable.
+             *
+             * Nonetheless, should the app encounter problems related to threading, this code is
+             * included to ensure proper generation of the puzzle solution.
+             */
+            puzzleSolution = SolveUtil.solve(
+                puzzleState,
+                blankTilePos,
+                goalPuzzleState,
+                NUM_COLUMNS,
+                BLANK_TILE_MARKER
+            )
+        }
+    }
+
+    private fun generateSolution() {
+        solveHandler.post {
+            puzzleSolution = SolveUtil.solve(
+                puzzleState,
+                blankTilePos,
+                goalPuzzleState,
+                NUM_COLUMNS,
+                BLANK_TILE_MARKER
+            )
+        }
+    }
+
+    private fun displaySolution() {
+        solveDisplayHandler.post (object : Runnable {
+            override fun run() {
+                if (puzzleSolution?.isNotEmpty()!!) {
+                    puzzleState = puzzleSolution?.pop()!!
+                    displayPuzzle()
+                    solveDisplayHandler.postDelayed(this, TimeUtil.SECONDS_TO_MILLISECONDS.toLong())
+                } else {
+                    timerHandler.removeCallbacks(this)
+                }
+            }
+        })
     }
 
     private fun endGame(solveStatus: SolveStatus) {
@@ -701,13 +786,12 @@ class NPuzzleActivity : AppCompatActivity() {
         tvSuccess.visibility = View.VISIBLE
         tvSuccess.text = when (solveStatus) {
             SolveStatus.USER_SOLVED -> getString(R.string.user_solved)
-            SolveStatus.FEWEST_MOVES, SolveStatus.FASTEST_TIME, SolveStatus.FEWEST_AND_FASTEST -> getString(
-                R.string.high_score
-            )
+            SolveStatus.FEWEST_MOVES, SolveStatus.FASTEST_TIME, SolveStatus.FEWEST_AND_FASTEST ->
+                getString(R.string.high_score)
             SolveStatus.COMPUTER_SOLVED -> getString(R.string.computer_solved)
         }
 
-        /* Make the success message disappear after a set number of seconds. */
+        /* Hide the success message after a set number of seconds. */
         Handler(Looper.getMainLooper()).postDelayed({
             tvSuccess.visibility = View.GONE
         }, AnimationUtil.SUCCESS_DISPLAY.toLong())
