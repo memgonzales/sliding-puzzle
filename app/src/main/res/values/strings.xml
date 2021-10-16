@@ -13,7 +13,7 @@
 
     <string name="user_solved">Great!</string>
     <string name="high_score">Bravo!</string>
-    <string name="computer_solved">Voila!</string>
+    <string name="computer_solved">Moves</string>
 
     <string name="default_fewest">-</string>
     <string name="default_fastest">-:--:--</string>

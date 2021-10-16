@@ -151,6 +151,7 @@ class NPuzzleActivity : AppCompatActivity() {
      * of the <code>solve()</code> method in the <code>SolveUtil</code> class.
      */
     private var puzzleSolution: Stack<StatePair>? = null
+    private var numMovesSolution: Int = 0
     private lateinit var solveHandler: Handler
     private lateinit var solveDisplayHandler: Handler
 
@@ -665,6 +666,8 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun displaySolution() {
+        numMovesSolution = puzzleSolution?.size!!
+
         solveDisplayHandler.post(object : Runnable {
             override fun run() {
                 if (puzzleSolution?.isNotEmpty()!!) {
@@ -675,7 +678,8 @@ class NPuzzleActivity : AppCompatActivity() {
                     displayPuzzle()
                     solveDisplayHandler.postDelayed(this, AnimationUtil.SOLUTION_ANIMATION.toLong())
                 } else {
-                    timerHandler.removeCallbacks(this)
+                    solveDisplayHandler.removeCallbacks(this)
+                    displaySuccessMessage(SolveStatus.COMPUTER_SOLVED)
                 }
             }
         })
@@ -687,10 +691,9 @@ class NPuzzleActivity : AppCompatActivity() {
         isTimerRunning = false
 
         /* Save the updated statistics, and display them alongside the success message. */
-        saveStats(solveStatus)
-        displaySuccessMessage(solveStatus)
-
         if (solveStatus != SolveStatus.COMPUTER_SOLVED) {
+            saveStats(solveStatus)
+            displaySuccessMessage(solveStatus)
             prepareForNewGame()
         } else {
             prepareForSolution()
@@ -786,10 +789,18 @@ class NPuzzleActivity : AppCompatActivity() {
         /* Display a message depending on how the goal state of the puzzle was reached. */
         tvSuccess.visibility = View.VISIBLE
         tvSuccess.text = when (solveStatus) {
-            SolveStatus.USER_SOLVED -> getString(R.string.user_solved)
-            SolveStatus.FEWEST_MOVES, SolveStatus.FASTEST_TIME, SolveStatus.FEWEST_AND_FASTEST ->
+            SolveStatus.USER_SOLVED -> {
+                getString(R.string.user_solved)
+            }
+
+            SolveStatus.FEWEST_MOVES, SolveStatus.FASTEST_TIME, SolveStatus.FEWEST_AND_FASTEST -> {
                 getString(R.string.high_score)
-            SolveStatus.COMPUTER_SOLVED -> getString(R.string.computer_solved)
+            }
+
+            SolveStatus.COMPUTER_SOLVED -> {
+                val message: String = getString(R.string.computer_solved)
+                "$numMovesSolution $message"
+            }
         }
 
         /* Hide the success message after a set number of seconds. */
