@@ -109,16 +109,16 @@ class SolveUtil {
                 /* Consider the node with the least f-value. */
                 val node: Node = frontier.poll()!!
 
-                if (isSolved(node.getState(), goalPuzzleState)) {
+                if (isSolved(node.puzzleState, goalPuzzleState)) {
                     return backtrackPath(node)
                 }
 
                 /* Expand the current node, and add it to the list of explored nodes. */
-                explored.add(node.getState())
+                explored.add(node.puzzleState)
 
                 val childNodes: ArrayList<Node> = getChildNodes(
                     node,
-                    node.getBlankTilePos(),
+                    node.blankTilePos,
                     numColumns,
                     blankTileMarker
                 )
@@ -132,7 +132,7 @@ class SolveUtil {
                      * Add the node to the list of frontier nodes if it is neither in this list nor
                      * in the list of already-explored nodes.
                      */
-                    if (childInFrontier == null && child.getState() !in explored) {
+                    if (childInFrontier == null && child.puzzleState !in explored) {
                         frontier.add(child)
                         frontierMap[childHash] = child
                     } else if (childInFrontier != null && childInFrontier.getF() > child.getF()) {
@@ -165,8 +165,8 @@ class SolveUtil {
             var current: Node? = node
 
             while (current != null) {
-                path.push(current.getState())
-                current = current.getParent()
+                path.push(current.puzzleState)
+                current = current.parent
             }
 
             return path
@@ -181,10 +181,10 @@ class SolveUtil {
             val childNodes: ArrayList<Node> = ArrayList(MAX_NUM_CHILDREN)
 
             for (position in childPositions[blankTilePos]) {
-                val childState: ArrayList<Int> = ArrayList(node.getState().size)
+                val childState: ArrayList<Int> = ArrayList(node.puzzleState.size)
                 val childBlankTilePos: Int
 
-                for (tile in node.getState()) {
+                for (tile in node.puzzleState) {
                     childState.add(tile)
                 }
 
@@ -199,7 +199,7 @@ class SolveUtil {
                         childState,
                         childBlankTilePos,
                         node,
-                        node.getG() + 1,
+                        node.g + 1,
                         getManhattan(childState, numColumns, blankTileMarker)
                     )
                 )

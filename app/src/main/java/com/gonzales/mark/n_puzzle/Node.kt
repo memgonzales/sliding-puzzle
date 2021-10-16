@@ -1,10 +1,10 @@
 package com.gonzales.mark.n_puzzle
 
 class Node(
-    private val puzzleState: ArrayList<Int>,
-    private val blankTilePos: Int,
-    private var parent: Node?,
-    private var g: Int,
+    val puzzleState: ArrayList<Int>,
+    val blankTilePos: Int,
+    val parent: Node?,
+    var g: Int,
     private var h: Int
 ) {
     companion object {
@@ -16,22 +16,6 @@ class Node(
 
             return hash
         }
-    }
-
-    fun getState(): ArrayList<Int> {
-        return puzzleState
-    }
-
-    fun getBlankTilePos(): Int {
-        return blankTilePos
-    }
-
-    fun getParent(): Node? {
-        return parent
-    }
-
-    fun getG(): Int {
-        return g
     }
 
     fun getF(): Int {
