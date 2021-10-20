@@ -23,6 +23,10 @@ import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 
 class NPuzzleActivity : AppCompatActivity() {
+    /**
+     * Companion object containing constants related to the state, display, and statistics
+     * of this 8-puzzle app.
+     */
     companion object {
         /**
          * Number of columns in the 8-puzzle grid.
@@ -44,7 +48,16 @@ class NPuzzleActivity : AppCompatActivity() {
          */
         private const val BLANK_TILE_MARKER = NUM_TILES - 1
 
+        /**
+         * Default value for the fewest number of moves, that is, its initial value
+         * before the user starts playing their first game.
+         */
         private const val DEFAULT_FEWEST_MOVES = Long.MAX_VALUE
+
+        /**
+         * Default value for the fastest time, that is, its initial value before the
+         * user starts playing their first game.
+         */
         private const val DEFAULT_FASTEST_TIME = Long.MAX_VALUE
     }
 
@@ -83,6 +96,10 @@ class NPuzzleActivity : AppCompatActivity() {
      * Shared Preferences *
      **********************/
 
+    /**
+     * Points to a file containing key-value pairs or, in the context of this app, the statistics
+     * related to the fewest number of moves and the fastest time taken in solving an 8-puzzle.
+     */
     private lateinit var sp: SharedPreferences
 
     /***************
@@ -130,10 +147,24 @@ class NPuzzleActivity : AppCompatActivity() {
      * Statistics *
      **************/
 
+    /**
+     * Tracks the number of moves for the current game.
+     */
     private var numMoves: Long = 0
+
+    /**
+     * Fewest number of moves taken by the user to solve an 8-puzzle.
+     */
     private var fewestMoves: Long = DEFAULT_FEWEST_MOVES
 
+    /**
+     * Tracks the time taken for the current game.
+     */
     private var timeTaken: Long = 0
+
+    /**
+     * Fastest time taken by the user to solve an 8-puzzle.
+     */
     private var fastestTime: Long = DEFAULT_FASTEST_TIME
 
     /******************************
@@ -144,10 +175,11 @@ class NPuzzleActivity : AppCompatActivity() {
      * Sequence of states from the current puzzle state to the goal state.
      *
      * Since the 8-puzzle grids generated in this app are guaranteed to be solvable (via the
-     * getValidShuffledState() method in ShuffleUtil), the only time when the value of this stack
-     * is <code>null</code> is prior to the first time the Show Solution button is clicked.
+     * <code>getValidShuffledState()</code> method in <code>ShuffleUtil</code>), the only time
+     * when the value of this stack is <code>null</code> is prior to the first time the Show
+     * Solution button is clicked.
      *
-     * Its type is set to nullable only to conform with the data type of the return value
+     * Its type is set to nullable only to conform to the data type of the return value
      * of the <code>solve()</code> method in the <code>SolveUtil</code> class.
      */
     private var puzzleSolution: Stack<StatePair>? = null
@@ -178,6 +210,14 @@ class NPuzzleActivity : AppCompatActivity() {
         initPuzzle()
     }
 
+    /**
+     * Called when the current <code>Window</code> of the activity gains or loses focus.
+     * This is the best indicator of whether this activity is the entity with which the user
+     * actively interacts. The default implementation clears the key tracking state, so should
+     * always be called.
+     *
+     * @param hasFocus Whether the window of this activity has focus.
+     */
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {
@@ -185,6 +225,11 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Hides the navigation bar, status bar, and app bar, and displays the app in sticky immersive
+     * mode. With the deprecation of the system UI flags, this method hides the system UI via
+     * <code>WindowCompat</code> and <code>WindowInsetsControllerCompat</code>.
+     */
     private fun hideSystemUI() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
         WindowInsetsControllerCompat(window, clRoot).let {

@@ -99,7 +99,7 @@ class SolveUtil {
 
             /* Add the start node to the frontier. */
             frontier.add(startNode)
-            frontierMap[startNode.hash()] = startNode
+            frontierMap[startNode.hashCode()] = startNode
 
             /*
              * If there are no more frontier nodes but the solution has not yet been found,
@@ -125,7 +125,7 @@ class SolveUtil {
 
                 for (child in childNodes) {
                     /* Store the hash into a variable for efficiency. */
-                    val childHash: Int = child.hash()
+                    val childHash: Int = child.hashCode()
                     val childInFrontier: Node? = frontierMap[childHash]
 
                     /*

@@ -3,18 +3,23 @@
     <string name="app_title">Sliding Puzzle</string>
     <string name="preference_file_key">com.gonzales.mark.n_puzzle.PREFERENCE_FILE_KEY</string>
 
+    <!-- First button text -->
     <string name="randomizing">Shuffling</string>
     <string name="inversions">Counting Inversions</string>
     <string name="randomized">Show Solution</string>
     <string name="new_game">New Game</string>
     <string name="pause">Pause</string>
+
+    <!-- Second button text -->
     <string name="skip">Skip Solution</string>
     <string name="upload_picture">Upload Picture</string>
 
+    <!-- Success message -->
     <string name="user_solved">Great!</string>
     <string name="high_score">Bravo!</string>
     <string name="computer_solved">Moves</string>
 
+    <!-- Game statistics -->
     <string name="default_fewest">-</string>
     <string name="default_fastest">-:--:--</string>
     <string name="move_number">0</string>
@@ -25,5 +30,6 @@
     <string name="timer">Timer:&#xA0;</string>
     <string name="fastest_time">Fastest:&#xA0;</string>
 
+    <!-- Trivia -->
     <string name="trivia">Trivia goes here</string>
 </resources>

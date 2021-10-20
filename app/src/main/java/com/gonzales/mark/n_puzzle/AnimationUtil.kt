@@ -43,6 +43,9 @@ class AnimationUtil {
          */
         const val SUCCESS_DISPLAY = 5000
 
-        const val SOLUTION_ANIMATION = 750
+        /**
+         * Delay between the sliding of tiles during the animation of the puzzle solution.
+         */
+        const val SOLUTION_ANIMATION = 650
     }
 }

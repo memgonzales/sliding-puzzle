@@ -8,12 +8,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <!-- Buttons -->
     <color name="btn_first">#D8BE97</color>
     <color name="btn_first_variant">#A0D1A2</color>
     <color name="btn_second">#B56B6B</color>
     <color name="btn_first_text">#0E3E3E</color>
     <color name="btn_second_text">#D8E3E3</color>
 
+    <!-- Miscellaneous UI elements -->
     <color name="progress">#404A1706</color>
     <color name="success">#800E3E3E</color>
     <color name="success_text">#D8E3E3</color>
