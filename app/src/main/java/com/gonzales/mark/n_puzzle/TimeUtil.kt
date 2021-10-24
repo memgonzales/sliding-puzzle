@@ -2,7 +2,15 @@ package com.gonzales.mark.n_puzzle
 
 import java.util.*
 
+/**
+ * Utility class providing constants and methods related to the app's timer.
+ *
+ * @constructor Creates an object that provides constants and methods related to the app's timer.
+ */
 class TimeUtil {
+    /**
+     * Companion object containing constants and methods related to the app's timer.
+     */
     companion object {
         /**
          * Number of seconds in one hour.
@@ -19,6 +27,13 @@ class TimeUtil {
          */
         const val SECONDS_TO_MILLISECONDS = 1000
 
+        /**
+         * Displays the specified number of seconds in the format <code>h:mm:ss</code>, which
+         * is commonly used in timers and stopwatches.
+         *
+         * @param seconds Number of seconds.
+         * @return Number of seconds in the format <code>h:mm:ss</code>.
+         */
         fun displayTime(seconds: Long): String {
             /*
              * The computation is as follows:
