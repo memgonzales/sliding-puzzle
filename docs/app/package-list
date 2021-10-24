@@ -2,6 +2,7 @@ $dokka.format:html-v1
 $dokka.linkExtension:html
 $dokka.location:com.gonzales.mark.n_puzzle////PointingToDeclaration/app/com.gonzales.mark.n_puzzle/index.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/index.html
+$dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion/FIRST_MOVE_SOLUTION_DELAY/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/-f-i-r-s-t_-m-o-v-e_-s-o-l-u-t-i-o-n_-d-e-l-a-y.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion/SHUFFLING_ANIMATION_OFFSET/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/-s-h-u-f-f-l-i-n-g_-a-n-i-m-a-t-i-o-n_-o-f-f-s-e-t.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion/SHUFFLING_ANIMATION_UPPER_BOUND/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/-s-h-u-f-f-l-i-n-g_-a-n-i-m-a-t-i-o-n_-u-p-p-e-r_-b-o-u-n-d.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion/SOLUTION_ANIMATION/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/-s-o-l-u-t-i-o-n_-a-n-i-m-a-t-i-o-n.html
@@ -93,6 +94,7 @@ $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity.Companion/NUM_COLUMNS
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity.Companion/NUM_TILES/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/-companion/-n-u-m_-t-i-l-e-s.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/index.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/NPuzzleActivity/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/-n-puzzle-activity.html
+$dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/blankDisplayedStats/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/blank-displayed-stats.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/blankImageChunks/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/blank-image-chunks.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/blankTilePos/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/blank-tile-pos.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/btnShuffle/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/btn-shuffle.html
@@ -126,6 +128,7 @@ $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/initSharedPreferences
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/initStateAndTileImages/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/init-state-and-tile-images.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/isGameInSession/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/is-game-in-session.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/isPuzzleGridFrozen/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/is-puzzle-grid-frozen.html
+$dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/isSolutionDisplay/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/is-solution-display.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/isTimerRunning/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/is-timer-running.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/launchTimer/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/launch-timer.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/moveTile/#com.gonzales.mark.n_puzzle.FlingDirection#kotlin.Int/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/move-tile.html
@@ -197,7 +200,7 @@ $dokka.location:com.gonzales.mark.n_puzzle/ShuffleRunnable/run/#/PointingToDecla
 $dokka.location:com.gonzales.mark.n_puzzle/ShuffleRunnable/tilePosition/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-shuffle-runnable/tile-position.html
 $dokka.location:com.gonzales.mark.n_puzzle/ShuffleUtil.Companion///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-shuffle-util/-companion/index.html
 $dokka.location:com.gonzales.mark.n_puzzle/ShuffleUtil.Companion/countInversions/#java.util.ArrayList[kotlin.Int]#kotlin.Int/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-shuffle-util/-companion/count-inversions.html
-$dokka.location:com.gonzales.mark.n_puzzle/ShuffleUtil.Companion/getValidShuffledState/#java.util.ArrayList[kotlin.Int]#kotlin.Int/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-shuffle-util/-companion/get-valid-shuffled-state.html
+$dokka.location:com.gonzales.mark.n_puzzle/ShuffleUtil.Companion/getValidShuffledState/#java.util.ArrayList[kotlin.Int]#java.util.ArrayList[kotlin.Int]#kotlin.Int/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-shuffle-util/-companion/get-valid-shuffled-state.html
 $dokka.location:com.gonzales.mark.n_puzzle/ShuffleUtil.Companion/isBlankTile/#kotlin.Int#java.util.ArrayList[kotlin.Int]#kotlin.Int/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-shuffle-util/-companion/is-blank-tile.html
 $dokka.location:com.gonzales.mark.n_puzzle/ShuffleUtil.Companion/isSolvable/#java.util.ArrayList[kotlin.Int]#kotlin.Int/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-shuffle-util/-companion/is-solvable.html
 $dokka.location:com.gonzales.mark.n_puzzle/ShuffleUtil.Companion/swapTiles/#java.util.ArrayList[kotlin.Int]#kotlin.Int/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-shuffle-util/-companion/swap-tiles.html

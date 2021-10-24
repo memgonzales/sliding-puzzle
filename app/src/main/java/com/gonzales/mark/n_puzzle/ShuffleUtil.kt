@@ -58,6 +58,15 @@ class ShuffleUtil {
             }
         }
 
+        /**
+         * Checks if the tile specified by the given position is a blank tile.
+         *
+         * @param position Position of the tile in the puzzle grid (zero-based, following row-major order).
+         * @param puzzleState Current puzzle state (flattened into one dimension, following row-major order).
+         * @param blankTileMarker Indicator that the tile is blank.
+         * @return <code>true</code> if the tile specified by the given position is a blank tile;
+         * <code>false</code>, otherwise.
+         */
         private fun isBlankTile(
             position: Int,
             puzzleState: ArrayList<Int>,
