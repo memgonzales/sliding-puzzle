@@ -186,8 +186,10 @@ class NPuzzleActivity : AppCompatActivity() {
     private var numMovesSolution: Int = 0
     private lateinit var solveHandler: Handler
     private lateinit var solveDisplayHandler: Handler
+
     private var isSolutionDisplay: Boolean = false
     private var isSolutionPlay: Boolean = false
+    private var isSolutionSkip: Boolean = false
 
     /**
      * Called when the activity is first created. This is where you should do all of your normal
@@ -747,10 +749,14 @@ class NPuzzleActivity : AppCompatActivity() {
             solveDisplayHandler.post(object : Runnable {
                 override fun run() {
                     if (puzzleSolution?.isNotEmpty()!! && isSolutionDisplay && isSolutionPlay) {
-                        solveDisplayHandler.postDelayed(
-                            this,
-                            AnimationUtil.MOVE_SOLUTION_DELAY.toLong()
-                        )
+                        if (!isSolutionSkip) {
+                            solveDisplayHandler.postDelayed(
+                                this,
+                                AnimationUtil.MOVE_SOLUTION_DELAY.toLong()
+                            )
+                        } else {
+                            solveDisplayHandler.postDelayed(this, 0)
+                        }
 
                         val puzzleStatePair: StatePair = puzzleSolution?.pop()!!
                         puzzleState = puzzleStatePair.puzzleState
@@ -779,6 +785,7 @@ class NPuzzleActivity : AppCompatActivity() {
         isSolutionDisplay = false
         isSolutionPlay = false
         isPuzzleGridFrozen = false
+        isSolutionSkip = false
     }
 
     private fun pauseSolution() {
@@ -794,8 +801,8 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun skipSolution() {
-        endSolution()
-        prepareForNewGame()
+        isSolutionSkip = true
+        resumeSolution()
     }
 
     /*********************
