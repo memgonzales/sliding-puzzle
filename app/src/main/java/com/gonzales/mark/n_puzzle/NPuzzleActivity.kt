@@ -187,6 +187,7 @@ class NPuzzleActivity : AppCompatActivity() {
     private lateinit var solveHandler: Handler
     private lateinit var solveDisplayHandler: Handler
     private var isSolutionDisplay: Boolean = false
+    private var isSolutionPlay: Boolean = false
 
     /**
      * Called when the activity is first created. This is where you should do all of your normal
@@ -252,13 +253,7 @@ class NPuzzleActivity : AppCompatActivity() {
         /* Initialize the buttons. */
         btnUpload = findViewById(R.id.btn_upload)
         btnShuffle = findViewById(R.id.btn_shuffle)
-        btnShuffle.setOnClickListener {
-            if (!isGameInSession) {
-                shuffle()
-            } else {
-                solve()
-            }
-        }
+        setBtnShuffleAction()
 
         /* Initialize the progress bar. */
         pbShuffle = findViewById(R.id.pb_shuffle)
@@ -276,6 +271,18 @@ class NPuzzleActivity : AppCompatActivity() {
         }
 
         tvTrivia = findViewById(R.id.tv_trivia)
+    }
+
+    private fun setBtnShuffleAction() {
+        btnShuffle.setOnClickListener {
+            if (!isGameInSession && !isSolutionDisplay) {
+                shuffle()
+            } else if (isSolutionDisplay) {
+                controlSolutionDisplay()
+            } else {
+                solve()
+            }
+        }
     }
 
     private fun initSharedPreferences() {
@@ -341,9 +348,9 @@ class NPuzzleActivity : AppCompatActivity() {
         setDimensions()
     }
 
-    /***********************************************
-     * Methods Related to Initial Display of Stats *
-     ***********************************************/
+    /*****************************************
+     * Methods Related to Statistics Display *
+     *****************************************/
 
     private fun displayStats() {
         displayFewestMoves()
@@ -364,6 +371,26 @@ class NPuzzleActivity : AppCompatActivity() {
         } else {
             TimeUtil.displayTime(fastestTime)
         }
+    }
+
+    private fun blankDisplayedStats() {
+        /* Remove the statistics for the number of moves, and display them. */
+        numMoves = 0
+        tvMoveNumber.text = getString(R.string.default_move_count)
+
+        /* Remove the statistics for the time taken, and display them. */
+        timeTaken = 0
+        tvTimeTaken.text = getString(R.string.default_timer)
+    }
+
+    private fun resetDisplayedStats() {
+        /* Reset the statistics for the number of moves, and display them. */
+        numMoves = 0
+        tvMoveNumber.text = numMoves.toString()
+
+        /* Reset the statistics for the time taken, and display them. */
+        timeTaken = 0
+        tvTimeTaken.text = TimeUtil.displayTime(timeTaken)
     }
 
     /********************************************
@@ -664,35 +691,13 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
-    private fun blankDisplayedStats() {
-        /* Remove the statistics for the number of moves, and display them. */
-        numMoves = 0
-        tvMoveNumber.text = getString(R.string.default_move_count)
-
-        /* Remove the statistics for the time taken, and display them. */
-        timeTaken = 0
-        tvTimeTaken.text = getString(R.string.default_timer)
-    }
-
-    private fun resetDisplayedStats() {
-        /* Reset the statistics for the number of moves, and display them. */
-        numMoves = 0
-        tvMoveNumber.text = numMoves.toString()
-
-        /* Reset the statistics for the time taken, and display them. */
-        timeTaken = 0
-        tvTimeTaken.text = TimeUtil.displayTime(timeTaken)
-    }
-
-    /***********************************************
-     * Methods Related to Solving and Post-Solving *
-     ***********************************************/
+    /***************************************
+     * Methods Related to Solution Display *
+     ***************************************/
 
     private fun solve() {
         /* Remove the displayed move number and time taken. */
         blankDisplayedStats()
-
-        endGame(SolveStatus.COMPUTER_SOLVED)
 
         if (puzzleSolution?.pop()?.puzzleState == puzzleState) {
             displaySolution()
@@ -711,6 +716,8 @@ class NPuzzleActivity : AppCompatActivity() {
                 BLANK_TILE_MARKER
             )
         }
+
+        endGame(SolveStatus.COMPUTER_SOLVED)
     }
 
     private fun generateSolution() {
@@ -725,13 +732,33 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun displaySolution() {
+        startSolution()
         numMovesSolution = puzzleSolution?.size!!
+        animateSolution()
+    }
 
+    private fun controlSolutionDisplay() {
+        if (isSolutionPlay) {
+            pauseSolution()
+        } else {
+            resumeSolution()
+        }
+    }
+
+    private fun startSolution() {
+        isSolutionDisplay = true
+        isSolutionPlay = true
+    }
+
+    private fun animateSolution() {
         Handler(Looper.getMainLooper()).postDelayed({
             solveDisplayHandler.post(object : Runnable {
                 override fun run() {
-                    if (puzzleSolution?.isNotEmpty()!!) {
-                        solveDisplayHandler.postDelayed(this, AnimationUtil.SOLUTION_ANIMATION.toLong())
+                    if (puzzleSolution?.isNotEmpty()!! && isSolutionDisplay && isSolutionPlay) {
+                        solveDisplayHandler.postDelayed(
+                            this,
+                            AnimationUtil.SOLUTION_ANIMATION.toLong()
+                        )
 
                         val puzzleStatePair: StatePair = puzzleSolution?.pop()!!
                         puzzleState = puzzleStatePair.puzzleState
@@ -745,7 +772,8 @@ class NPuzzleActivity : AppCompatActivity() {
                          */
                         if (puzzleSolution?.empty()!!) {
                             solveDisplayHandler.removeCallbacks(this)
-                            displaySuccessMessage(SolveStatus.COMPUTER_SOLVED)
+
+                            endSolution()
                             prepareForNewGame()
                         }
                     }
@@ -753,6 +781,29 @@ class NPuzzleActivity : AppCompatActivity() {
             })
         }, AnimationUtil.FIRST_MOVE_SOLUTION_DELAY.toLong())
     }
+
+    private fun endSolution() {
+        isSolutionDisplay = false
+        isSolutionPlay = false
+
+        displaySuccessMessage(SolveStatus.COMPUTER_SOLVED)
+    }
+
+    private fun pauseSolution() {
+        isSolutionPlay = false
+        btnShuffle.text = getString(R.string.resume)
+    }
+
+    private fun resumeSolution() {
+        isSolutionPlay = true
+        btnShuffle.text = getString(R.string.pause)
+
+        animateSolution()
+    }
+
+    /*********************
+     * Post-Game Methods *
+     *********************/
 
     private fun endGame(solveStatus: SolveStatus) {
         /* Signal that the game is over. */

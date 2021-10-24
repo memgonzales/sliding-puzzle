@@ -9,6 +9,7 @@
     <string name="randomized">Show Solution</string>
     <string name="new_game">New Game</string>
     <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
 
     <!-- Second button text -->
     <string name="skip">Skip Solution</string>
