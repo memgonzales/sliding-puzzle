@@ -3,9 +3,9 @@ $dokka.linkExtension:html
 $dokka.location:com.gonzales.mark.n_puzzle////PointingToDeclaration/app/com.gonzales.mark.n_puzzle/index.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/index.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion/FIRST_MOVE_SOLUTION_DELAY/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/-f-i-r-s-t_-m-o-v-e_-s-o-l-u-t-i-o-n_-d-e-l-a-y.html
+$dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion/MOVE_SOLUTION_DELAY/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/-m-o-v-e_-s-o-l-u-t-i-o-n_-d-e-l-a-y.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion/SHUFFLING_ANIMATION_OFFSET/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/-s-h-u-f-f-l-i-n-g_-a-n-i-m-a-t-i-o-n_-o-f-f-s-e-t.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion/SHUFFLING_ANIMATION_UPPER_BOUND/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/-s-h-u-f-f-l-i-n-g_-a-n-i-m-a-t-i-o-n_-u-p-p-e-r_-b-o-u-n-d.html
-$dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion/SOLUTION_ANIMATION/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/-s-o-l-u-t-i-o-n_-a-n-i-m-a-t-i-o-n.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion/SUCCESS_DISPLAY/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/-s-u-c-c-e-s-s_-d-i-s-p-l-a-y.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/index.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil/AnimationUtil/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-animation-util.html
@@ -94,12 +94,14 @@ $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity.Companion/NUM_COLUMNS
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity.Companion/NUM_TILES/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/-companion/-n-u-m_-t-i-l-e-s.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/index.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/NPuzzleActivity/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/-n-puzzle-activity.html
+$dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/animateSolution/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/animate-solution.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/blankDisplayedStats/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/blank-displayed-stats.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/blankImageChunks/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/blank-image-chunks.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/blankTilePos/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/blank-tile-pos.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/btnShuffle/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/btn-shuffle.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/btnUpload/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/btn-upload.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/clRoot/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/cl-root.html
+$dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/controlSolutionDisplay/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/control-solution-display.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/disableClickables/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/disable-clickables.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/displayBlankPuzzle/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/display-blank-puzzle.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/displayFastestTime/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/display-fastest-time.html
@@ -110,10 +112,10 @@ $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/displayStats/#/Pointi
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/displaySuccessMessage/#com.gonzales.mark.n_puzzle.SolveStatus/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/display-success-message.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/enableClickables/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/enable-clickables.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/endGame/#com.gonzales.mark.n_puzzle.SolveStatus/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/end-game.html
+$dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/endSolution/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/end-solution.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/fastestTime/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/fastest-time.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/fewestMoves/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/fewest-moves.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/finishShuffling/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/finish-shuffling.html
-$dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/generateSolution/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/generate-solution.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/getValidShuffledState/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/get-valid-shuffled-state.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/goalPuzzleState/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/goal-puzzle-state.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/gvgPuzzle/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/gvg-puzzle.html
@@ -129,6 +131,7 @@ $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/initStateAndTileImage
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/isGameInSession/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/is-game-in-session.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/isPuzzleGridFrozen/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/is-puzzle-grid-frozen.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/isSolutionDisplay/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/is-solution-display.html
+$dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/isSolutionPlay/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/is-solution-play.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/isTimerRunning/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/is-timer-running.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/launchTimer/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/launch-timer.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/moveTile/#com.gonzales.mark.n_puzzle.FlingDirection#kotlin.Int/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/move-tile.html
@@ -136,6 +139,7 @@ $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/numMoves/#/PointingTo
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/numMovesSolution/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/num-moves-solution.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/onCreate/#android.os.Bundle?/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/on-create.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/onWindowFocusChanged/#kotlin.Boolean/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/on-window-focus-changed.html
+$dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/pauseSolution/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/pause-solution.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/pbShuffle/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/pb-shuffle.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/prepareForNewGame/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/prepare-for-new-game.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/prepareForSolution/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/prepare-for-solution.html
@@ -143,10 +147,12 @@ $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/puzzleDimen/#/Pointin
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/puzzleSolution/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/puzzle-solution.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/puzzleState/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/puzzle-state.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/resetDisplayedStats/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/reset-displayed-stats.html
+$dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/resumeSolution/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/resume-solution.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/saveFastestTime/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/save-fastest-time.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/saveFewestAndFastest/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/save-fewest-and-fastest.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/saveFewestMoves/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/save-fewest-moves.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/saveStats/#com.gonzales.mark.n_puzzle.SolveStatus/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/save-stats.html
+$dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/setBtnShuffleAction/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/set-btn-shuffle-action.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/setDimensions/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/set-dimensions.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/setOnFlingListener/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/set-on-fling-listener.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/setTouchSlopThreshold/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/set-touch-slop-threshold.html
@@ -160,6 +166,7 @@ $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/solveDisplayHandler/#
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/solveHandler/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/solve-handler.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/sp/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/sp.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/startShowingTiles/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/start-showing-tiles.html
+$dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/startSolution/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/start-solution.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/tileDimen/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/tile-dimen.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/tileImages/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/tile-images.html
 $dokka.location:com.gonzales.mark.n_puzzle/NPuzzleActivity/timeTaken/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-n-puzzle-activity/time-taken.html
