@@ -5,7 +5,7 @@ import android.graphics.*
 
 class ImageUtil {
     companion object {
-        private const val DARK_SLATE_GRAY_FILTER = 0xFF2F4F4F
+        private const val DARK_GRAY_FILTER = 0x121f1f
 
         fun drawableToBitmap(context: Context, drawableId: Int): Bitmap {
             return BitmapFactory.decodeResource(context.resources, drawableId)
@@ -45,7 +45,7 @@ class ImageUtil {
             val canvas = Canvas(darkPicture)
 
             val paint = Paint(Color.RED)
-            paint.colorFilter = LightingColorFilter(DARK_SLATE_GRAY_FILTER.toInt(), 0x00000000)
+            paint.colorFilter = LightingColorFilter(DARK_GRAY_FILTER, 0x00000000)
 
             canvas.drawBitmap(darkPicture, Matrix(), paint)
 

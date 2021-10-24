@@ -251,9 +251,11 @@ class NPuzzleActivity : AppCompatActivity() {
         gvgPuzzle = findViewById(R.id.gvg_puzzle)
 
         /* Initialize the buttons. */
-        btnUpload = findViewById(R.id.btn_upload)
         btnShuffle = findViewById(R.id.btn_shuffle)
         setBtnShuffleAction()
+
+        btnUpload = findViewById(R.id.btn_upload)
+        setBtnUploadAction()
 
         /* Initialize the progress bar. */
         pbShuffle = findViewById(R.id.pb_shuffle)
@@ -275,12 +277,20 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private fun setBtnShuffleAction() {
         btnShuffle.setOnClickListener {
-            if (!isGameInSession && !isSolutionDisplay) {
-                shuffle()
-            } else if (isSolutionDisplay) {
+            if (isSolutionDisplay) {
                 controlSolutionDisplay()
+            } else if (!isGameInSession) {
+                shuffle()
             } else {
                 solve()
+            }
+        }
+    }
+
+    private fun setBtnUploadAction() {
+        btnUpload.setOnClickListener {
+            if (isSolutionDisplay) {
+                skipSolution()
             }
         }
     }
@@ -426,7 +436,7 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private fun initChunks() {
         val image: Bitmap = ImageUtil.resizeToBitmap(
-            ImageUtil.drawableToBitmap(this@NPuzzleActivity, R.drawable.shoob1),
+            ImageUtil.drawableToBitmap(this@NPuzzleActivity, R.drawable.kikyo1),
             puzzleDimen, puzzleDimen
         )
 
@@ -756,6 +766,7 @@ class NPuzzleActivity : AppCompatActivity() {
                             solveDisplayHandler.removeCallbacks(this)
 
                             endSolution()
+                            displaySuccessMessage(SolveStatus.COMPUTER_SOLVED)
                             prepareForNewGame()
                         }
                     }
@@ -768,8 +779,6 @@ class NPuzzleActivity : AppCompatActivity() {
         isSolutionDisplay = false
         isSolutionPlay = false
         isPuzzleGridFrozen = false
-
-        displaySuccessMessage(SolveStatus.COMPUTER_SOLVED)
     }
 
     private fun pauseSolution() {
@@ -782,6 +791,11 @@ class NPuzzleActivity : AppCompatActivity() {
         btnShuffle.text = getString(R.string.pause)
 
         animateSolution()
+    }
+
+    private fun skipSolution() {
+        endSolution()
+        prepareForNewGame()
     }
 
     /*********************

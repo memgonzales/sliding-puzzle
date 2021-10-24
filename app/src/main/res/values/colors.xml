@@ -10,11 +10,11 @@
 
     <!-- Buttons -->
     <color name="btn_first">#D8BE97</color>
-    <color name="btn_first_variant">#8CBF8F</color>
+    <color name="btn_first_variant">#90D194</color>
     <color name="btn_first_text">#324251</color>
 
     <color name="btn_second">#B56B6B</color>
-    <color name="btn_second_variant">#B16B82</color>
+    <color name="btn_second_variant">#A57A7A</color>
     <color name="btn_second_text">#D2DCDD</color>
 
     <!-- Miscellaneous UI elements -->
