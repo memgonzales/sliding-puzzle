@@ -624,13 +624,20 @@ class NPuzzleActivity : AppCompatActivity() {
         isGameInSession = true
 
         /*
-         * Change the colors of the game title and solve button, as well as the text displayed,
+         * Change the colors of the game title and the buttons, as well as the text displayed,
          * to visually indicate that shuffling is finished.
          */
         tvTitle.setTextColor(
             ContextCompat.getColor(
                 applicationContext,
                 R.color.btn_first_variant
+            )
+        )
+
+        btnUpload.setBackgroundColor(
+            ContextCompat.getColor(
+                applicationContext,
+                R.color.btn_second_variant
             )
         )
 
@@ -798,10 +805,17 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private fun prepareForNewGame() {
         /*
-         * Revert the colors of the game title and solve button, as well as the text displayed,
+         * Revert the colors of the game title and the buttons, as well as the text displayed,
          * to visually indicate the start of a new game.
          */
         tvTitle.setTextColor(ContextCompat.getColor(applicationContext, R.color.btn_first))
+
+        btnUpload.setBackgroundColor(
+            ContextCompat.getColor(
+                applicationContext,
+                R.color.btn_second
+            )
+        )
 
         btnShuffle.setBackgroundColor(
             ContextCompat.getColor(
