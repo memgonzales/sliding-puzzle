@@ -21,7 +21,7 @@ class AnimationUtil {
          * <code>SHUFFLING_ANIMATION_UPPER_BOUND + SHUFFLING_ANIMATION_OFFSET</code>,
          * inclusive.
          */
-        const val SHUFFLING_ANIMATION_UPPER_BOUND = 3000
+        const val SHUFFLING_ANIMATION_UPPER_BOUND = 2700
 
         /**
          * Offset of the duration of the animation of the progress bar during shuffling.
@@ -46,6 +46,8 @@ class AnimationUtil {
         /**
          * Delay between the sliding of tiles during the animation of the puzzle solution.
          */
-        const val SOLUTION_ANIMATION = 650
+        const val SOLUTION_ANIMATION = 425
+
+        const val FIRST_MOVE_SOLUTION_DELAY = 520
     }
 }

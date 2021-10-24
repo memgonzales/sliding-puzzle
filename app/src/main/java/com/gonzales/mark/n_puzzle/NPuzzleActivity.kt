@@ -186,6 +186,7 @@ class NPuzzleActivity : AppCompatActivity() {
     private var numMovesSolution: Int = 0
     private lateinit var solveHandler: Handler
     private lateinit var solveDisplayHandler: Handler
+    private var isSolutionDisplay: Boolean = false
 
     /**
      * Called when the activity is first created. This is where you should do all of your normal
@@ -351,7 +352,7 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private fun displayFewestMoves() {
         tvFewestMoves.text = if (fewestMoves == DEFAULT_FEWEST_MOVES) {
-            getString(R.string.default_fewest)
+            getString(R.string.default_move_count)
         } else {
             fewestMoves.toString()
         }
@@ -359,7 +360,7 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private fun displayFastestTime() {
         tvFastestTime.text = if (fastestTime == DEFAULT_FASTEST_TIME) {
-            getString(R.string.default_fastest)
+            getString(R.string.default_timer)
         } else {
             TimeUtil.displayTime(fastestTime)
         }
@@ -583,7 +584,7 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private fun getValidShuffledState() {
         val shuffledState: StatePair =
-            ShuffleUtil.getValidShuffledState(puzzleState, BLANK_TILE_MARKER)
+            ShuffleUtil.getValidShuffledState(puzzleState, goalPuzzleState, BLANK_TILE_MARKER)
 
         puzzleState = shuffledState.puzzleState
         blankTilePos = shuffledState.blankTilePos
@@ -606,7 +607,7 @@ class NPuzzleActivity : AppCompatActivity() {
 
         /*
          * Change the colors of the game title and solve button, as well as the text displayed,
-         * to visually indicate the start of a new game.
+         * to visually indicate that shuffling is finished.
          */
         tvTitle.setTextColor(
             ContextCompat.getColor(
@@ -663,6 +664,16 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    private fun blankDisplayedStats() {
+        /* Remove the statistics for the number of moves, and display them. */
+        numMoves = 0
+        tvMoveNumber.text = getString(R.string.default_move_count)
+
+        /* Remove the statistics for the time taken, and display them. */
+        timeTaken = 0
+        tvTimeTaken.text = getString(R.string.default_timer)
+    }
+
     private fun resetDisplayedStats() {
         /* Reset the statistics for the number of moves, and display them. */
         numMoves = 0
@@ -678,6 +689,9 @@ class NPuzzleActivity : AppCompatActivity() {
      ***********************************************/
 
     private fun solve() {
+        /* Remove the displayed move number and time taken. */
+        blankDisplayedStats()
+
         endGame(SolveStatus.COMPUTER_SOLVED)
 
         if (puzzleSolution?.pop()?.puzzleState == puzzleState) {
@@ -713,21 +727,31 @@ class NPuzzleActivity : AppCompatActivity() {
     private fun displaySolution() {
         numMovesSolution = puzzleSolution?.size!!
 
-        solveDisplayHandler.post(object : Runnable {
-            override fun run() {
-                if (puzzleSolution?.isNotEmpty()!!) {
-                    val puzzleStatePair: StatePair = puzzleSolution?.pop()!!
-                    puzzleState = puzzleStatePair.puzzleState
-                    blankTilePos = puzzleStatePair.blankTilePos
+        Handler(Looper.getMainLooper()).postDelayed({
+            solveDisplayHandler.post(object : Runnable {
+                override fun run() {
+                    if (puzzleSolution?.isNotEmpty()!!) {
+                        solveDisplayHandler.postDelayed(this, AnimationUtil.SOLUTION_ANIMATION.toLong())
 
-                    displayPuzzle()
-                    solveDisplayHandler.postDelayed(this, AnimationUtil.SOLUTION_ANIMATION.toLong())
-                } else {
-                    solveDisplayHandler.removeCallbacks(this)
-                    displaySuccessMessage(SolveStatus.COMPUTER_SOLVED)
+                        val puzzleStatePair: StatePair = puzzleSolution?.pop()!!
+                        puzzleState = puzzleStatePair.puzzleState
+                        blankTilePos = puzzleStatePair.blankTilePos
+
+                        displayPuzzle()
+
+                        /*
+                         * Check immediately so that the last move and the success message are displayed
+                         * almost simultaneously.
+                         */
+                        if (puzzleSolution?.empty()!!) {
+                            solveDisplayHandler.removeCallbacks(this)
+                            displaySuccessMessage(SolveStatus.COMPUTER_SOLVED)
+                            prepareForNewGame()
+                        }
+                    }
                 }
-            }
-        })
+            })
+        }, AnimationUtil.FIRST_MOVE_SOLUTION_DELAY.toLong())
     }
 
     private fun endGame(solveStatus: SolveStatus) {

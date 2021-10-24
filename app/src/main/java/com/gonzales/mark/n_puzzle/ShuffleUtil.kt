@@ -4,9 +4,13 @@ class ShuffleUtil {
     companion object {
         fun getValidShuffledState(
             puzzleState: ArrayList<Int>,
+            goalPuzzleState: ArrayList<Int>,
             blankTileMarker: Int
         ): StatePair {
-            puzzleState.shuffle()
+            /* Repeat shuffling if the resulting state is equivalent to the goal state. */
+            while (puzzleState == goalPuzzleState) {
+                puzzleState.shuffle()
+            }
 
             /*
              * If the 8-puzzle is not solvable (that is, it has an odd number of inversions),

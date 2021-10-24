@@ -20,10 +20,8 @@
     <string name="computer_solved">Moves</string>
 
     <!-- Game statistics -->
-    <string name="default_fewest">-</string>
-    <string name="default_fastest">-:--:--</string>
-    <string name="move_number">0</string>
-    <string name="time_taken">0:00:00</string>
+    <string name="default_move_count">-</string>
+    <string name="default_timer">-:--:--</string>
 
     <string name="move_count">Move Count:&#xA0;</string>
     <string name="fewest_moves">Fewest:&#xA0;</string>
