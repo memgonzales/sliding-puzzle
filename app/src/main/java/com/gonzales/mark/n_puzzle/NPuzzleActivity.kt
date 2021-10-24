@@ -592,17 +592,8 @@ class NPuzzleActivity : AppCompatActivity() {
         /* Reset the displayed move number and time taken. */
         resetDisplayedStats()
 
-        /*
-         * Generate the shuffled state, and find the solution.
-         *
-         * Although the runtime for finding the solution to an 8-puzzle grid (following the
-         * implementation in the SolveUtil class) is less than a second, it is already being
-         * processed on a separate thread while the shuffling animation is playing in order
-         * to ensure that, when the Show Solution button is clicked, the solution is displayed
-         * almost instantaneously.
-         */
+        /* Generate the shuffled state. */
         getValidShuffledState()
-        generateSolution()
 
         /* Apply dark filter to all the tiles before starting the animation. */
         displayBlankPuzzle()
@@ -696,44 +687,27 @@ class NPuzzleActivity : AppCompatActivity() {
      ***************************************/
 
     private fun solve() {
+        puzzleSolution = SolveUtil.solve(
+            StatePair(puzzleState, blankTilePos),
+            goalPuzzleState,
+            NUM_COLUMNS,
+            BLANK_TILE_MARKER
+        )
+
         /* Remove the displayed move number and time taken. */
         blankDisplayedStats()
 
-        if (puzzleSolution?.pop()?.puzzleState == puzzleState) {
-            displaySolution()
-        } else {
-            /*
-             * Since the solution is processed in a separate thread while the shuffling animation
-             * is playing, this code should be unreachable.
-             *
-             * Nonetheless, should the app encounter problems related to threading, this code is
-             * included to ensure proper generation of the puzzle solution.
-             */
-            puzzleSolution = SolveUtil.solve(
-                StatePair(puzzleState, blankTilePos),
-                goalPuzzleState,
-                NUM_COLUMNS,
-                BLANK_TILE_MARKER
-            )
-        }
+        displaySolution()
 
         endGame(SolveStatus.COMPUTER_SOLVED)
     }
 
-    private fun generateSolution() {
-        solveHandler.post {
-            puzzleSolution = SolveUtil.solve(
-                StatePair(puzzleState, blankTilePos),
-                goalPuzzleState,
-                NUM_COLUMNS,
-                BLANK_TILE_MARKER
-            )
-        }
-    }
-
     private fun displaySolution() {
         startSolution()
+
+        puzzleSolution?.pop()!!
         numMovesSolution = puzzleSolution?.size!!
+
         animateSolution()
     }
 
@@ -748,6 +722,7 @@ class NPuzzleActivity : AppCompatActivity() {
     private fun startSolution() {
         isSolutionDisplay = true
         isSolutionPlay = true
+        isPuzzleGridFrozen = true
     }
 
     private fun animateSolution() {
@@ -757,7 +732,7 @@ class NPuzzleActivity : AppCompatActivity() {
                     if (puzzleSolution?.isNotEmpty()!! && isSolutionDisplay && isSolutionPlay) {
                         solveDisplayHandler.postDelayed(
                             this,
-                            AnimationUtil.SOLUTION_ANIMATION.toLong()
+                            AnimationUtil.MOVE_SOLUTION_DELAY.toLong()
                         )
 
                         val puzzleStatePair: StatePair = puzzleSolution?.pop()!!
@@ -785,6 +760,7 @@ class NPuzzleActivity : AppCompatActivity() {
     private fun endSolution() {
         isSolutionDisplay = false
         isSolutionPlay = false
+        isPuzzleGridFrozen = false
 
         displaySuccessMessage(SolveStatus.COMPUTER_SOLVED)
     }

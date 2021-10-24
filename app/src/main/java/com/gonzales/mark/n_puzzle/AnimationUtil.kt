@@ -44,10 +44,13 @@ class AnimationUtil {
         const val SUCCESS_DISPLAY = 5000
 
         /**
+         * Delay before the first move in the animation of the puzzle solution is displayed.
+         */
+        const val FIRST_MOVE_SOLUTION_DELAY = 750
+
+        /**
          * Delay between the sliding of tiles during the animation of the puzzle solution.
          */
-        const val SOLUTION_ANIMATION = 425
-
-        const val FIRST_MOVE_SOLUTION_DELAY = 520
+        const val MOVE_SOLUTION_DELAY = 425
     }
 }
