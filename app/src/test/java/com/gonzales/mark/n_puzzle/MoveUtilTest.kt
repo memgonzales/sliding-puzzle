@@ -49,15 +49,33 @@ class MoveUtilTest {
             allowedMoves: ArrayList<Pair<Int, FlingDirection>>,
             blankTilePos: Int
         ) {
+            for (allowedMove in allowedMoves) {
+                assertTrue(
+                    MoveUtil.canMoveTile(
+                        allowedMove.second,
+                        allowedMove.first,
+                        blankTilePos,
+                        NUM_COLUMNS
+                    )
+                )
+            }
+        }
+
+        private fun assertNotMovable(
+            allowedMoves: ArrayList<Pair<Int, FlingDirection>>,
+            blankTilePos: Int
+        ) {
             for (position in 0 until NUM_TILES) {
                 for (direction in directions) {
-                    val isMovable: Boolean =
-                        MoveUtil.canMoveTile(direction, position, blankTilePos, NUM_COLUMNS)
-
-                    if (Pair(position, direction) in allowedMoves) {
-                        assertTrue(isMovable)
-                    } else {
-                        assertFalse(isMovable)
+                    if (Pair(position, direction) !in allowedMoves) {
+                        assertFalse(
+                            MoveUtil.canMoveTile(
+                                direction,
+                                position,
+                                blankTilePos,
+                                NUM_COLUMNS
+                            )
+                        )
                     }
                 }
             }
@@ -190,5 +208,117 @@ class MoveUtilTest {
             arrayListOf(Pair(7, FlingDirection.RIGHT), Pair(5, FlingDirection.DOWN))
 
         assertMovable(allowedMoves, blankTilePos)
+    }
+
+    @Test
+    fun `Check immovable tiles when blank tile is at the top left position`() {
+        val testCase: ArrayList<Int> = testCases[0]
+        val blankTilePos: Int = testCase.indexOf(BLANK_TILE_MARKER)
+        val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
+            arrayListOf(Pair(1, FlingDirection.LEFT), Pair(3, FlingDirection.UP))
+
+        assertNotMovable(allowedMoves, blankTilePos)
+    }
+
+    @Test
+    fun `Check immovable tiles when blank tile is at the top center position`() {
+        val testCase: ArrayList<Int> = testCases[1]
+        val blankTilePos: Int = testCase.indexOf(BLANK_TILE_MARKER)
+        val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
+            arrayListOf(
+                Pair(0, FlingDirection.RIGHT),
+                Pair(2, FlingDirection.LEFT),
+                Pair(4, FlingDirection.UP)
+            )
+
+        assertNotMovable(allowedMoves, blankTilePos)
+    }
+
+    @Test
+    fun `Check immovable tiles when blank tile is at the top right position`() {
+        val testCase: ArrayList<Int> = testCases[2]
+        val blankTilePos: Int = testCase.indexOf(BLANK_TILE_MARKER)
+        val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
+            arrayListOf(Pair(1, FlingDirection.RIGHT), Pair(5, FlingDirection.UP))
+
+        assertNotMovable(allowedMoves, blankTilePos)
+    }
+
+    @Test
+    fun `Check immovable tiles when blank tile is at the middle left position`() {
+        val testCase: ArrayList<Int> = testCases[3]
+        val blankTilePos: Int = testCase.indexOf(BLANK_TILE_MARKER)
+        val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
+            arrayListOf(
+                Pair(0, FlingDirection.DOWN),
+                Pair(4, FlingDirection.LEFT),
+                Pair(6, FlingDirection.UP)
+            )
+
+        assertNotMovable(allowedMoves, blankTilePos)
+    }
+
+    @Test
+    fun `Check immovable tiles when blank tile is at the middle center position`() {
+        val testCase: ArrayList<Int> = testCases[4]
+        val blankTilePos: Int = testCase.indexOf(BLANK_TILE_MARKER)
+        val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
+            arrayListOf(
+                Pair(1, FlingDirection.DOWN),
+                Pair(3, FlingDirection.RIGHT),
+                Pair(5, FlingDirection.LEFT),
+                Pair(7, FlingDirection.UP)
+            )
+
+        assertNotMovable(allowedMoves, blankTilePos)
+    }
+
+    @Test
+    fun `Check immovable tiles when blank tile is at the middle right position`() {
+        val testCase: ArrayList<Int> = testCases[5]
+        val blankTilePos: Int = testCase.indexOf(BLANK_TILE_MARKER)
+
+        val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
+            arrayListOf(
+                Pair(2, FlingDirection.DOWN),
+                Pair(4, FlingDirection.RIGHT),
+                Pair(8, FlingDirection.UP),
+            )
+
+        assertNotMovable(allowedMoves, blankTilePos)
+    }
+
+    @Test
+    fun `Check immovable tiles when blank tile is at the bottom left position`() {
+        val testCase: ArrayList<Int> = testCases[6]
+        val blankTilePos: Int = testCase.indexOf(BLANK_TILE_MARKER)
+        val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
+            arrayListOf(Pair(3, FlingDirection.DOWN), Pair(7, FlingDirection.LEFT))
+
+        assertNotMovable(allowedMoves, blankTilePos)
+    }
+
+    @Test
+    fun `Check immovable tiles when blank tile is at the bottom center position`() {
+        val testCase: ArrayList<Int> = testCases[7]
+        val blankTilePos: Int = testCase.indexOf(BLANK_TILE_MARKER)
+        val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
+            arrayListOf(
+                Pair(4, FlingDirection.DOWN),
+                Pair(6, FlingDirection.RIGHT),
+                Pair(8, FlingDirection.LEFT)
+            )
+
+        assertNotMovable(allowedMoves, blankTilePos)
+    }
+
+    @Test
+    fun `Check immovable tiles when blank tile is at the bottom right position`() {
+        val testCase: ArrayList<Int> = testCases[8]
+        val blankTilePos: Int = testCase.indexOf(BLANK_TILE_MARKER)
+        val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
+            arrayListOf(Pair(7, FlingDirection.RIGHT), Pair(5, FlingDirection.DOWN))
+
+        assertNotMovable(allowedMoves, blankTilePos)
     }
 }
