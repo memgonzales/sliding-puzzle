@@ -51,24 +51,13 @@ class MoveUtilTest {
         ) {
             for (position in 0 until NUM_TILES) {
                 for (direction in directions) {
+                    val isMovable: Boolean =
+                        MoveUtil.canMoveTile(direction, position, blankTilePos, NUM_COLUMNS)
+
                     if (Pair(position, direction) in allowedMoves) {
-                        assertTrue(
-                            MoveUtil.canMoveTile(
-                                direction,
-                                position,
-                                blankTilePos,
-                                NUM_COLUMNS
-                            )
-                        )
+                        assertTrue(isMovable)
                     } else {
-                        assertFalse(
-                            MoveUtil.canMoveTile(
-                                direction,
-                                position,
-                                blankTilePos,
-                                NUM_COLUMNS
-                            )
-                        )
+                        assertFalse(isMovable)
                     }
                 }
             }
