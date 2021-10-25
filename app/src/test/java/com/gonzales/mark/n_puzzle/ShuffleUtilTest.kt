@@ -1,5 +1,6 @@
 package com.gonzales.mark.n_puzzle
 
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -29,6 +30,21 @@ class ShuffleUtilTest {
             )
 
             assertTrue(isSolvableWithAStar(puzzleStatePair))
+        }
+    }
+
+    @Test
+    fun `Check if shuffling does not result in an already-solved 8-puzzle`() {
+        for (i in 0 until NUM_TEST_CASES) {
+            val puzzleState = arrayListOf(0, 1, 2, 3, 4, 5, 6, 7, 8)
+
+            val puzzleStatePair: StatePair = ShuffleUtil.getValidShuffledState(
+                puzzleState,
+                TestUtil.goalPuzzleState,
+                TestUtil.BLANK_TILE_MARKER
+            )
+
+            assertFalse(puzzleStatePair.puzzleState == TestUtil.goalPuzzleState)
         }
     }
 }
