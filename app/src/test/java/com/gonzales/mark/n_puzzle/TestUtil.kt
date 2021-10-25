@@ -19,6 +19,17 @@ class TestUtil {
          */
         const val BLANK_TILE_MARKER = NUM_TILES - 1
 
+        val goalPuzzleState: ArrayList<Int> = initGoalPuzzleState()
+
+        private fun initGoalPuzzleState(): ArrayList<Int> {
+            val goalPuzzleState: ArrayList<Int> = ArrayList()
+            for (tile in 0 until NUM_TILES) {
+                goalPuzzleState.add(tile)
+            }
+
+            return goalPuzzleState
+        }
+
         /**
          * Generates all the permutations of this list using Heap's algorithm.
          *
