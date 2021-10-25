@@ -40,7 +40,7 @@ class ShuffleUtil {
             return numInversions
         }
 
-        private fun isSolvable(puzzleState: ArrayList<Int>, blankTileMarker: Int): Boolean {
+        fun isSolvable(puzzleState: ArrayList<Int>, blankTileMarker: Int): Boolean {
             return countInversions(puzzleState, blankTileMarker) % 2 == 0
         }
 

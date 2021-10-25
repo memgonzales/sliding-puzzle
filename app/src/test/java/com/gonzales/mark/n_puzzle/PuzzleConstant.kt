@@ -5,16 +5,16 @@ class PuzzleConstant {
         /**
          * Number of columns in the 8-puzzle grid.
          */
-        private val NUM_COLUMNS = 3
+        const val NUM_COLUMNS = 3
 
         /**
          * Number of tiles in the 8-puzzle grid.
          */
-        val NUM_TILES = NUM_COLUMNS * NUM_COLUMNS
+        const val NUM_TILES = NUM_COLUMNS * NUM_COLUMNS
 
         /**
          * Indicator that the tile is blank.
          */
-        val BLANK_TILE_MARKER = NUM_TILES - 1
+        const val BLANK_TILE_MARKER = NUM_TILES - 1
     }
 }
