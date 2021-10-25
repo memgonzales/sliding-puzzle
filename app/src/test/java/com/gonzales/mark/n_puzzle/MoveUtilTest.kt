@@ -12,15 +12,15 @@ class MoveUtilTest {
         private val directions: Array<FlingDirection> = FlingDirection.values()
 
         private fun generateTestCases(): ArrayList<ArrayList<Int>> {
-            val testCases: ArrayList<ArrayList<Int>> = ArrayList(PuzzleConstant.NUM_TILES)
+            val testCases: ArrayList<ArrayList<Int>> = ArrayList(TestUtil.NUM_TILES)
 
-            for (position in 0 until PuzzleConstant.NUM_TILES) {
-                val testCase: ArrayList<Int> = ArrayList(PuzzleConstant.NUM_TILES)
-                for (tile in 0 until PuzzleConstant.NUM_TILES) {
+            for (position in 0 until TestUtil.NUM_TILES) {
+                val testCase: ArrayList<Int> = ArrayList(TestUtil.NUM_TILES)
+                for (tile in 0 until TestUtil.NUM_TILES) {
                     testCase.add(tile)
                 }
 
-                val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+                val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
                 swap(testCase, position, blankTilePos)
 
                 testCases.add(testCase)
@@ -39,7 +39,7 @@ class MoveUtilTest {
                         allowedMove.second,
                         allowedMove.first,
                         blankTilePos,
-                        PuzzleConstant.NUM_COLUMNS
+                        TestUtil.NUM_COLUMNS
                     )
                 )
             }
@@ -49,7 +49,7 @@ class MoveUtilTest {
             allowedMoves: ArrayList<Pair<Int, FlingDirection>>,
             blankTilePos: Int
         ) {
-            for (position in 0 until PuzzleConstant.NUM_TILES) {
+            for (position in 0 until TestUtil.NUM_TILES) {
                 for (direction in directions) {
                     if (Pair(position, direction) !in allowedMoves) {
                         assertFalse(
@@ -57,7 +57,7 @@ class MoveUtilTest {
                                 direction,
                                 position,
                                 blankTilePos,
-                                PuzzleConstant.NUM_COLUMNS
+                                TestUtil.NUM_COLUMNS
                             )
                         )
                     }
@@ -71,12 +71,12 @@ class MoveUtilTest {
         val expectedPositionSet: HashSet<Int> = HashSet()
         val actualPositionSet: HashSet<Int> = HashSet()
 
-        for (position in 0 until PuzzleConstant.NUM_TILES) {
+        for (position in 0 until TestUtil.NUM_TILES) {
             expectedPositionSet.add(position)
         }
 
         for (testCase in testCases) {
-            actualPositionSet.add(testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER))
+            actualPositionSet.add(testCase.indexOf(TestUtil.BLANK_TILE_MARKER))
         }
 
         assertTrue(expectedPositionSet == actualPositionSet)
@@ -85,7 +85,7 @@ class MoveUtilTest {
     @Test
     fun `Check movable tiles when blank tile is at the top left position`() {
         val testCase: ArrayList<Int> = testCases[0]
-        val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+        val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
         val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
             arrayListOf(Pair(1, FlingDirection.LEFT), Pair(3, FlingDirection.UP))
 
@@ -95,7 +95,7 @@ class MoveUtilTest {
     @Test
     fun `Check movable tiles when blank tile is at the top center position`() {
         val testCase: ArrayList<Int> = testCases[1]
-        val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+        val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
         val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
             arrayListOf(
                 Pair(0, FlingDirection.RIGHT),
@@ -109,7 +109,7 @@ class MoveUtilTest {
     @Test
     fun `Check movable tiles when blank tile is at the top right position`() {
         val testCase: ArrayList<Int> = testCases[2]
-        val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+        val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
         val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
             arrayListOf(Pair(1, FlingDirection.RIGHT), Pair(5, FlingDirection.UP))
 
@@ -119,7 +119,7 @@ class MoveUtilTest {
     @Test
     fun `Check movable tiles when blank tile is at the middle left position`() {
         val testCase: ArrayList<Int> = testCases[3]
-        val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+        val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
         val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
             arrayListOf(
                 Pair(0, FlingDirection.DOWN),
@@ -133,7 +133,7 @@ class MoveUtilTest {
     @Test
     fun `Check movable tiles when blank tile is at the middle center position`() {
         val testCase: ArrayList<Int> = testCases[4]
-        val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+        val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
         val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
             arrayListOf(
                 Pair(1, FlingDirection.DOWN),
@@ -148,7 +148,7 @@ class MoveUtilTest {
     @Test
     fun `Check movable tiles when blank tile is at the middle right position`() {
         val testCase: ArrayList<Int> = testCases[5]
-        val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+        val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
 
         val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
             arrayListOf(
@@ -163,7 +163,7 @@ class MoveUtilTest {
     @Test
     fun `Check movable tiles when blank tile is at the bottom left position`() {
         val testCase: ArrayList<Int> = testCases[6]
-        val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+        val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
         val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
             arrayListOf(Pair(3, FlingDirection.DOWN), Pair(7, FlingDirection.LEFT))
 
@@ -173,7 +173,7 @@ class MoveUtilTest {
     @Test
     fun `Check movable tiles when blank tile is at the bottom center position`() {
         val testCase: ArrayList<Int> = testCases[7]
-        val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+        val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
         val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
             arrayListOf(
                 Pair(4, FlingDirection.DOWN),
@@ -187,7 +187,7 @@ class MoveUtilTest {
     @Test
     fun `Check movable tiles when blank tile is at the bottom right position`() {
         val testCase: ArrayList<Int> = testCases[8]
-        val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+        val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
         val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
             arrayListOf(Pair(7, FlingDirection.RIGHT), Pair(5, FlingDirection.DOWN))
 
@@ -197,7 +197,7 @@ class MoveUtilTest {
     @Test
     fun `Check immovable tiles when blank tile is at the top left position`() {
         val testCase: ArrayList<Int> = testCases[0]
-        val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+        val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
         val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
             arrayListOf(Pair(1, FlingDirection.LEFT), Pair(3, FlingDirection.UP))
 
@@ -207,7 +207,7 @@ class MoveUtilTest {
     @Test
     fun `Check immovable tiles when blank tile is at the top center position`() {
         val testCase: ArrayList<Int> = testCases[1]
-        val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+        val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
         val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
             arrayListOf(
                 Pair(0, FlingDirection.RIGHT),
@@ -221,7 +221,7 @@ class MoveUtilTest {
     @Test
     fun `Check immovable tiles when blank tile is at the top right position`() {
         val testCase: ArrayList<Int> = testCases[2]
-        val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+        val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
         val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
             arrayListOf(Pair(1, FlingDirection.RIGHT), Pair(5, FlingDirection.UP))
 
@@ -231,7 +231,7 @@ class MoveUtilTest {
     @Test
     fun `Check immovable tiles when blank tile is at the middle left position`() {
         val testCase: ArrayList<Int> = testCases[3]
-        val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+        val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
         val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
             arrayListOf(
                 Pair(0, FlingDirection.DOWN),
@@ -245,7 +245,7 @@ class MoveUtilTest {
     @Test
     fun `Check immovable tiles when blank tile is at the middle center position`() {
         val testCase: ArrayList<Int> = testCases[4]
-        val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+        val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
         val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
             arrayListOf(
                 Pair(1, FlingDirection.DOWN),
@@ -260,7 +260,7 @@ class MoveUtilTest {
     @Test
     fun `Check immovable tiles when blank tile is at the middle right position`() {
         val testCase: ArrayList<Int> = testCases[5]
-        val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+        val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
 
         val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
             arrayListOf(
@@ -275,7 +275,7 @@ class MoveUtilTest {
     @Test
     fun `Check immovable tiles when blank tile is at the bottom left position`() {
         val testCase: ArrayList<Int> = testCases[6]
-        val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+        val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
         val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
             arrayListOf(Pair(3, FlingDirection.DOWN), Pair(7, FlingDirection.LEFT))
 
@@ -285,7 +285,7 @@ class MoveUtilTest {
     @Test
     fun `Check immovable tiles when blank tile is at the bottom center position`() {
         val testCase: ArrayList<Int> = testCases[7]
-        val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+        val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
         val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
             arrayListOf(
                 Pair(4, FlingDirection.DOWN),
@@ -299,7 +299,7 @@ class MoveUtilTest {
     @Test
     fun `Check immovable tiles when blank tile is at the bottom right position`() {
         val testCase: ArrayList<Int> = testCases[8]
-        val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
+        val blankTilePos: Int = testCase.indexOf(TestUtil.BLANK_TILE_MARKER)
         val allowedMoves: ArrayList<Pair<Int, FlingDirection>> =
             arrayListOf(Pair(7, FlingDirection.RIGHT), Pair(5, FlingDirection.DOWN))
 

@@ -1,5 +1,6 @@
 package com.gonzales.mark.n_puzzle
 
+import androidx.annotation.VisibleForTesting
 import java.util.Collections.swap
 
 class ShuffleUtil {
@@ -14,13 +15,7 @@ class ShuffleUtil {
                 puzzleState.shuffle()
             }
 
-            /*
-             * If the 8-puzzle is not solvable (that is, it has an odd number of inversions),
-             * swap a pair of tiles to change the parity and, thus, guarantee solvability.
-             */
-            if (!isSolvable(puzzleState, blankTileMarker)) {
-                swapTiles(puzzleState, blankTileMarker)
-            }
+            ensureSolvability(puzzleState, blankTileMarker)
 
             return StatePair(puzzleState, puzzleState.indexOf(blankTileMarker))
         }
@@ -42,11 +37,23 @@ class ShuffleUtil {
             return numInversions
         }
 
+        @VisibleForTesting
+        fun ensureSolvability(puzzleState: ArrayList<Int>, blankTileMarker: Int) {
+            /*
+             * If the 8-puzzle is not solvable (that is, it has an odd number of inversions),
+             * swap a pair of tiles to change the parity and, thus, guarantee solvability.
+             */
+            if (!isSolvable(puzzleState, blankTileMarker)) {
+                swapTiles(puzzleState, blankTileMarker)
+            }
+        }
+
+        @VisibleForTesting
         fun isSolvable(puzzleState: ArrayList<Int>, blankTileMarker: Int): Boolean {
             return countInversions(puzzleState, blankTileMarker) % 2 == 0
         }
 
-        fun swapTiles(puzzleState: ArrayList<Int>, blankTileMarker: Int) {
+        private fun swapTiles(puzzleState: ArrayList<Int>, blankTileMarker: Int) {
             var position = 0
             while (isBlankTile(position, puzzleState, blankTileMarker)
                 || isBlankTile(position + 1, puzzleState, blankTileMarker)
