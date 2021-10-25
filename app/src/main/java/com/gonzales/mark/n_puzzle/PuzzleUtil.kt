@@ -1,6 +1,6 @@
 package com.gonzales.mark.n_puzzle
 
-import java.util.*
+import java.util.Collections.swap
 
 class PuzzleUtil {
     companion object {
@@ -33,7 +33,7 @@ class PuzzleUtil {
                 position++
             }
 
-            Collections.swap(puzzleState, position, position + 1)
+            swap(puzzleState, position, position + 1)
         }
 
         /**
