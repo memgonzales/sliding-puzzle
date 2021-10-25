@@ -1,6 +1,7 @@
 package com.gonzales.mark.n_puzzle
 
 import java.util.*
+import java.util.Collections.swap
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
 import kotlin.math.abs
@@ -182,21 +183,16 @@ class SolveUtil {
 
             for (position in childPositions[blankTilePos]) {
                 val childState: ArrayList<Int> = ArrayList(node.puzzleStatePair.puzzleState.size)
-                val childBlankTilePos: Int
 
                 for (tile in node.puzzleStatePair.puzzleState) {
                     childState.add(tile)
                 }
 
-                /* Swap the blank tile with the tile in this position. */
-                childState[position] = childState[blankTilePos].also {
-                    childState[blankTilePos] = childState[position]
-                    childBlankTilePos = position
-                }
+                swap(childState, position, blankTilePos)
 
                 childNodes.add(
                     Node(
-                        StatePair(childState, childBlankTilePos),
+                        StatePair(childState, position),
                         node,
                         node.g + 1,
                         getManhattan(childState, numColumns, blankTileMarker)

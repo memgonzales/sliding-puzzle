@@ -3,6 +3,7 @@ package com.gonzales.mark.n_puzzle
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.util.Collections.swap
 
 class MoveUtilTest {
     companion object {
@@ -20,9 +21,7 @@ class MoveUtilTest {
                 }
 
                 val blankTilePos: Int = testCase.indexOf(PuzzleConstant.BLANK_TILE_MARKER)
-                testCase[position] = testCase[blankTilePos].also {
-                    testCase[blankTilePos] = testCase[position]
-                }
+                swap(testCase, position, blankTilePos)
 
                 testCases.add(testCase)
             }

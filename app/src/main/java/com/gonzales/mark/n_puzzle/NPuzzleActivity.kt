@@ -18,6 +18,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import java.util.*
+import java.util.Collections.swap
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -499,14 +500,9 @@ class NPuzzleActivity : AppCompatActivity() {
         /* Move a tile only when the puzzle grid is clickable. */
         if (!isPuzzleGridFrozen) {
             if (MoveUtil.canMoveTile(direction, position, blankTilePos, NUM_COLUMNS)) {
-                /*
-                 * Swap the flung tile and the blank tile via Kotlin's also idiom.
-                 * This creates an effect akin to tile sliding.
-                 */
-                puzzleState[position] = puzzleState[blankTilePos].also {
-                    puzzleState[blankTilePos] = puzzleState[position]
-                    blankTilePos = position
-                }
+                /* Swap the flung tile and the blank tile to create an effect akin to tile sliding. */
+                swap(puzzleState, position, blankTilePos)
+                blankTilePos = position
 
                 /* Update the grid and the statistics. */
                 displayPuzzle()

@@ -1,5 +1,7 @@
 package com.gonzales.mark.n_puzzle
 
+import java.util.Collections.swap
+
 class ShuffleUtil {
     companion object {
         fun getValidShuffledState(
@@ -44,7 +46,7 @@ class ShuffleUtil {
             return countInversions(puzzleState, blankTileMarker) % 2 == 0
         }
 
-        private fun swapTiles(puzzleState: ArrayList<Int>, blankTileMarker: Int) {
+        fun swapTiles(puzzleState: ArrayList<Int>, blankTileMarker: Int) {
             var position = 0
             while (isBlankTile(position, puzzleState, blankTileMarker)
                 || isBlankTile(position + 1, puzzleState, blankTileMarker)
@@ -52,10 +54,7 @@ class ShuffleUtil {
                 position++
             }
 
-            /* Swap the two tiles via Kotlin's also idiom. */
-            puzzleState[position] = puzzleState[position + 1].also {
-                puzzleState[position + 1] = puzzleState[position]
-            }
+            swap(puzzleState, position, position + 1)
         }
 
         /**
