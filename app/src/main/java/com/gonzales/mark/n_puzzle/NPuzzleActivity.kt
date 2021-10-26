@@ -1034,19 +1034,11 @@ class NPuzzleActivity : AppCompatActivity() {
     private fun displaySuccessMessage(solveStatus: SolveStatus) {
         /* Display a message depending on how the goal state of the puzzle was reached. */
         tvSuccess.visibility = View.VISIBLE
-        tvSuccess.text = when (solveStatus) {
-            SolveStatus.USER_SOLVED -> {
-                getString(R.string.user_solved)
-            }
+        tvSuccess.text = getString(solveStatus.successMessageId)
 
-            SolveStatus.FEWEST_MOVES, SolveStatus.FASTEST_TIME, SolveStatus.FEWEST_AND_FASTEST -> {
-                getString(R.string.high_score)
-            }
-
-            SolveStatus.COMPUTER_SOLVED -> {
-                val message: String = getString(R.string.computer_solved)
-                "$numMovesSolution $message"
-            }
+        if (solveStatus == SolveStatus.COMPUTER_SOLVED) {
+            val message = "$numMovesSolution ${tvSuccess.text}"
+            tvSuccess.text = message
         }
 
         /* Hide the success message after a set number of seconds. */
