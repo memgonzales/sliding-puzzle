@@ -1,16 +1,20 @@
 package com.gonzales.mark.n_puzzle
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Bitmap
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.*
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.ViewTreeObserver
 import android.widget.*
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -22,6 +26,7 @@ import java.util.Collections.swap
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
+
 
 class NPuzzleActivity : AppCompatActivity() {
     /**
@@ -198,6 +203,8 @@ class NPuzzleActivity : AppCompatActivity() {
     private var isSolutionPlay: Boolean = false
     private var isSolutionSkip: Boolean = false
 
+    private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
+
     /**
      * Called when the activity is first created. This is where you should do all of your normal
      * static set up: create views, bind data to lists, etc. This method also provides you with a
@@ -219,6 +226,7 @@ class NPuzzleActivity : AppCompatActivity() {
         initHandlers()
         initStateAndTileImages()
         initPuzzle()
+        initGalleryLauncher()
     }
 
     /**
@@ -357,9 +365,22 @@ class NPuzzleActivity : AppCompatActivity() {
         setDimensions()
     }
 
+    /**
+     * Initializes the activity result launcher related to choosing photos from the Gallery.
+     */
+    private fun initGalleryLauncher() {
+        galleryLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    loadPuzzle(result.data?.data)
+                }
+            }
+    }
+
     /*************************************************
      * Methods Related to Button and Spinner Actions *
      *************************************************/
+
     private fun setBtnShuffleAction() {
         btnShuffle.setOnClickListener {
             if (isSolutionDisplay) {
@@ -376,6 +397,8 @@ class NPuzzleActivity : AppCompatActivity() {
         btnUpload.setOnClickListener {
             if (isSolutionDisplay) {
                 skipSolution()
+            } else {
+                uploadPuzzleImage()
             }
         }
     }
@@ -596,7 +619,8 @@ class NPuzzleActivity : AppCompatActivity() {
             ImageUtil.drawableToBitmap(
                 this@NPuzzleActivity, puzzleImages[puzzleImageIndex].drawableId
             ),
-            puzzleDimen, puzzleDimen
+            puzzleDimen,
+            puzzleDimen
         )
 
         with(sp.edit()) {
@@ -1045,5 +1069,65 @@ class NPuzzleActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             tvSuccess.visibility = View.GONE
         }, AnimationUtil.SUCCESS_DISPLAY.toLong())
+    }
+
+    /***********************************************
+     * Methods Related to Uploading a Puzzle Image *
+     ***********************************************/
+
+    private fun uploadPuzzleImage() {
+        UploadUtil.chooseFromGallery(this, galleryLauncher)
+    }
+
+    private fun loadPuzzle(imagePath: Uri?) {
+        /*
+         * Handle the case when the spinner is clicked while the success message is still
+         * on display.
+         */
+        tvSuccess.visibility = View.GONE
+
+        updatePuzzleImage(imagePath)
+        initChunks()
+        displayPuzzle()
+    }
+
+    private fun updatePuzzleImage(imagePath: Uri?) {
+        puzzleImage = ImageUtil.resizeToBitmap(
+            BitmapFactory.decodeStream(
+                contentResolver.openInputStream(imagePath!!)
+            ),
+            puzzleDimen,
+            puzzleDimen
+        );
+    }
+
+    /**
+     * Callback for the result from requesting permissions.
+     *
+     * @param requestCode The request code passed in <code>
+     *     ActivityCompat.requestPermissions(android.app.Activity, String[], int)</code>.
+     * @param permissions The requested permissions. Never null.
+     * @param grantResults The grant results for the corresponding permissions which is either <code>
+     *     PackageManager.PERMISSION_GRANTED</code> or <code>PackageManager.PERMISSION_DENIED</code>.
+     *     Never null.
+     */
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        permissionsResult(grantResults)
+    }
+
+    /**
+     * Defines the behavior related to choosing a puzzle image from the Gallery based on the permissions
+     * granted by the user.
+     *
+     * @param grantResults The grant results for the corresponding permissions which is either <code>
+     *     PackageManager.PERMISSION_GRANTED</code> or <code>PackageManager.PERMISSION_DENIED</code>.
+     *     Never null.
+     */
+    private fun permissionsResult(grantResults: IntArray) {
+        UploadUtil.permissionsResultGallery(grantResults, this@NPuzzleActivity, galleryLauncher)
     }
 }
