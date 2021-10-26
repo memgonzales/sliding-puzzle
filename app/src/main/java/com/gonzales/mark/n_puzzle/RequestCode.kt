@@ -10,7 +10,7 @@ package com.gonzales.mark.n_puzzle
  * @constructor Creates an enumeration class containing the codes used in requesting permissions
  * related to launching activities related to the Gallery of the device.
  */
-enum class RequestCodes {
+enum class RequestCode {
     /**
      * Request code for launching activities related to the Gallery.
      */

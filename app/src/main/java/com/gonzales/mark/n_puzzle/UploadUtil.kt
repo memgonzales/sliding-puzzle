@@ -33,7 +33,7 @@ class UploadUtil {
                 ActivityCompat.requestPermissions(
                     activity,
                     permissions,
-                    RequestCodes.REQUEST_CODE_POST_GALLERY.ordinal
+                    RequestCode.REQUEST_CODE_POST_GALLERY.ordinal
                 )
             } else {
                 chooseFromGalleryIntent(galleryLauncher)
