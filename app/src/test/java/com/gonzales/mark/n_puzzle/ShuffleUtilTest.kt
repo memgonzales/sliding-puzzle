@@ -5,22 +5,9 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class ShuffleUtilTest {
-    companion object {
-        private const val NUM_TEST_CASES = 1000
-
-        private fun isSolvableWithAStar(puzzleStatePair: StatePair): Boolean {
-            return SolveUtil.solve(
-                puzzleStatePair,
-                TestUtil.goalPuzzleState,
-                TestUtil.NUM_COLUMNS,
-                TestUtil.BLANK_TILE_MARKER
-            ) != null
-        }
-    }
-
     @Test
     fun `Check if shuffling results in solvable 8-puzzles`() {
-        for (i in 0 until NUM_TEST_CASES) {
+        for (i in 0 until 2 * TestUtil.NUM_PUZZLE_CONFIGS) {
             val puzzleState = arrayListOf(0, 1, 2, 3, 4, 5, 6, 7, 8)
 
             val puzzleStatePair: StatePair = ShuffleUtil.getValidShuffledState(
@@ -29,13 +16,18 @@ class ShuffleUtilTest {
                 TestUtil.BLANK_TILE_MARKER
             )
 
-            assertTrue(isSolvableWithAStar(puzzleStatePair))
+            assertTrue(
+                PuzzleUtil.isSolvable(
+                    puzzleStatePair.puzzleState,
+                    TestUtil.BLANK_TILE_MARKER
+                )
+            )
         }
     }
 
     @Test
     fun `Check if shuffling does not result in an already-solved 8-puzzle`() {
-        for (i in 0 until NUM_TEST_CASES) {
+        for (i in 0 until 2 * TestUtil.NUM_PUZZLE_CONFIGS) {
             val puzzleState = arrayListOf(0, 1, 2, 3, 4, 5, 6, 7, 8)
 
             val puzzleStatePair: StatePair = ShuffleUtil.getValidShuffledState(
