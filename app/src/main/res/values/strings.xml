@@ -35,7 +35,7 @@
     <!-- Puzzle Images -->
     <string name="default_image">Lobster Shoob</string>
     <string-array name="puzzle_images">
-        <item>Lobster Shoob</item>
-        <item>Kikyo &amp; Inuyasha</item>
+        <item>LOBSTER SHOOB</item>
+        <item>KIKYO &amp; INUYASHA</item>
     </string-array>
 </resources>

@@ -78,6 +78,8 @@ class NPuzzleActivity : AppCompatActivity() {
     private lateinit var tvTimeTaken: TextView
     private lateinit var tvFastestTime: TextView
 
+    private lateinit var spnPuzzle: Spinner
+
     /**
      * Text view for the title of the app.
      */
@@ -249,7 +251,7 @@ class NPuzzleActivity : AppCompatActivity() {
      **************************/
 
     private fun initComponents() {
-        /* Initialize the layout and grid view. */
+        /* Initialize the root layout and the grid view. */
         clRoot = findViewById(R.id.cl_root)
         gvgPuzzle = findViewById(R.id.gvg_puzzle)
 
@@ -276,6 +278,14 @@ class NPuzzleActivity : AppCompatActivity() {
         }
 
         tvTrivia = findViewById(R.id.tv_trivia)
+
+        /* Initialize the puzzle spinner and its adapter. */
+        spnPuzzle = findViewById(R.id.spn_puzzle)
+        spnPuzzle.adapter = SpinnerAdapter(
+            this,
+            R.layout.spn_puzzle_item,
+            resources.getStringArray(R.array.puzzle_images)
+        )
     }
 
     private fun setBtnShuffleAction() {
