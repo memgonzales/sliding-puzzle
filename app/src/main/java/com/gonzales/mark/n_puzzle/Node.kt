@@ -1,6 +1,6 @@
 package com.gonzales.mark.n_puzzle
 
-class Node(
+data class Node(
     val puzzleStatePair: StatePair,
     val parent: Node?,
     var g: Int,

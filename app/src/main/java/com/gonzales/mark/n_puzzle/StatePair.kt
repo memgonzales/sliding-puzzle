@@ -15,8 +15,4 @@ package com.gonzales.mark.n_puzzle
  * @param blankTilePos Position of the blank tile in the puzzle grid (zero-based, following
  * row-major order).
  */
-data class StatePair(val puzzleState: ArrayList<Int>, val blankTilePos: Int) {
-    override fun toString(): String {
-        return "$puzzleState $blankTilePos\n"
-    }
-}
+data class StatePair(val puzzleState: ArrayList<Int>, val blankTilePos: Int)
