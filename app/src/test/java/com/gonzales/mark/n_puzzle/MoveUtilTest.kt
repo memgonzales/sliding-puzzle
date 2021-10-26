@@ -1,7 +1,6 @@
 package com.gonzales.mark.n_puzzle
 
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Test
 import java.util.Collections.swap
 
@@ -34,13 +33,17 @@ class MoveUtilTest {
             blankTilePos: Int
         ) {
             for (allowedMove in allowedMoves) {
+                val errorMessage =
+                    "\nblankTilePos: $blankTilePos\nallowedMoves: $allowedMoves\nshould be movable: $allowedMove\n"
+
                 assertTrue(
+                    errorMessage,
                     MoveUtil.canMoveTile(
                         allowedMove.second,
                         allowedMove.first,
                         blankTilePos,
                         TestUtil.NUM_COLUMNS
-                    )
+                    ),
                 )
             }
         }
@@ -52,7 +55,11 @@ class MoveUtilTest {
             for (position in 0 until TestUtil.NUM_TILES) {
                 for (direction in directions) {
                     if (Pair(position, direction) !in allowedMoves) {
+                        val errorMessage =
+                            "blankTilePos: $blankTilePos\nallowedMoves: $allowedMoves\nshould not be movable: ($position, $direction)\n"
+
                         assertFalse(
+                            errorMessage,
                             MoveUtil.canMoveTile(
                                 direction,
                                 position,
@@ -79,7 +86,7 @@ class MoveUtilTest {
             actualPositionSet.add(testCase.indexOf(TestUtil.BLANK_TILE_MARKER))
         }
 
-        assertTrue(expectedPositionSet == actualPositionSet)
+        assertEquals(expectedPositionSet, actualPositionSet)
     }
 
     @Test

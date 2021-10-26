@@ -1,12 +1,12 @@
 package com.gonzales.mark.n_puzzle
 
 import com.gonzales.mark.n_puzzle.TestUtil.Companion.permute
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class PuzzleUtilTest {
     @Test
-    fun `Check if the number of solvable 8-puzzles is equal to half of 9!`() {
+    fun `Check if the number of solvable 8-puzzles is equal to half of the total number of puzzle configurations`() {
         val puzzleState: ArrayList<Int> = arrayListOf(0, 1, 2, 3, 4, 5, 6, 7, 8)
         val testCases: List<List<Int>> = puzzleState.permute()
 
@@ -17,11 +17,11 @@ class PuzzleUtilTest {
             }
         }
 
-        Assert.assertEquals(TestUtil.NUM_PUZZLE_CONFIGS / 2, numSolvable)
+        assertEquals(TestUtil.NUM_PUZZLE_CONFIGS / 2, numSolvable)
     }
 
     @Test
-    fun `Check if the number of unsolvable 8-puzzles is equal to half of 9!`() {
+    fun `Check if the number of unsolvable 8-puzzles is equal to half of the total number of puzzle configurations`() {
         val puzzleState: ArrayList<Int> = arrayListOf(0, 1, 2, 3, 4, 5, 6, 7, 8)
         val testCases: List<List<Int>> = puzzleState.permute()
 
@@ -32,7 +32,7 @@ class PuzzleUtilTest {
             }
         }
 
-        Assert.assertEquals(TestUtil.NUM_PUZZLE_CONFIGS / 2, numUnsolvable)
+        assertEquals(TestUtil.NUM_PUZZLE_CONFIGS / 2, numUnsolvable)
     }
 
     @Test
@@ -41,7 +41,7 @@ class PuzzleUtilTest {
         val expectedSwapped: ArrayList<Int> = arrayListOf(1, 0, 3, 2, 4, 5, 6, 7, 8)
         PuzzleUtil.swapTiles(puzzleState, TestUtil.BLANK_TILE_MARKER)
 
-        Assert.assertEquals(expectedSwapped, puzzleState)
+        assertEquals(expectedSwapped, puzzleState)
     }
 
     @Test
@@ -50,7 +50,7 @@ class PuzzleUtilTest {
         val expectedSwapped: ArrayList<Int> = arrayListOf(8, 3, 1, 2, 4, 5, 6, 7, 0)
         PuzzleUtil.swapTiles(puzzleState, TestUtil.BLANK_TILE_MARKER)
 
-        Assert.assertEquals(expectedSwapped, puzzleState)
+        assertEquals(expectedSwapped, puzzleState)
     }
 
     @Test
@@ -59,6 +59,6 @@ class PuzzleUtilTest {
         val expectedSwapped: ArrayList<Int> = arrayListOf(3, 8, 1, 4, 2, 5, 6, 7, 0)
         PuzzleUtil.swapTiles(puzzleState, TestUtil.BLANK_TILE_MARKER)
 
-        Assert.assertEquals(expectedSwapped, puzzleState)
+        assertEquals(expectedSwapped, puzzleState)
     }
 }
