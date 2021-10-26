@@ -60,8 +60,6 @@ class NPuzzleActivity : AppCompatActivity() {
          * user starts playing their first game.
          */
         private const val DEFAULT_FASTEST_TIME = Long.MAX_VALUE
-
-        private val DEFAULT_PUZZLE_IMAGE = PuzzleImage.LOBSTER_SHOOB.drawableId
     }
 
     /***************************
@@ -129,13 +127,13 @@ class NPuzzleActivity : AppCompatActivity() {
      * Images *
      **********/
 
-    private lateinit var image: Bitmap
+    private lateinit var puzzleImage: Bitmap
     private lateinit var imageChunks: ArrayList<Bitmap>
     private lateinit var blankImageChunks: ArrayList<Bitmap>
     private lateinit var tileImages: ArrayList<ImageButton>
 
     private lateinit var puzzleImages: Array<PuzzleImage>
-    private lateinit var currentPuzzleImage: PuzzleImage
+    private var puzzleImageIndex: Int = 0
 
     /********************************
      * Shuffling-Related Properties *
@@ -287,7 +285,6 @@ class NPuzzleActivity : AppCompatActivity() {
 
         /* Initialize the puzzle spinner, its adapter, and the selection of puzzle images. */
         spnPuzzle = findViewById(R.id.spn_puzzle)
-
         spnPuzzle.adapter = SpinnerAdapter(
             this,
             R.layout.spn_puzzle_item,
@@ -466,9 +463,9 @@ class NPuzzleActivity : AppCompatActivity() {
         tvTimeTaken.text = TimeUtil.displayTime(timeTaken)
     }
 
-    /********************************************
-     * Methods Related to Puzzle State and Grid *
-     ********************************************/
+    /**********************************
+     * Methods Related to Puzzle Grid *
+     **********************************/
 
     private fun setTouchSlopThreshold() {
         gvgPuzzle.setTouchSlopThreshold(ViewConfiguration.get(this).scaledTouchSlop)
@@ -499,26 +496,40 @@ class NPuzzleActivity : AppCompatActivity() {
         })
     }
 
+    /********************************************
+     * Methods Related to Puzzle Image and Grid *
+     ********************************************/
+
     private fun initPuzzleImage() {
-        image = ImageUtil.resizeToBitmap(
-            ImageUtil.drawableToBitmap(this@NPuzzleActivity, DEFAULT_PUZZLE_IMAGE),
+        puzzleImageIndex = sp.getInt(Key.KEY_PUZZLE_IMAGE.name, 0)
+        spnPuzzle.setSelection(puzzleImageIndex)
+
+        puzzleImage = ImageUtil.resizeToBitmap(
+            ImageUtil.drawableToBitmap(
+                this@NPuzzleActivity,
+                puzzleImages[puzzleImageIndex].drawableId
+            ),
             puzzleDimen,
             puzzleDimen
         )
-
-        // currentPuzzleImage = sp.getString()
-
-            fewestMoves =
-            sp.getString(Key.KEY_FEWEST_MOVES.name, DEFAULT_FEWEST_MOVES.toString())?.toLong()
-                ?: DEFAULT_FEWEST_MOVES
     }
 
     private fun initChunks() {
         /* Store copies of the tiles, alongside versions with dark filter applied (blank tiles). */
         imageChunks =
-            ImageUtil.splitBitmap(image, tileDimen - BORDER_OFFSET, NUM_TILES, NUM_COLUMNS).first
+            ImageUtil.splitBitmap(
+                puzzleImage,
+                tileDimen - BORDER_OFFSET,
+                NUM_TILES,
+                NUM_COLUMNS
+            ).first
         blankImageChunks =
-            ImageUtil.splitBitmap(image, tileDimen - BORDER_OFFSET, NUM_TILES, NUM_COLUMNS).second
+            ImageUtil.splitBitmap(
+                puzzleImage,
+                tileDimen - BORDER_OFFSET,
+                NUM_TILES,
+                NUM_COLUMNS
+            ).second
     }
 
     private fun displayPuzzle() {
@@ -559,22 +570,31 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun loadPuzzle(position: Int) {
-        spnPuzzle.setPopupBackgroundDrawable(
-            ContextCompat.getDrawable(
-                this@NPuzzleActivity,
-                R.drawable.spinner_dropdown_background
-            )
-        )
+        /*
+         * Handle the case when the spinner is clicked while the success message is still
+         * on display.
+         */
+        tvSuccess.visibility = View.GONE
 
-        image = ImageUtil.resizeToBitmap(
+        updatePuzzleImage(position)
+        initChunks()
+        displayPuzzle()
+    }
+
+    private fun updatePuzzleImage(position: Int) {
+        puzzleImageIndex = position
+
+        puzzleImage = ImageUtil.resizeToBitmap(
             ImageUtil.drawableToBitmap(
-                this@NPuzzleActivity, puzzleImages[position].drawableId
+                this@NPuzzleActivity, puzzleImages[puzzleImageIndex].drawableId
             ),
             puzzleDimen, puzzleDimen
         )
 
-        initChunks()
-        displayPuzzle()
+        with(sp.edit()) {
+            putInt(Key.KEY_PUZZLE_IMAGE.name, puzzleImageIndex)
+            commit()
+        }
     }
 
     /***********************************
@@ -604,7 +624,7 @@ class NPuzzleActivity : AppCompatActivity() {
 
             /*
              * Remove the success message (if it is displayed). This scenario is triggered when
-             * the user moves a tile while the success message displayed is still displayed, right
+             * the user moves a tile while the success message is still on display, right
              * after completing a game.
              */
             if (!flag) {
@@ -678,7 +698,7 @@ class NPuzzleActivity : AppCompatActivity() {
 
         /*
          * Handle the case when the shuffle button is clicked while the success message
-         * is still displayed.
+         * is still on display.
          */
         tvSuccess.visibility = View.GONE
 

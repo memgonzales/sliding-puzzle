@@ -250,7 +250,7 @@
             android:background="@drawable/spinner_background"
             android:entries="@array/puzzle_images"
             android:gravity="center"
-            android:popupBackground="@android:color/white"
+            android:popupBackground="@drawable/spinner_dropdown_background"
             android:spinnerMode="dropdown"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
