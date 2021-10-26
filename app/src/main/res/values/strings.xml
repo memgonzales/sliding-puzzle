@@ -31,4 +31,11 @@
 
     <!-- Trivia -->
     <string name="trivia">Trivia goes here</string>
+
+    <!-- Puzzle Images -->
+    <string name="default_image">Lobster Shoob</string>
+    <string-array name="puzzle_images">
+        <item>Lobster Shoob</item>
+        <item>Kikyo &amp; Inuyasha</item>
+    </string-array>
 </resources>

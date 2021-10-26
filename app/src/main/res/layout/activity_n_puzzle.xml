@@ -244,10 +244,15 @@
             app:layout_constraintVertical_bias="0.05" />
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/spn_puzzle"
             android:layout_width="0dp"
             android:layout_height="35dp"
             android:background="@drawable/spinner_background"
+            android:entries="@array/puzzle_images"
+            android:gravity="center"
+            android:popupBackground="@android:color/white"
+            android:spinnerMode="dropdown"
+            android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/gl_right_spinner"
             app:layout_constraintStart_toStartOf="@+id/gl_left_spinner"
@@ -281,7 +286,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinner"
+            app:layout_constraintTop_toBottomOf="@+id/spn_puzzle"
             app:layout_constraintVertical_bias="0.0">
 
             <com.gonzales.mark.n_puzzle.GridViewGesture
