@@ -1,9 +1,13 @@
 package com.gonzales.mark.n_puzzle
 
+import java.util.*
 import java.util.Collections.swap
+import kotlin.math.abs
 
 class PuzzleUtil {
     companion object {
+        private val manhattan: HashMap<Int, Int> = HashMap()
+
         fun isSolvable(puzzleState: ArrayList<Int>, blankTileMarker: Int): Boolean {
             return countInversions(puzzleState, blankTileMarker) % 2 == 0
         }
@@ -51,6 +55,31 @@ class PuzzleUtil {
             blankTileMarker: Int
         ): Boolean {
             return puzzleState[position] == blankTileMarker
+        }
+
+        fun getManhattan(
+            puzzleState: ArrayList<Int>,
+            numColumns: Int,
+            blankTileMarker: Int
+        ): Int {
+            val hash: Int = Node.hashState(puzzleState)
+
+            if (manhattan[hash] != null) {
+                return manhattan[hash]!!
+            }
+
+            var sumManhattan = 0
+            for (i in 0 until puzzleState.size) {
+                if (puzzleState[i] != blankTileMarker) {
+                    sumManhattan +=
+                        abs(i / numColumns - puzzleState[i] / numColumns) +
+                                abs(i % numColumns - puzzleState[i] % numColumns)
+                }
+            }
+
+            manhattan[hash] = sumManhattan
+
+            return sumManhattan
         }
     }
 }

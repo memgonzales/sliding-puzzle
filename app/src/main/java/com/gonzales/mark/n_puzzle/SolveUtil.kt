@@ -4,7 +4,6 @@ import java.util.*
 import java.util.Collections.swap
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
-import kotlin.math.abs
 
 /**
  * Utility class providing constants and methods related to solving an 8-puzzle.
@@ -27,7 +26,6 @@ class SolveUtil {
         private const val FRONTIER_INITIAL_CAPACITY = 11
 
         private val childPositions: ArrayList<ArrayList<Int>> = getChildPositions()
-        private val manhattan: HashMap<Int, Int> = HashMap()
 
         /**
          * Returns the sequence of states from the current puzzle state to the goal state,
@@ -95,7 +93,7 @@ class SolveUtil {
                 StatePair(puzzleState, blankTilePos),
                 null,
                 0,
-                getManhattan(puzzleState, numColumns, blankTileMarker)
+                PuzzleUtil.getManhattan(puzzleState, numColumns, blankTileMarker)
             )
 
             /* Add the start node to the frontier. */
@@ -195,7 +193,7 @@ class SolveUtil {
                         StatePair(childState, position),
                         node,
                         node.g + 1,
-                        getManhattan(childState, numColumns, blankTileMarker)
+                        PuzzleUtil.getManhattan(childState, numColumns, blankTileMarker)
                     )
                 )
             }
@@ -224,31 +222,6 @@ class SolveUtil {
                 arrayListOf(4, 6, 8),
                 arrayListOf(5, 7)
             )
-        }
-
-        private fun getManhattan(
-            puzzleState: ArrayList<Int>,
-            numColumns: Int,
-            blankTileMarker: Int
-        ): Int {
-            val hash: Int = Node.hashState(puzzleState)
-
-            if (manhattan[hash] != null) {
-                return manhattan[hash]!!
-            }
-
-            var sumManhattan = 0
-            for (i in 0 until puzzleState.size) {
-                if (puzzleState[i] != blankTileMarker) {
-                    sumManhattan +=
-                        abs(i / numColumns - puzzleState[i] / numColumns) +
-                                abs(i % numColumns - puzzleState[i] % numColumns)
-                }
-            }
-
-            manhattan[hash] = sumManhattan
-
-            return sumManhattan
         }
     }
 }
