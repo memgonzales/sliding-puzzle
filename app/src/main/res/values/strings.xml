@@ -36,6 +36,9 @@
     <string name="default_image">Lobster Shoob</string>
     <string-array name="puzzle_images">
         <item>LOBSTER SHOOB</item>
+        <item>DESSERT SHOOB</item>
         <item>KIKYO &amp; INUYASHA</item>
+        <item>YUKO, MARU &amp; MORO</item>
+        <item>JIGOKU SHOUJO</item>
     </string-array>
 </resources>

@@ -286,26 +286,7 @@ class NPuzzleActivity : AppCompatActivity() {
             R.layout.spn_puzzle_item,
             resources.getStringArray(R.array.puzzle_images)
         )
-    }
-
-    private fun setBtnShuffleAction() {
-        btnShuffle.setOnClickListener {
-            if (isSolutionDisplay) {
-                controlSolutionDisplay()
-            } else if (!isGameInSession) {
-                shuffle()
-            } else {
-                solve()
-            }
-        }
-    }
-
-    private fun setBtnUploadAction() {
-        btnUpload.setOnClickListener {
-            if (isSolutionDisplay) {
-                skipSolution()
-            }
-        }
+        setSpnPuzzleAction()
     }
 
     private fun initSharedPreferences() {
@@ -369,6 +350,66 @@ class NPuzzleActivity : AppCompatActivity() {
         setTouchSlopThreshold()
         setOnFlingListener()
         setDimensions()
+    }
+
+    /*************************************************
+     * Methods Related to Button and Spinner Actions *
+     *************************************************/
+    private fun setBtnShuffleAction() {
+        btnShuffle.setOnClickListener {
+            if (isSolutionDisplay) {
+                controlSolutionDisplay()
+            } else if (!isGameInSession) {
+                shuffle()
+            } else {
+                solve()
+            }
+        }
+    }
+
+    private fun setBtnUploadAction() {
+        btnUpload.setOnClickListener {
+            if (isSolutionDisplay) {
+                skipSolution()
+            }
+        }
+    }
+
+    private fun setSpnPuzzleAction() {
+        spnPuzzle.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            /**
+             *
+             * Callback method to be invoked when an item in this view has been
+             * selected. This callback is invoked only when the newly selected
+             * position is different from the previously selected position or if
+             * there was no selected item.
+             *
+             * Implementers can call <code>getItemAtPosition(position)</code> if they need
+             * to access the data associated with the selected item.
+             *
+             * @param parent The <code>AdapterView</code> where the selection happened
+             * @param view The view within the <code>AdapterView</code> that was clicked
+             * @param position The position of the view in the adapter
+             * @param id The row id of the item that is selected
+             */
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                loadPuzzle()
+            }
+
+            /**
+             * Callback method to be invoked when the selection disappears from this
+             * view. The selection can disappear for instance when touch is activated
+             * or when the adapter becomes empty.
+             *
+             * @param parent The <code>AdapterView</code> that now contains no selected item.
+             */
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
     }
 
     /*****************************************
@@ -497,6 +538,15 @@ class NPuzzleActivity : AppCompatActivity() {
 
         /* Set (or reset) the adapter of the grid view. */
         gvgPuzzle.adapter = TileAdapter(tileImages, tileDimen, tileDimen)
+    }
+
+    private fun loadPuzzle() {
+        spnPuzzle.setPopupBackgroundDrawable(
+            ContextCompat.getDrawable(
+                this@NPuzzleActivity,
+                R.drawable.spinner_dropdown_background
+            )
+        )
     }
 
     /***********************************
