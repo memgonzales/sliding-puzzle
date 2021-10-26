@@ -290,7 +290,6 @@ class NPuzzleActivity : AppCompatActivity() {
             R.layout.spn_puzzle_item,
             resources.getStringArray(R.array.puzzle_images)
         )
-        setSpnPuzzleAction()
 
         puzzleImages = PuzzleImage.values()
     }
@@ -488,6 +487,15 @@ class NPuzzleActivity : AppCompatActivity() {
                 /* Calculate the side length of each square tile. */
                 puzzleDimen = gvgPuzzle.measuredWidth
                 tileDimen = puzzleDimen / NUM_COLUMNS
+
+                /*
+                 * This method uses the results of the calculation of the side length of each
+                 * square tile and the side length of the entire grid.
+                 *
+                 * Therefore, it is imperative that this method is called only after the said
+                 * dimensions have been calculated.
+                 */
+                setSpnPuzzleAction()
 
                 initPuzzleImage()
                 initChunks()
