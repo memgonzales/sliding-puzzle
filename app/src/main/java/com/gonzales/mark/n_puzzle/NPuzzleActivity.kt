@@ -60,6 +60,8 @@ class NPuzzleActivity : AppCompatActivity() {
          * user starts playing their first game.
          */
         private const val DEFAULT_FASTEST_TIME = Long.MAX_VALUE
+
+        private val DEFAULT_PUZZLE_IMAGE = PuzzleImage.LOBSTER_SHOOB.drawableId
     }
 
     /***************************
@@ -127,9 +129,13 @@ class NPuzzleActivity : AppCompatActivity() {
      * Images *
      **********/
 
+    private lateinit var image: Bitmap
     private lateinit var imageChunks: ArrayList<Bitmap>
     private lateinit var blankImageChunks: ArrayList<Bitmap>
     private lateinit var tileImages: ArrayList<ImageButton>
+
+    private lateinit var puzzleImages: Array<PuzzleImage>
+    private lateinit var currentPuzzleImage: PuzzleImage
 
     /********************************
      * Shuffling-Related Properties *
@@ -279,14 +285,17 @@ class NPuzzleActivity : AppCompatActivity() {
 
         tvTrivia = findViewById(R.id.tv_trivia)
 
-        /* Initialize the puzzle spinner and its adapter. */
+        /* Initialize the puzzle spinner, its adapter, and the selection of puzzle images. */
         spnPuzzle = findViewById(R.id.spn_puzzle)
+
         spnPuzzle.adapter = SpinnerAdapter(
             this,
             R.layout.spn_puzzle_item,
             resources.getStringArray(R.array.puzzle_images)
         )
         setSpnPuzzleAction()
+
+        puzzleImages = PuzzleImage.values()
     }
 
     private fun initSharedPreferences() {
@@ -398,7 +407,7 @@ class NPuzzleActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                loadPuzzle()
+                loadPuzzle(position)
             }
 
             /**
@@ -483,24 +492,33 @@ class NPuzzleActivity : AppCompatActivity() {
                 puzzleDimen = gvgPuzzle.measuredWidth
                 tileDimen = puzzleDimen / NUM_COLUMNS
 
+                initPuzzleImage()
                 initChunks()
+                displayPuzzle()
             }
         })
     }
 
-    private fun initChunks() {
-        val image: Bitmap = ImageUtil.resizeToBitmap(
-            ImageUtil.drawableToBitmap(this@NPuzzleActivity, R.drawable.kikyo1),
-            puzzleDimen, puzzleDimen
+    private fun initPuzzleImage() {
+        image = ImageUtil.resizeToBitmap(
+            ImageUtil.drawableToBitmap(this@NPuzzleActivity, DEFAULT_PUZZLE_IMAGE),
+            puzzleDimen,
+            puzzleDimen
         )
 
+        // currentPuzzleImage = sp.getString()
+
+            fewestMoves =
+            sp.getString(Key.KEY_FEWEST_MOVES.name, DEFAULT_FEWEST_MOVES.toString())?.toLong()
+                ?: DEFAULT_FEWEST_MOVES
+    }
+
+    private fun initChunks() {
         /* Store copies of the tiles, alongside versions with dark filter applied (blank tiles). */
         imageChunks =
             ImageUtil.splitBitmap(image, tileDimen - BORDER_OFFSET, NUM_TILES, NUM_COLUMNS).first
         blankImageChunks =
             ImageUtil.splitBitmap(image, tileDimen - BORDER_OFFSET, NUM_TILES, NUM_COLUMNS).second
-
-        displayPuzzle()
     }
 
     private fun displayPuzzle() {
@@ -540,13 +558,23 @@ class NPuzzleActivity : AppCompatActivity() {
         gvgPuzzle.adapter = TileAdapter(tileImages, tileDimen, tileDimen)
     }
 
-    private fun loadPuzzle() {
+    private fun loadPuzzle(position: Int) {
         spnPuzzle.setPopupBackgroundDrawable(
             ContextCompat.getDrawable(
                 this@NPuzzleActivity,
                 R.drawable.spinner_dropdown_background
             )
         )
+
+        image = ImageUtil.resizeToBitmap(
+            ImageUtil.drawableToBitmap(
+                this@NPuzzleActivity, puzzleImages[position].drawableId
+            ),
+            puzzleDimen, puzzleDimen
+        )
+
+        initChunks()
+        displayPuzzle()
     }
 
     /***********************************
@@ -726,6 +754,7 @@ class NPuzzleActivity : AppCompatActivity() {
     private fun disableClickables() {
         isPuzzleGridFrozen = true
         btnShuffle.isEnabled = false
+        spnPuzzle.isEnabled = false
     }
 
     private fun enableClickables() {
@@ -907,6 +936,8 @@ class NPuzzleActivity : AppCompatActivity() {
         btnUpload.visibility = View.VISIBLE
         btnUpload.text = getString(R.string.upload_picture)
         tvTrivia.visibility = View.GONE
+
+        spnPuzzle.isEnabled = true
     }
 
     private fun prepareForSolution() {
