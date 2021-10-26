@@ -45,14 +45,21 @@ class TestUtil {
          * Generates all the permutations of this list using Heap's algorithm.
          *
          * Heap's algorithm was introduced by B.R. Heap in the 1963 paper "Permutations by Interchanges,"
-         * which was published in <i>The Computer Journal</i> (Volume 6, Issue 3). The implementation
-         * in this method is the recursive version.
+         * which was published in <i>The Computer Journal</i> (Volume 6, Issue 3). This method follows
+         * a recursive implementation of the said algorithm.
          *
          * @return List of all the permutations of this list.
          */
         fun <T> List<T>.permute(): List<List<T>> {
             val permutations: MutableList<List<T>> = mutableListOf()
 
+            /**
+             * Implements Heap's algorithm to recursively generate all the permutations of the given
+             * list.
+             *
+             * @param size Number of elements in the list.
+             * @param list List whose permutations are to be generated.
+             */
             fun generate(size: Int, list: List<T>) {
                 if (size == 1) {
                     permutations.add(list.toList())
@@ -71,6 +78,7 @@ class TestUtil {
                 }
             }
 
+            /* Generate the permutations. */
             generate(this.size, this.toList())
 
             return permutations
