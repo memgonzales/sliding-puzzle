@@ -11,12 +11,32 @@ class ImageUtil {
             return BitmapFactory.decodeResource(context.resources, drawableId)
         }
 
-        fun resizeToBitmap(picture: Bitmap, dstWidth: Int, dstHeight: Int): Bitmap {
-            return Bitmap.createScaledBitmap(picture, dstWidth, dstHeight, true)
+        fun resizeToSquareBitmap(image: Bitmap, dstWidth: Int, dstHeight: Int): Bitmap {
+            return Bitmap.createScaledBitmap(cropToSquareBitmap(image), dstWidth, dstHeight, true)
+        }
+
+        private fun cropToSquareBitmap(image: Bitmap): Bitmap {
+            if (image.width >= image.height) {
+                return Bitmap.createBitmap(
+                    image,
+                    image.width / 2 - image.height / 2,
+                    0,
+                    image.height,
+                    image.height
+                )
+            } else {
+                return Bitmap.createBitmap(
+                    image,
+                    0,
+                    image.height / 2 - image.width / 2,
+                    image.width,
+                    image.width
+                )
+            }
         }
 
         fun splitBitmap(
-            picture: Bitmap,
+            image: Bitmap,
             chunkDimen: Int,
             numTiles: Int,
             numColumns: Int
@@ -25,8 +45,8 @@ class ImageUtil {
             val blankChunks: ArrayList<Bitmap> = ArrayList(numTiles)
 
             for (i in 0 until numTiles) {
-                val chunk: Bitmap =  Bitmap.createBitmap(
-                    picture,
+                val chunk: Bitmap = Bitmap.createBitmap(
+                    image,
                     (i % numColumns) * chunkDimen,
                     (i / numColumns) * chunkDimen,
                     chunkDimen,
@@ -40,8 +60,8 @@ class ImageUtil {
             return Pair(chunks, blankChunks)
         }
 
-        private fun darkenBitmap(picture: Bitmap): Bitmap {
-            val darkPicture: Bitmap = picture.copy(picture.config, true)
+        private fun darkenBitmap(image: Bitmap): Bitmap {
+            val darkPicture: Bitmap = image.copy(image.config, true)
             val canvas = Canvas(darkPicture)
 
             val paint = Paint(Color.RED)

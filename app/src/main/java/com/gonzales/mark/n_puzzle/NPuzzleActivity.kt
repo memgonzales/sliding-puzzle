@@ -535,7 +535,7 @@ class NPuzzleActivity : AppCompatActivity() {
         puzzleImageIndex = sp.getInt(Key.KEY_PUZZLE_IMAGE.name, 0)
         spnPuzzle.setSelection(puzzleImageIndex)
 
-        puzzleImage = ImageUtil.resizeToBitmap(
+        puzzleImage = ImageUtil.resizeToSquareBitmap(
             ImageUtil.drawableToBitmap(
                 this@NPuzzleActivity,
                 puzzleImages[puzzleImageIndex].drawableId
@@ -615,7 +615,7 @@ class NPuzzleActivity : AppCompatActivity() {
     private fun updatePuzzleImage(position: Int) {
         puzzleImageIndex = position
 
-        puzzleImage = ImageUtil.resizeToBitmap(
+        puzzleImage = ImageUtil.resizeToSquareBitmap(
             ImageUtil.drawableToBitmap(
                 this@NPuzzleActivity, puzzleImages[puzzleImageIndex].drawableId
             ),
@@ -1092,13 +1092,13 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun updatePuzzleImage(imagePath: Uri?) {
-        puzzleImage = ImageUtil.resizeToBitmap(
+        puzzleImage = ImageUtil.resizeToSquareBitmap(
             BitmapFactory.decodeStream(
                 contentResolver.openInputStream(imagePath!!)
             ),
             puzzleDimen,
             puzzleDimen
-        );
+        )
     }
 
     /**
