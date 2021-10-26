@@ -19,7 +19,18 @@ class TestUtil {
          */
         const val BLANK_TILE_MARKER = NUM_TILES - 1
 
+        val NUM_PUZZLE_CONFIGS = countPuzzleConfigs()
+
         val goalPuzzleState: ArrayList<Int> = initGoalPuzzleState()
+
+        private fun countPuzzleConfigs(): Int {
+            var numPuzzleConfigs = 1
+            for (i in 1..NUM_TILES) {
+                numPuzzleConfigs *= i
+            }
+
+            return numPuzzleConfigs
+        }
 
         private fun initGoalPuzzleState(): ArrayList<Int> {
             val goalPuzzleState: ArrayList<Int> = ArrayList()

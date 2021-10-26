@@ -5,19 +5,6 @@ import org.junit.Assert
 import org.junit.Test
 
 class PuzzleUtilTest {
-    companion object {
-        private val NUM_PUZZLE_CONFIGS = countPuzzleConfigs()
-
-        private fun countPuzzleConfigs(): Int {
-            var numPuzzleConfigs = 1
-            for (i in 1..TestUtil.NUM_TILES) {
-                numPuzzleConfigs *= i
-            }
-
-            return numPuzzleConfigs
-        }
-    }
-
     @Test
     fun `Check if the number of solvable 8-puzzles is equal to half of 9!`() {
         val puzzleState: ArrayList<Int> = arrayListOf(0, 1, 2, 3, 4, 5, 6, 7, 8)
@@ -30,7 +17,7 @@ class PuzzleUtilTest {
             }
         }
 
-        Assert.assertEquals(NUM_PUZZLE_CONFIGS / 2, numSolvable)
+        Assert.assertEquals(TestUtil.NUM_PUZZLE_CONFIGS / 2, numSolvable)
     }
 
     @Test
@@ -45,7 +32,7 @@ class PuzzleUtilTest {
             }
         }
 
-        Assert.assertEquals(NUM_PUZZLE_CONFIGS / 2, numUnsolvable)
+        Assert.assertEquals(TestUtil.NUM_PUZZLE_CONFIGS / 2, numUnsolvable)
     }
 
     @Test
@@ -74,5 +61,4 @@ class PuzzleUtilTest {
 
         Assert.assertEquals(expectedSwapped, puzzleState)
     }
-
 }
