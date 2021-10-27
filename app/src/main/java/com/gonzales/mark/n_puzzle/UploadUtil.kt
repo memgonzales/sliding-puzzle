@@ -70,7 +70,7 @@ class UploadUtil {
             } else {
                 Toast.makeText(
                     context,
-                    "Insufficient permissions to access your gallery",
+                    context.getString(R.string.no_permission),
                     Toast.LENGTH_SHORT
                 ).show()
             }
