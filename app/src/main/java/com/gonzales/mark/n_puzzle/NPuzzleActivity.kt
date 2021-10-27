@@ -373,6 +373,11 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    private fun resetState() {
+        puzzleState = goalPuzzleState.toMutableList() as ArrayList<Int>
+        blankTilePos = BLANK_TILE_MARKER
+    }
+
     private fun initPuzzle() {
         setTouchSlopThreshold()
         setOnFlingListener()
@@ -628,6 +633,7 @@ class NPuzzleActivity : AppCompatActivity() {
          * on display.
          */
         tvSuccess.visibility = View.GONE
+        resetState()
 
         updatePuzzleImage(position)
         initChunks()
@@ -1103,6 +1109,7 @@ class NPuzzleActivity : AppCompatActivity() {
 
     private fun loadPuzzle(imagePath: Uri?) {
         isGalleryImageChosen = true
+        resetState()
 
         /*
          * Handle the case when the spinner is clicked while the success message is still
