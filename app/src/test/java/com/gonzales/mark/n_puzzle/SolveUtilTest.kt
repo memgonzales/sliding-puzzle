@@ -19,7 +19,7 @@ class SolveUtilTest {
         val actualSolution: Stack<StatePair>? =
             SolveUtil.solve(
                 StatePair(puzzleState, puzzleState.indexOf(TestUtil.BLANK_TILE_MARKER)),
-                TestUtil.goalPuzzleState,
+                TestUtil.GOAL_PUZZLE_STATE,
                 TestUtil.NUM_COLUMNS,
                 TestUtil.BLANK_TILE_MARKER
             )
@@ -35,7 +35,7 @@ class SolveUtilTest {
         val solution: Stack<StatePair>? =
             SolveUtil.solve(
                 StatePair(puzzleState, puzzleState.indexOf(TestUtil.BLANK_TILE_MARKER)),
-                TestUtil.goalPuzzleState,
+                TestUtil.GOAL_PUZZLE_STATE,
                 TestUtil.NUM_COLUMNS,
                 TestUtil.BLANK_TILE_MARKER
             )
@@ -51,7 +51,7 @@ class SolveUtilTest {
         val solution: Stack<StatePair>? =
             SolveUtil.solve(
                 StatePair(puzzleState, puzzleState.indexOf(TestUtil.BLANK_TILE_MARKER)),
-                TestUtil.goalPuzzleState,
+                TestUtil.GOAL_PUZZLE_STATE,
                 TestUtil.NUM_COLUMNS,
                 TestUtil.BLANK_TILE_MARKER
             )
@@ -67,7 +67,7 @@ class SolveUtilTest {
         val solution: Stack<StatePair>? =
             SolveUtil.solve(
                 StatePair(puzzleState, puzzleState.indexOf(TestUtil.BLANK_TILE_MARKER)),
-                TestUtil.goalPuzzleState,
+                TestUtil.GOAL_PUZZLE_STATE,
                 TestUtil.NUM_COLUMNS,
                 TestUtil.BLANK_TILE_MARKER
             )
@@ -83,7 +83,7 @@ class SolveUtilTest {
         val solution: Stack<StatePair>? =
             SolveUtil.solve(
                 StatePair(puzzleState, puzzleState.indexOf(TestUtil.BLANK_TILE_MARKER)),
-                TestUtil.goalPuzzleState,
+                TestUtil.GOAL_PUZZLE_STATE,
                 TestUtil.NUM_COLUMNS,
                 TestUtil.BLANK_TILE_MARKER
             )
@@ -105,7 +105,7 @@ class SolveUtilTest {
         val solution: Stack<StatePair>? =
             SolveUtil.solve(
                 StatePair(puzzleState, puzzleState.indexOf(TestUtil.BLANK_TILE_MARKER)),
-                TestUtil.goalPuzzleState,
+                TestUtil.GOAL_PUZZLE_STATE,
                 TestUtil.NUM_COLUMNS,
                 TestUtil.BLANK_TILE_MARKER
             )
@@ -127,7 +127,7 @@ class SolveUtilTest {
         val solution: Stack<StatePair>? =
             SolveUtil.solve(
                 StatePair(puzzleState, puzzleState.indexOf(TestUtil.BLANK_TILE_MARKER)),
-                TestUtil.goalPuzzleState,
+                TestUtil.GOAL_PUZZLE_STATE,
                 TestUtil.NUM_COLUMNS,
                 TestUtil.BLANK_TILE_MARKER
             )

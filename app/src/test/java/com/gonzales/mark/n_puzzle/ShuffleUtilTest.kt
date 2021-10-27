@@ -16,7 +16,7 @@ class ShuffleUtilTest {
 
             val puzzleStatePair: StatePair = ShuffleUtil.getValidShuffledState(
                 puzzleState,
-                TestUtil.goalPuzzleState,
+                TestUtil.GOAL_PUZZLE_STATE,
                 TestUtil.BLANK_TILE_MARKER
             )
 
@@ -39,11 +39,11 @@ class ShuffleUtilTest {
 
             val puzzleStatePair: StatePair = ShuffleUtil.getValidShuffledState(
                 puzzleState,
-                TestUtil.goalPuzzleState,
+                TestUtil.GOAL_PUZZLE_STATE,
                 TestUtil.BLANK_TILE_MARKER
             )
 
-            assertFalse(puzzleStatePair.puzzleState == TestUtil.goalPuzzleState)
+            assertFalse(puzzleStatePair.puzzleState == TestUtil.GOAL_PUZZLE_STATE)
         }
     }
 }
