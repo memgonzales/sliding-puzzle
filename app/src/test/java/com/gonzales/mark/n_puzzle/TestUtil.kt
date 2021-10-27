@@ -89,7 +89,12 @@ class TestUtil {
             var i = 1
 
             for (tile in puzzleState) {
-                grid += "$tile "
+                grid += if (tile == BLANK_TILE_MARKER) {
+                    "- "
+                } else {
+                    "$tile "
+                }
+
                 if (i % NUM_COLUMNS == 0) {
                     grid += "\n"
                 }

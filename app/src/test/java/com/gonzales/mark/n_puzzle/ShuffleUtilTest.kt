@@ -20,7 +20,7 @@ class ShuffleUtilTest {
                 TestUtil.BLANK_TILE_MARKER
             )
 
-            val errorMessage = "\nShould be solvable: $puzzleStatePair\n"
+            val errorMessage = "\n${TestUtil.displayGrid(puzzleStatePair.puzzleState)}\n"
 
             assertTrue(
                 errorMessage,
