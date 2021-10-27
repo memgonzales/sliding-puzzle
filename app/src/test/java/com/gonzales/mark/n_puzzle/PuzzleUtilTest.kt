@@ -8,7 +8,7 @@ class PuzzleUtilTest {
     @Test
     fun `Check if a shuffled 8-puzzle with solution is detected as solvable`() {
         val puzzleState: ArrayList<Int> = arrayListOf(0, 1, 2, 3, 4, 8, 6, 7, 5)
-        val errorMessage = "\nShould be solvable: $puzzleState\n"
+        val errorMessage = "\n${TestUtil.displayGrid(puzzleState)}\n"
 
         assertTrue(errorMessage, PuzzleUtil.isSolvable(puzzleState, TestUtil.BLANK_TILE_MARKER))
     }
@@ -16,7 +16,7 @@ class PuzzleUtilTest {
     @Test
     fun `Check if an already-solved 8-puzzle is detected as solvable`() {
         val puzzleState: ArrayList<Int> = arrayListOf(0, 1, 2, 3, 4, 5, 6, 7, 8)
-        val errorMessage = "\nShould be solvable: $puzzleState\n"
+        val errorMessage = "\n${TestUtil.displayGrid(puzzleState)}\n"
 
         assertTrue(errorMessage, PuzzleUtil.isSolvable(puzzleState, TestUtil.BLANK_TILE_MARKER))
     }
@@ -24,7 +24,7 @@ class PuzzleUtilTest {
     @Test
     fun `Check if an 8-puzzle with no solution is detected as unsolvable`() {
         val puzzleState: ArrayList<Int> = arrayListOf(0, 1, 2, 3, 4, 5, 7, 6, 8)
-        val errorMessage = "\nShould not be solvable: $puzzleState\n"
+        val errorMessage = "\n${TestUtil.displayGrid(puzzleState)}\n"
 
         assertFalse(errorMessage, PuzzleUtil.isSolvable(puzzleState, TestUtil.BLANK_TILE_MARKER))
     }
