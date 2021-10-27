@@ -28,13 +28,20 @@ class MoveUtilTest {
             return testCases
         }
 
+        private fun displayGrid(blankTilePos: Int): String {
+            val puzzleState: ArrayList<Int> = arrayListOf(0, 1, 2, 3, 4, 5, 6, 7, 8)
+            swap(puzzleState, TestUtil.BLANK_TILE_MARKER, blankTilePos)
+
+            return TestUtil.displayGrid(puzzleState)
+        }
+
         private fun assertMovable(
             allowedMoves: ArrayList<Pair<Int, FlingDirection>>,
             blankTilePos: Int
         ) {
             for (allowedMove in allowedMoves) {
                 val errorMessage =
-                    "\nBBlank tile position: $blankTilePos\nAllowed moves: $allowedMoves\nShould be movable: $allowedMove\n"
+                    "\n${displayGrid(blankTilePos)}\n$allowedMove\n"
 
                 assertTrue(
                     errorMessage,
@@ -56,7 +63,7 @@ class MoveUtilTest {
                 for (direction in directions) {
                     if (Pair(position, direction) !in allowedMoves) {
                         val errorMessage =
-                            "\nBlank tile position: $blankTilePos\nAllowed moves: $allowedMoves\nShould not be movable: ($position, $direction)\n"
+                            "\n${displayGrid(blankTilePos)}\n($position, $direction)\n"
 
                         assertFalse(
                             errorMessage,

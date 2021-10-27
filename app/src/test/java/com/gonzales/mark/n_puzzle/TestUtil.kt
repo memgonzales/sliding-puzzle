@@ -83,5 +83,20 @@ class TestUtil {
 
             return permutations
         }
+
+        fun displayGrid(puzzleState: ArrayList<Int>): String {
+            var grid = ""
+            var i = 1
+
+            for (tile in puzzleState) {
+                grid += "$tile "
+                if (i % NUM_COLUMNS == 0) {
+                    grid += "\n"
+                }
+                i++
+            }
+
+            return grid
+        }
     }
 }
