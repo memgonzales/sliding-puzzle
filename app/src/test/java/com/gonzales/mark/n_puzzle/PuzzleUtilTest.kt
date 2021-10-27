@@ -85,4 +85,141 @@ class PuzzleUtilTest {
 
         assertEquals(expectedSwapped, puzzleState)
     }
+
+    @Test
+    fun `Check if the Manhattan distance (versus the goal state) when two horizontally adjacent tiles are swapped is equal to 2`() {
+        val puzzleState: ArrayList<Int> = arrayListOf(0, 1, 2, 3, 4, 5, 7, 6, 8)
+        val errorMessage =
+            "\n${TestUtil.displayGrid(puzzleState)}\n${TestUtil.displayGrid(TestUtil.goalPuzzleState)}\n"
+
+        assertEquals(
+            errorMessage,
+            2,
+            PuzzleUtil.getManhattan(puzzleState, TestUtil.NUM_COLUMNS, TestUtil.BLANK_TILE_MARKER)
+        )
+    }
+
+    @Test
+    fun `Check if the Manhattan distance (versus the goal state) when two vertically adjacent tiles are swapped is equal to 2`() {
+        val puzzleState: ArrayList<Int> = arrayListOf(0, 1, 5, 3, 4, 2, 6, 7, 8)
+        val errorMessage =
+            "\n${TestUtil.displayGrid(puzzleState)}\n${TestUtil.displayGrid(TestUtil.goalPuzzleState)}\n"
+
+        assertEquals(
+            errorMessage,
+            2,
+            PuzzleUtil.getManhattan(puzzleState, TestUtil.NUM_COLUMNS, TestUtil.BLANK_TILE_MARKER)
+        )
+    }
+
+    @Test
+    fun `Check if the Manhattan distance (versus the goal state) when two diagonally connected tiles are swapped is equal to 4`() {
+        val puzzleState: ArrayList<Int> = arrayListOf(4, 1, 2, 3, 0, 5, 6, 7, 8)
+        val errorMessage =
+            "\n${TestUtil.displayGrid(puzzleState)}\n${TestUtil.displayGrid(TestUtil.goalPuzzleState)}\n"
+
+        assertEquals(
+            errorMessage,
+            4,
+            PuzzleUtil.getManhattan(puzzleState, TestUtil.NUM_COLUMNS, TestUtil.BLANK_TILE_MARKER)
+        )
+    }
+
+    @Test
+    fun `Check if the Manhattan distance (versus the goal state) when the last tile of a row is swapped with the first tile of the next row is equal to 6`() {
+        val puzzleState: ArrayList<Int> = arrayListOf(0, 1, 3, 2, 4, 5, 6, 7, 8)
+        val errorMessage =
+            "\n${TestUtil.displayGrid(puzzleState)}\n${TestUtil.displayGrid(TestUtil.goalPuzzleState)}\n"
+
+        assertEquals(
+            errorMessage,
+            6,
+            PuzzleUtil.getManhattan(puzzleState, TestUtil.NUM_COLUMNS, TestUtil.BLANK_TILE_MARKER)
+        )
+    }
+
+    @Test
+    fun `Check if the Manhattan distance (versus the goal state) when the last tile of a column is swapped with the first tile of the next column is equal to 6`() {
+        val puzzleState: ArrayList<Int> = arrayListOf(0, 6, 2, 3, 4, 5, 1, 7, 8)
+        val errorMessage =
+            "\n${TestUtil.displayGrid(puzzleState)}\n${TestUtil.displayGrid(TestUtil.goalPuzzleState)}\n"
+
+        assertEquals(
+            errorMessage,
+            6,
+            PuzzleUtil.getManhattan(puzzleState, TestUtil.NUM_COLUMNS, TestUtil.BLANK_TILE_MARKER)
+        )
+    }
+
+    @Test
+    fun `Check the Manhattan distance (versus the goal state) if multiple tiles are swapped`() {
+        val puzzleState: ArrayList<Int> = arrayListOf(8, 7, 6, 5, 4, 3, 2, 1, 0)
+        val errorMessage =
+            "\n${TestUtil.displayGrid(puzzleState)}\n${TestUtil.displayGrid(TestUtil.goalPuzzleState)}\n"
+
+        assertEquals(
+            errorMessage,
+            20,
+            PuzzleUtil.getManhattan(puzzleState, TestUtil.NUM_COLUMNS, TestUtil.BLANK_TILE_MARKER)
+        )
+    }
+
+    @Test
+    fun `Check if the Manhattan distance (versus the goal state) if the grid represents the goal state`() {
+        val puzzleState: ArrayList<Int> = arrayListOf(0, 1, 2, 3, 4, 5, 6, 7, 8)
+        val errorMessage =
+            "\n${TestUtil.displayGrid(puzzleState)}\n${TestUtil.displayGrid(TestUtil.goalPuzzleState)}\n"
+
+        assertEquals(
+            errorMessage,
+            0,
+            PuzzleUtil.getManhattan(puzzleState, TestUtil.NUM_COLUMNS, TestUtil.BLANK_TILE_MARKER)
+        )
+    }
+
+    @Test
+    fun `Check if the Manhattan distance (versus the goal state) when a tile is slid down is equal to 1`() {
+        val puzzleState: ArrayList<Int> = arrayListOf(0, 1, 2, 3, 4, 8, 6, 7, 5)
+        val errorMessage =
+            "\n${TestUtil.displayGrid(puzzleState)}\n${TestUtil.displayGrid(TestUtil.goalPuzzleState)}\n"
+
+        assertEquals(
+            errorMessage,
+            1,
+            PuzzleUtil.getManhattan(puzzleState, TestUtil.NUM_COLUMNS, TestUtil.BLANK_TILE_MARKER)
+        )
+    }
+
+    @Test
+    fun `Check if the Manhattan distance (versus the goal state) when a tile is slid to the right is equal to 1`() {
+        val puzzleState: ArrayList<Int> = arrayListOf(0, 1, 2, 3, 4, 5, 6, 8, 7)
+        val errorMessage =
+            "\n${TestUtil.displayGrid(puzzleState)}\n${TestUtil.displayGrid(TestUtil.goalPuzzleState)}\n"
+
+        assertEquals(
+            errorMessage,
+            1,
+            PuzzleUtil.getManhattan(puzzleState, TestUtil.NUM_COLUMNS, TestUtil.BLANK_TILE_MARKER)
+        )
+    }
+
+    @Test
+    fun `Check if there are exactly two grids with Manhattan distance (versus the goal state) equal to 1`() {
+        val puzzleState: ArrayList<Int> = arrayListOf(0, 1, 2, 3, 4, 5, 6, 7, 8)
+        val testCases: List<List<Int>> = puzzleState.permute()
+
+        var numGrids = 0
+        for (testCase in testCases) {
+            if (PuzzleUtil.getManhattan(
+                    testCase as ArrayList<Int>,
+                    TestUtil.NUM_COLUMNS,
+                    TestUtil.BLANK_TILE_MARKER
+                ) == 1
+            ) {
+                numGrids++
+            }
+        }
+
+        assertEquals(2, numGrids)
+    }
 }
