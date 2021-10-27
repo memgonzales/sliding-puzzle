@@ -137,8 +137,10 @@ class NPuzzleActivity : AppCompatActivity() {
     private lateinit var blankImageChunks: ArrayList<Bitmap>
     private lateinit var tileImages: ArrayList<ImageButton>
 
-    private lateinit var puzzleImages: Array<PuzzleImage>
+    private lateinit var puzzleImageChoices: Array<PuzzleImage>
     private var puzzleImageIndex: Int = 0
+    private var indexOfCustom: Int = 0
+    private var isGalleryImageChosen: Boolean = false
 
     /********************************
      * Shuffling-Related Properties *
@@ -258,6 +260,16 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        if (isGalleryImageChosen) {
+            isGalleryImageChosen = false
+        } else {
+            spnPuzzle.setSelection(puzzleImageIndex)
+        }
+    }
+
     /**************************
      * Initialization Methods *
      **************************/
@@ -291,7 +303,7 @@ class NPuzzleActivity : AppCompatActivity() {
 
         tvTrivia = findViewById(R.id.tv_trivia)
 
-        /* Initialize the puzzle spinner, its adapter, and the selection of puzzle images. */
+        /* Initialize the puzzle spinner and its adapter. */
         spnPuzzle = findViewById(R.id.spn_puzzle)
         spnPuzzle.adapter = SpinnerAdapter(
             this,
@@ -299,7 +311,9 @@ class NPuzzleActivity : AppCompatActivity() {
             resources.getStringArray(R.array.puzzle_images)
         )
 
-        puzzleImages = PuzzleImage.values()
+        /* Initialize the selection of puzzle images. */
+        puzzleImageChoices = PuzzleImage.values()
+        indexOfCustom = puzzleImageChoices.lastIndex
     }
 
     private fun initSharedPreferences() {
@@ -398,7 +412,11 @@ class NPuzzleActivity : AppCompatActivity() {
             if (isSolutionDisplay) {
                 skipSolution()
             } else {
-                uploadPuzzleImage()
+                if (spnPuzzle.selectedItemPosition != indexOfCustom) {
+                    spnPuzzle.setSelection(indexOfCustom)
+                } else {
+                    uploadPuzzleImage()
+                }
             }
         }
     }
@@ -426,7 +444,11 @@ class NPuzzleActivity : AppCompatActivity() {
                 position: Int,
                 id: Long
             ) {
-                loadPuzzle(position)
+                if (position != indexOfCustom) {
+                    loadPuzzle(position)
+                } else {
+                    uploadPuzzleImage()
+                }
             }
 
             /**
@@ -538,7 +560,7 @@ class NPuzzleActivity : AppCompatActivity() {
         puzzleImage = ImageUtil.resizeToSquareBitmap(
             ImageUtil.drawableToBitmap(
                 this@NPuzzleActivity,
-                puzzleImages[puzzleImageIndex].drawableId
+                puzzleImageChoices[puzzleImageIndex].drawableId
             ),
             puzzleDimen,
             puzzleDimen
@@ -617,7 +639,7 @@ class NPuzzleActivity : AppCompatActivity() {
 
         puzzleImage = ImageUtil.resizeToSquareBitmap(
             ImageUtil.drawableToBitmap(
-                this@NPuzzleActivity, puzzleImages[puzzleImageIndex].drawableId
+                this@NPuzzleActivity, puzzleImageChoices[puzzleImageIndex].drawableId
             ),
             puzzleDimen,
             puzzleDimen
@@ -1080,6 +1102,8 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     private fun loadPuzzle(imagePath: Uri?) {
+        isGalleryImageChosen = true
+
         /*
          * Handle the case when the spinner is clicked while the success message is still
          * on display.
