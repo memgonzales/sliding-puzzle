@@ -34,7 +34,7 @@ class MoveUtilTest {
         ) {
             for (allowedMove in allowedMoves) {
                 val errorMessage =
-                    "\nblankTilePos: $blankTilePos\nallowedMoves: $allowedMoves\nshould be movable: $allowedMove\n"
+                    "\nBBlank tile position: $blankTilePos\nAllowed moves: $allowedMoves\nShould be movable: $allowedMove\n"
 
                 assertTrue(
                     errorMessage,
@@ -56,7 +56,7 @@ class MoveUtilTest {
                 for (direction in directions) {
                     if (Pair(position, direction) !in allowedMoves) {
                         val errorMessage =
-                            "blankTilePos: $blankTilePos\nallowedMoves: $allowedMoves\nshould not be movable: ($position, $direction)\n"
+                            "\nBlank tile position: $blankTilePos\nAllowed moves: $allowedMoves\nShould not be movable: ($position, $direction)\n"
 
                         assertFalse(
                             errorMessage,
