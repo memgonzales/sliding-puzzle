@@ -222,4 +222,24 @@ class PuzzleUtilTest {
 
         assertEquals(2, numGrids)
     }
+
+    @Test
+    fun `Check if there is exactly one grid with Manhattan distance (versus the goal state) equal to 0`() {
+        val puzzleState: ArrayList<Int> = arrayListOf(0, 1, 2, 3, 4, 5, 6, 7, 8)
+        val testCases: List<List<Int>> = puzzleState.permute()
+
+        var numGrids = 0
+        for (testCase in testCases) {
+            if (PuzzleUtil.getManhattan(
+                    testCase as ArrayList<Int>,
+                    TestUtil.NUM_COLUMNS,
+                    TestUtil.BLANK_TILE_MARKER
+                ) == 0
+            ) {
+                numGrids++
+            }
+        }
+
+        assertEquals(1, numGrids)
+    }
 }
