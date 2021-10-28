@@ -12,10 +12,40 @@
 The **source code documentation** can be accessed through the following website: [https://memgonzales.github.io/sliding-puzzle/](https://memgonzales.github.io/sliding-puzzle/).
 
 ## Project Structure
+The project consists of the following folders:
+
+Folder | Description
+-- | --
+<a href = "https://github.com/memgonzales/sliding-puzzle/tree/master/.idea">`.idea`</a> | Contains files used by Android Studio to load project-specific configurations
+<a href = "https://github.com/memgonzales/sliding-puzzle/tree/master/app">`app`</a> | Contains all the source code and resource files, the markdown file for the app- and package-level documentation, and files defining the module-specific dependencies, project-specific ProGuard rules, and developer credentials related to Google services
+<a href = "https://github.com/memgonzales/sliding-puzzle/tree/master/docs">`docs`</a> | Contains the HTML documentation of the project, generated from KDoc comments via Dokka
+<a href = "https://github.com/memgonzales/sliding-puzzle/tree/master/gradle/wrapper">`gradle`</a> | Contains files used by Gradle to run build automation tasks
+
+Several Gradle-related files are also included in its root directory.
 
 ## Running the Application
+***The minimum SDK supported is Android Lollipop (API Level 21), and the target SDK is Android 11 (API Level 30).***
+
+1. Before running the application locally, the following software are recommended (albeit not required) to be installed:
+
+   | Software | Description | License |
+   | --- | --- | --- |
+   | <a href = "https://git-scm.com/downloads">git</a> | Distributed version control system | GNU General Public License v2.0 |
+   | <a href = "https://developer.android.com/studio">Android Studio</a> | Official integrated development environment (IDE) for Android development | Apache License 2.0
+   
+2. Create a copy of this repository:
+   - If git is installed, type the following command on the terminal:
+   
+     ```
+     git clone https://github.com/memgonzales/sliding-puzzle
+     ```
+      
+   - If git is not installed, click the green <code>Code</code> button near the top right of the repository and choose <code>Download ZIP</code>. Once the zipped folder has been downloaded, extract its contents.
+
+3. Run the app using Android Studio (or any IDE that supports Android development). Alternatively, Android also provides a <a href = "https://developer.android.com/studio/build/building-cmdline">guide</a> on how to build the app from the command line.
 
 ## Testing the Application
+The project includes unit tests, which are located inside the [`app/src/test/java`](https://github.com/memgonzales/sliding-puzzle/tree/master/app/src/test/java/com/gonzales/mark/n_puzzle) folder. These are JUnit tests that run on the machine's local Java Virtual Machine.
 
 ## Dependencies
 
