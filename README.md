@@ -48,8 +48,36 @@ Several Gradle-related files are also included in its root directory.
 The project includes unit tests, which are located inside the [`app/src/test/java`](https://github.com/memgonzales/sliding-puzzle/tree/master/app/src/test/java/com/gonzales/mark/n_puzzle) folder. These are JUnit tests that run on the machine's local Java Virtual Machine. Testing can be done either from <a href = "https://developer.android.com/studio/test">Android Studio</a> or the <a href = "https://developer.android.com/studio/test/command-line">command line</a>.
 
 ## Dependencies
+This project uses the following project dependencies:
+
+Dependency | Version | Description | License
+-- | -- | -- | --
+`com.android.tools.build:gradle` | 4.2.2 | Gradle build automation tool | Apache License 2.0
+`org.jetbrains.kotlin:kotlin-gradle-plugin` | 1.5.0 | Gradle plugin for Kotlin/JVM compilation tasks | Apache License 2.0
+`org.jetbrains.dokka:dokka-gradle-plugin` | 1.5.0 | Gradle plugin for Dokka documentation engine | Apache License 2.0
+`com.google.gms:google-services` | 4.3.10 | Plugin for processing the <a href = "https://github.com/memgonzales/artemis-art-app/blob/master/app/google-services.json">`google-servies.json`</a> file | Apache License 2.0
+
+It also uses the following module-specific dependencies:
+
+Dependency | Version | Description | License
+-- | -- | -- | --
+`org.jetbrains.kotlin:kotlin-stdlib` | 1.5.0 | Kotlin standard library for JVM | Apache License 2.0
+`androidx.core:core-ktx` | 1.6.0 | Core module providing Kotlin extensions for common framework APIs and several domain-specific extensions | Apache License 2.0
+`androidx.appcompat:appcompat` | 1.3.1. | Library allowing access to new APIs on older API versions of the platform | Apache License 2.0
+`com.google.android.material:material` | 1.2.1 <br/> 1.4.0 | Library for using APIs that provide implementations of the Material Design specification | Apache License 2.0
+`androidx.constraintlayout:constraintlayout` | 2.1.1 | Library for positioning and sizing widgets in a flexible way with relative positioning | Apache License 2.0
+`junit:junit` | 4.13.2 | Unit testing framework for Java | Eclipse Public License 1.0
+`androidx.test.ext:junit` | 1.1.3 | AndroidX unit testing framework for Java | Eclipse Public License 1.0 <br/> Apache License 2.0
+`androidx.test.espresso:espresso-core` | 3.4.0 | Framework for writing Android user interface tests | Apache License 2.0
+
+*The descriptions are taken from their respective websites.*
 
 ## Built Using
+This project uses the following languages and technologies:
+- **Logic**: <a href = "https://kotlinlang.org/">Kotlin</a>, a statically-typed language officially endorsed by Google as the preferred language for Android development
+- **Layouts**: <a href = "https://developer.android.com/guide/topics/ui/declaring-layout">XML</a>, a lightweight markup language that is both human- and machine-readable
+
+The <a href = "https://memgonzales.github.io/sliding-puzzle/">HTML documentation</a> of the source code was generated from <a href = "https://kotlinlang.org/docs/kotlin-doc.html">KDoc</a> comments via the documentation engine <a href = "https://github.com/Kotlin/dokka">Dokka</a>.
 
 ## Product Backlog
 - Create launcher icon
