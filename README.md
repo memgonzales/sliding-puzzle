@@ -64,7 +64,7 @@ Dependency | Version | Description | License
 `org.jetbrains.kotlin:kotlin-stdlib` | 1.5.0 | Kotlin standard library for JVM | Apache License 2.0
 `androidx.core:core-ktx` | 1.6.0 | Core module providing Kotlin extensions for common framework APIs and several domain-specific extensions | Apache License 2.0
 `androidx.appcompat:appcompat` | 1.3.1. | Library allowing access to new APIs on older API versions of the platform | Apache License 2.0
-`com.google.android.material:material` | 1.2.1 <br/> 1.4.0 | Library for using APIs that provide implementations of the Material Design specification | Apache License 2.0
+`com.google.android.material:material` | 1.4.0 | Library for using APIs that provide implementations of the Material Design specification | Apache License 2.0
 `androidx.constraintlayout:constraintlayout` | 2.1.1 | Library for positioning and sizing widgets in a flexible way with relative positioning | Apache License 2.0
 `junit:junit` | 4.13.2 | Unit testing framework for Java | Eclipse Public License 1.0
 `androidx.test.ext:junit` | 1.1.3 | AndroidX unit testing framework for Java | Eclipse Public License 1.0 <br/> Apache License 2.0
