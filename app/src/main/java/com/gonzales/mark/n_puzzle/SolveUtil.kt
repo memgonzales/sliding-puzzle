@@ -76,7 +76,7 @@ class SolveUtil {
              * f-value of the latter, which is an operation not natively supported by a hash set.
              */
             val frontier: PriorityQueue<Node> =
-                PriorityQueue(FRONTIER_INITIAL_CAPACITY, NodeComparator())
+                PriorityQueue(FRONTIER_INITIAL_CAPACITY, NodeByF())
             val frontierMap: HashMap<Int, Node> = HashMap()
 
             /*
