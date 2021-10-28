@@ -45,7 +45,7 @@ Several Gradle-related files are also included in its root directory.
 3. Run the app using Android Studio (or any IDE that supports Android development). Alternatively, Android also provides a <a href = "https://developer.android.com/studio/build/building-cmdline">guide</a> on how to build the app from the command line.
 
 ## Testing the Application
-The project includes unit tests, which are located inside the [`app/src/test/java`](https://github.com/memgonzales/sliding-puzzle/tree/master/app/src/test/java/com/gonzales/mark/n_puzzle) folder. These are JUnit tests that run on the machine's local Java Virtual Machine.
+The project includes unit tests, which are located inside the [`app/src/test/java`](https://github.com/memgonzales/sliding-puzzle/tree/master/app/src/test/java/com/gonzales/mark/n_puzzle) folder. These are JUnit tests that run on the machine's local Java Virtual Machine. Testing can be done either from <a href = "https://developer.android.com/studio/test">Android Studio</a> or the <a href = "https://developer.android.com/studio/test/command-line">command line</a>.
 
 ## Dependencies
 
