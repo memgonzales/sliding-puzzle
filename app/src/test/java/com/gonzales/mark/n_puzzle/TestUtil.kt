@@ -33,7 +33,7 @@ class TestUtil {
         }
 
         private fun initGoalPuzzleState(): ArrayList<Int> {
-            val goalPuzzleState: ArrayList<Int> = ArrayList()
+            val goalPuzzleState: ArrayList<Int> = ArrayList(NUM_TILES)
             for (tile in 0 until NUM_TILES) {
                 goalPuzzleState.add(tile)
             }
