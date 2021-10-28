@@ -12,15 +12,15 @@ import androidx.core.content.ContextCompat
 class UploadUtil {
     companion object {
         /**
-         * Obtains the necessary permissions for choosing a photo from the Gallery. If these
-         * permissions have already been granted beforehand, this method also defines the subsequent
+         * Obtains the necessary permission for choosing an image from the Gallery. If this
+         * permission have already been granted beforehand, this method also defines the subsequent
          * behavior.
          *
          * To access the Gallery, a <code>READ_EXTERNAL_STORAGE</code> permission is requested
          * from the user.
          *
          * @param activity Activity calling this method.
-         * @param galleryLauncher Activity result launcher related to choosing photos from the Gallery.
+         * @param galleryLauncher Activity result launcher related to choosing an image from the Gallery.
          */
         fun chooseFromGallery(activity: Activity, galleryLauncher: ActivityResultLauncher<Intent>) {
             val permissions = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -33,7 +33,7 @@ class UploadUtil {
                 ActivityCompat.requestPermissions(
                     activity,
                     permissions,
-                    RequestCode.REQUEST_CODE_POST_GALLERY.ordinal
+                    RequestCode.REQUEST_CODE_IMAGE_GALLERY.ordinal
                 )
             } else {
                 chooseFromGalleryIntent(galleryLauncher)
@@ -41,9 +41,9 @@ class UploadUtil {
         }
 
         /**
-         * Launches the Gallery should the user decide to choose a photo from it.
+         * Launches the Gallery should the user decide to choose an image from it.
          *
-         * @param galleryLauncher Activity result launcher related to choosing photos from the Gallery.
+         * @param galleryLauncher Activity result launcher related to choosing an image from the Gallery.
          */
         private fun chooseFromGalleryIntent(galleryLauncher: ActivityResultLauncher<Intent>) {
             val intent = Intent(Intent.ACTION_PICK)
@@ -54,16 +54,17 @@ class UploadUtil {
 
         /**
          * Defines the behavior depending on whether the user granted (or denied) the necessary
-         * permissions for choosing a photo from the Gallery.
+         * permission for choosing an image from the Gallery.
          *
-         * @param grantResults grant results for the corresponding permissions which is either <code>
+         * @param grantResults Grant results for the corresponding permissions which is either <code>
          *     PackageManager.PERMISSION_GRANTED</code> or <code>PackageManager.PERMISSION_DENIED</code>.
-         *     Never null
-         * @param context context tied to the activity calling this method
-         * @param galleryLauncher activity result launcher related to choosing photos from the Gallery
+         *     Never null.
+         * @param context Context tied to the activity calling this method.
+         * @param galleryLauncher Activity result launcher related to choosing an image from the Gallery.
          */
-        fun permissionsResultGallery(grantResults: IntArray, context: Context,
-                                     galleryLauncher: ActivityResultLauncher<Intent>
+        fun permissionsResultGallery(
+            grantResults: IntArray, context: Context,
+            galleryLauncher: ActivityResultLauncher<Intent>
         ) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 chooseFromGalleryIntent(galleryLauncher)
