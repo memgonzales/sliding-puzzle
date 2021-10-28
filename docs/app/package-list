@@ -218,9 +218,9 @@ $dokka.location:com.gonzales.mark.n_puzzle/Node/h/#/PointingToDeclaration/app/c
 $dokka.location:com.gonzales.mark.n_puzzle/Node/hashCode/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-node/hash-code.html
 $dokka.location:com.gonzales.mark.n_puzzle/Node/parent/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-node/parent.html
 $dokka.location:com.gonzales.mark.n_puzzle/Node/puzzleStatePair/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-node/puzzle-state-pair.html
-$dokka.location:com.gonzales.mark.n_puzzle/NodeComparator///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-node-comparator/index.html
-$dokka.location:com.gonzales.mark.n_puzzle/NodeComparator/NodeComparator/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-node-comparator/-node-comparator.html
-$dokka.location:com.gonzales.mark.n_puzzle/NodeComparator/compare/#com.gonzales.mark.n_puzzle.Node?#com.gonzales.mark.n_puzzle.Node?/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-node-comparator/compare.html
+$dokka.location:com.gonzales.mark.n_puzzle/NodeByF///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-node-by-f/index.html
+$dokka.location:com.gonzales.mark.n_puzzle/NodeByF/NodeByF/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-node-by-f/-node-by-f.html
+$dokka.location:com.gonzales.mark.n_puzzle/NodeByF/compare/#com.gonzales.mark.n_puzzle.Node?#com.gonzales.mark.n_puzzle.Node?/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-node-by-f/compare.html
 $dokka.location:com.gonzales.mark.n_puzzle/OnFlingListener///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-on-fling-listener/index.html
 $dokka.location:com.gonzales.mark.n_puzzle/OnFlingListener/onFling/#com.gonzales.mark.n_puzzle.FlingDirection#kotlin.Int/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-on-fling-listener/on-fling.html
 $dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.CUSTOM///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-c-u-s-t-o-m/index.html
@@ -259,9 +259,9 @@ $dokka.location:com.gonzales.mark.n_puzzle/PuzzleUtil.Companion/manhattan/#/Poin
 $dokka.location:com.gonzales.mark.n_puzzle/PuzzleUtil.Companion/swapTiles/#java.util.ArrayList[kotlin.Int]#kotlin.Int/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-util/-companion/swap-tiles.html
 $dokka.location:com.gonzales.mark.n_puzzle/PuzzleUtil///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-util/index.html
 $dokka.location:com.gonzales.mark.n_puzzle/PuzzleUtil/PuzzleUtil/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-util/-puzzle-util.html
-$dokka.location:com.gonzales.mark.n_puzzle/RequestCode.REQUEST_CODE_POST_GALLERY///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-request-code/-r-e-q-u-e-s-t_-c-o-d-e_-p-o-s-t_-g-a-l-l-e-r-y/index.html
-$dokka.location:com.gonzales.mark.n_puzzle/RequestCode.REQUEST_CODE_POST_GALLERY/name/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-request-code/-r-e-q-u-e-s-t_-c-o-d-e_-p-o-s-t_-g-a-l-l-e-r-y/name.html
-$dokka.location:com.gonzales.mark.n_puzzle/RequestCode.REQUEST_CODE_POST_GALLERY/ordinal/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-request-code/-r-e-q-u-e-s-t_-c-o-d-e_-p-o-s-t_-g-a-l-l-e-r-y/ordinal.html
+$dokka.location:com.gonzales.mark.n_puzzle/RequestCode.REQUEST_CODE_IMAGE_GALLERY///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-request-code/-r-e-q-u-e-s-t_-c-o-d-e_-i-m-a-g-e_-g-a-l-l-e-r-y/index.html
+$dokka.location:com.gonzales.mark.n_puzzle/RequestCode.REQUEST_CODE_IMAGE_GALLERY/name/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-request-code/-r-e-q-u-e-s-t_-c-o-d-e_-i-m-a-g-e_-g-a-l-l-e-r-y/name.html
+$dokka.location:com.gonzales.mark.n_puzzle/RequestCode.REQUEST_CODE_IMAGE_GALLERY/ordinal/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-request-code/-r-e-q-u-e-s-t_-c-o-d-e_-i-m-a-g-e_-g-a-l-l-e-r-y/ordinal.html
 $dokka.location:com.gonzales.mark.n_puzzle/RequestCode///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-request-code/index.html
 $dokka.location:com.gonzales.mark.n_puzzle/RequestCode/RequestCode/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-request-code/-request-code.html
 $dokka.location:com.gonzales.mark.n_puzzle/ShuffleRunnable.Companion///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-shuffle-runnable/-companion/index.html

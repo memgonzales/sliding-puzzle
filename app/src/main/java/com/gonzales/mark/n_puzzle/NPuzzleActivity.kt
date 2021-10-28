@@ -385,7 +385,7 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     /**
-     * Initializes the activity result launcher related to choosing photos from the Gallery.
+     * Initializes the activity result launcher related to choosing an image from the Gallery.
      */
     private fun initGalleryLauncher() {
         galleryLauncher =
@@ -1151,7 +1151,7 @@ class NPuzzleActivity : AppCompatActivity() {
     }
 
     /**
-     * Defines the behavior related to choosing a puzzle image from the Gallery based on the permissions
+     * Defines the behavior related to choosing an image from the Gallery based on the permissions
      * granted by the user.
      *
      * @param grantResults The grant results for the corresponding permissions which is either <code>
