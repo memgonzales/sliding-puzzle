@@ -3,13 +3,13 @@
 
 **8-Puzzle** is a **sliding puzzle game** that features a walkthrough of the optimal solution and allows users to customize the tiles using photos selected from their Gallery. In finding the optimal path from the current puzzle state to the goal state, the system employs the informed search algorithm A* and uses Manhattan distance as an admissible and consistent heuristic to estimate the cost. 
 
-*Inspired by the process management exercise in our Mobile Development class, I started creating this app during our university break, after finishing my second year of undergraduate studies. As one of my first personal projects, working on this served as an opportunity to synthesize concepts and practices that I learned from our second-year courses, such as:*
+*Inspired by an exercise in our Mobile Development class, I started creating this app during our university break, after finishing my second year of undergraduate studies. As one of my first personal projects, working on this served as an opportunity to synthesize concepts and practices that I learned from our sophomore courses, such as:*
 - *Exploration of language features (Advanced Programming and Theory of Programming Languages)*
 - *Program optimization (Algorithms and Complexity)*
 - *Artificial intelligence and search algorithms (Introduction to Intelligent Systems)*
 - *Quality assurance and unit testing (Introduction to Software Engineering)*
 
-The **source code documentation** can be accessed through the following website: [https://memgonzales.github.io/sliding-puzzle/](https://memgonzales.github.io/sliding-puzzle/).
+The **source code documentation** can be accessed through the following website: [https://memgonzales.github.io/sliding-puzzle/](https://memgonzales.github.io/sliding-puzzle/)
 
 ## Project Structure
 The project consists of the following folders:
@@ -45,7 +45,7 @@ Several Gradle-related files are also included in its root directory.
 3. Run the app using Android Studio (or any IDE that supports Android development). Alternatively, Android also provides a <a href = "https://developer.android.com/studio/build/building-cmdline">guide</a> on how to build the app from the command line.
 
 ## Testing the Application
-The project includes unit tests, which are located inside the [`app/src/test/java`](https://github.com/memgonzales/sliding-puzzle/tree/master/app/src/test/java/com/gonzales/mark/n_puzzle) folder. These are JUnit tests that run on the machine's local Java Virtual Machine. Testing can be done either from <a href = "https://developer.android.com/studio/test">Android Studio</a> or the <a href = "https://developer.android.com/studio/test/command-line">command line</a>.
+The project includes unit tests (among other tests), which are located inside the [`app/src/test/java`](https://github.com/memgonzales/sliding-puzzle/tree/master/app/src/test/java/com/gonzales/mark/n_puzzle) folder. These are JUnit tests that run on the machine's local Java Virtual Machine. Testing can be done either from <a href = "https://developer.android.com/studio/test">Android Studio</a> or the <a href = "https://developer.android.com/studio/test/command-line">command line</a>.
 
 ## Dependencies
 This project uses the following project dependencies:
