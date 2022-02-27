@@ -57,7 +57,7 @@ class AnimationUtil {
          * Duration of the display of the fadeout of the first iteration of the logo frame animation
          * in the splash screen.
          */
-        const val ANIMATION_FRAME_FADEOUT = 200
+        const val ANIMATION_FRAME_FADEOUT = 400
 
         /**
          * Duration of the display of the splash screen.
@@ -65,6 +65,6 @@ class AnimationUtil {
          * This should be set to a value less than 3000 ms, per the recommendation of Campbell
          * (2018): https://uxdesign.cc/building-the-perfect-splash-screen-46e080395f06.
          */
-        const val SPLASH_SCREEN_TIMEOUT = 2000
+        const val SPLASH_SCREEN_TIMEOUT = 1800
     }
 }

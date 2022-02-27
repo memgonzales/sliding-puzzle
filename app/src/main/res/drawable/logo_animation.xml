@@ -3,22 +3,17 @@
     android:oneshot="false">
 
     <item
-        android:drawable="@drawable/logo1"
-        android:duration="500"
-        android:zAdjustment="bottom"/>
-
-    <item
         android:drawable="@drawable/logo2"
-        android:duration="500"
+        android:duration="600"
         android:zAdjustment="bottom"/>
 
     <item
         android:drawable="@drawable/logo3"
-        android:duration="500"
+        android:duration="600"
         android:zAdjustment="bottom"/>
 
     <item
         android:drawable="@drawable/logo4"
-        android:duration="500"
+        android:duration="600"
         android:zAdjustment="bottom"/>
 </animation-list>
