@@ -80,8 +80,6 @@ This project uses the following languages and technologies:
 The <a href = "https://memgonzales.github.io/sliding-puzzle/">HTML documentation</a> of the source code was generated from <a href = "https://kotlinlang.org/docs/kotlin-doc.html">KDoc</a> comments via the documentation engine <a href = "https://github.com/Kotlin/dokka">Dokka</a>.
 
 ## Product Backlog
-- Create launcher icon
-- Add splash screen
 - Collect 8-puzzle trivia
 - Continue documentation (including KDoc)
 
