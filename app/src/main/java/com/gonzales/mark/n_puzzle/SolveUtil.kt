@@ -37,7 +37,7 @@ class SolveUtil {
         private const val FRONTIER_INITIAL_CAPACITY = 11
 
         /**
-         * Stores the positions adjacent to the positions in the puzzle grid.
+         * Stores the positions adjacent to each position in the puzzle grid.
          */
         private val childPositions: ArrayList<ArrayList<Int>> = getChildPositions()
 
@@ -169,10 +169,25 @@ class SolveUtil {
             return null
         }
 
+        /**
+         * Checks if the current puzzle state is equal to the goal state.
+         *
+         * @param puzzleState Puzzle state (flattened into one dimension, following row-major order).
+         * @param goalPuzzleState Goal state (flattened into one dimension, following row-major order).
+         * @return <code>true</code> if the current puzzle state is equal to the goal state;
+         * <code>false</code>, otherwise.
+         */
         fun isSolved(puzzleState: ArrayList<Int>, goalPuzzleState: ArrayList<Int>): Boolean {
             return puzzleState == goalPuzzleState
         }
 
+        /**
+         * Traces the path from the specified node back to the start node.
+         *
+         * @param node Current node.
+         * @return Path from the specified node back to the start node, with the start node at the
+         * top of the stack.
+         */
         private fun backtrackPath(node: Node): Stack<StatePair> {
             val path: Stack<StatePair> = Stack()
             var current: Node? = node
@@ -185,6 +200,19 @@ class SolveUtil {
             return path
         }
 
+        /**
+         * Gets the child nodes of the given node.
+         *
+         * The positions pertained to by these child nodes are adjacent to the position pertained to
+         * by the given node.
+         *
+         * @param node Current node.
+         * @param blankTilePos Position of the blank tile in the puzzle grid (zero-based, following
+         * row-major order).
+         * @param numColumns Number of columns in the puzzle grid.
+         * @param blankTileMarker Indicator that the tile is blank.
+         * @return Child nodes of the given node.
+         */
         private fun getChildNodes(
             node: Node,
             blankTilePos: Int,
@@ -202,6 +230,7 @@ class SolveUtil {
 
                 swap(childState, position, blankTilePos)
 
+                /* The depth (g-value) of a child node is one greater than that of the current node. */
                 childNodes.add(
                     Node(
                         StatePair(childState, position),
@@ -215,6 +244,13 @@ class SolveUtil {
             return childNodes
         }
 
+        /**
+         * Gets the positions adjacent to each position in the puzzle grid.
+         *
+         * @return Positions adjacent to each position in the puzzle grid, with the first element
+         * of the returned <code>ArrayList</code> pertaining to the positions adjacent to 0, the
+         * second element pertaining to those adjacent to 1, and so on.
+         */
         private fun getChildPositions(): ArrayList<ArrayList<Int>> {
             /*
              * The two-dimensional illustration of a puzzle grid is shown below:

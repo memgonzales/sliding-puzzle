@@ -73,11 +73,29 @@ class NPuzzleActivity : AppCompatActivity() {
      * View-Related Properties *
      ***************************/
 
+    /**
+     * Root of the layout.
+     */
     private lateinit var clRoot: ConstraintLayout
+
+    /**
+     * Puzzle grid.
+     */
     private lateinit var gvgPuzzle: GridViewGesture
 
+    /**
+     * Button for selecting a custom puzzle image from the Gallery.
+     */
     private lateinit var btnUpload: Button
+
+    /**
+     * Button for shuffling the puzzle tiles.
+     */
     private lateinit var btnShuffle: Button
+
+    /**
+     * Progress bar displayed during shuffling.
+     */
     private lateinit var pbShuffle: ProgressBar
 
     private lateinit var tvMoveNumber: TextView
@@ -276,6 +294,10 @@ class NPuzzleActivity : AppCompatActivity() {
      * Initialization Methods *
      **************************/
 
+    /**
+     * Initializes the components of this activity, particularly the layouts, widgets, listeners,
+     * and adapters.
+     */
     private fun initComponents() {
         /* Initialize the root layout and the grid view. */
         clRoot = findViewById(R.id.cl_root)
@@ -318,6 +340,10 @@ class NPuzzleActivity : AppCompatActivity() {
         indexOfCustom = puzzleImageChoices.lastIndex
     }
 
+    /**
+     * Retrieves the values stored using shared preferences, particularly those pertaining to the
+     * game statistics (and displays them as well).
+     */
     private fun initSharedPreferences() {
         sp = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
