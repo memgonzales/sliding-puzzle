@@ -17,7 +17,9 @@
 
     <!-- Success message -->
     <string name="user_solved">Nice!</string>
+    <string name="fastest_score">Fast!</string>
     <string name="high_score">Bravo!</string>
+    <string name="fewest_score">Great!</string>
     <string name="computer_solved">Moves</string>
 
     <!-- Game statistics -->
@@ -30,7 +32,8 @@
     <string name="fastest_time">Fastest:&#xA0;</string>
 
     <!-- Trivia -->
-    <string name="trivia">Trivia goes here</string>
+    <string name="trivia">An 8-puzzle can be solved in at most 31 moves</string>
+    <string name="trivia_a_star">This app uses the A* algorithm to solve the puzzle</string>
 
     <!-- Puzzle images -->
     <string name="default_image">Lobster Shoob</string>

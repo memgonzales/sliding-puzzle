@@ -267,7 +267,7 @@
             android:fontFamily="@font/cairo_semibold"
             android:text="@string/trivia"
             android:textColor="@color/stats_text"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/gl_right_button"

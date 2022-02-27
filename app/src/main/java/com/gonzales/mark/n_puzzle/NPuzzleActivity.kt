@@ -826,8 +826,9 @@ class NPuzzleActivity : AppCompatActivity() {
 
         btnShuffle.text = getString(R.string.randomized)
 
-        /* Remove the progress bar, and re-enable interaction with UI elements. */
+        /* Remove the progress bar and trivia, and re-enable interaction with UI elements. */
         pbShuffle.visibility = View.GONE
+        tvTrivia.text = getString(R.string.trivia_a_star)
         enableClickables()
     }
 
