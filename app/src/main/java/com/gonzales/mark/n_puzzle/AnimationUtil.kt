@@ -52,5 +52,19 @@ class AnimationUtil {
          * Delay between the sliding of tiles during the animation of the puzzle solution.
          */
         const val MOVE_SOLUTION_DELAY = 425
+
+        /**
+         * Duration of the display of the fadeout of the first iteration of the logo frame animation
+         * in the splash screen.
+         */
+        const val ANIMATION_FRAME_FADEOUT = 200
+
+        /**
+         * Duration of the display of the splash screen.
+         *
+         * This should be set to a value less than 3000 ms, per the recommendation of Campbell
+         * (2018): https://uxdesign.cc/building-the-perfect-splash-screen-46e080395f06.
+         */
+        const val SPLASH_SCREEN_TIMEOUT = 2000
     }
 }
