@@ -2,10 +2,12 @@ $dokka.format:html-v1
 $dokka.linkExtension:html
 $dokka.location:com.gonzales.mark.n_puzzle////PointingToDeclaration/app/com.gonzales.mark.n_puzzle/index.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/index.html
+$dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion/ANIMATION_FRAME_FADEOUT/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/-a-n-i-m-a-t-i-o-n_-f-r-a-m-e_-f-a-d-e-o-u-t.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion/FIRST_MOVE_SOLUTION_DELAY/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/-f-i-r-s-t_-m-o-v-e_-s-o-l-u-t-i-o-n_-d-e-l-a-y.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion/MOVE_SOLUTION_DELAY/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/-m-o-v-e_-s-o-l-u-t-i-o-n_-d-e-l-a-y.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion/SHUFFLING_ANIMATION_OFFSET/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/-s-h-u-f-f-l-i-n-g_-a-n-i-m-a-t-i-o-n_-o-f-f-s-e-t.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion/SHUFFLING_ANIMATION_UPPER_BOUND/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/-s-h-u-f-f-l-i-n-g_-a-n-i-m-a-t-i-o-n_-u-p-p-e-r_-b-o-u-n-d.html
+$dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion/SPLASH_SCREEN_TIMEOUT/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/-s-p-l-a-s-h_-s-c-r-e-e-n_-t-i-m-e-o-u-t.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil.Companion/SUCCESS_DISPLAY/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-companion/-s-u-c-c-e-s-s_-d-i-s-p-l-a-y.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/index.html
 $dokka.location:com.gonzales.mark.n_puzzle/AnimationUtil/AnimationUtil/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-animation-util/-animation-util.html
@@ -227,10 +229,6 @@ $dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.CUSTOM///PointingToDeclar
 $dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.CUSTOM/drawableId/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-c-u-s-t-o-m/drawable-id.html
 $dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.CUSTOM/name/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-c-u-s-t-o-m/name.html
 $dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.CUSTOM/ordinal/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-c-u-s-t-o-m/ordinal.html
-$dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.DESSERT_SHOOB///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-d-e-s-s-e-r-t_-s-h-o-o-b/index.html
-$dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.DESSERT_SHOOB/drawableId/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-d-e-s-s-e-r-t_-s-h-o-o-b/drawable-id.html
-$dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.DESSERT_SHOOB/name/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-d-e-s-s-e-r-t_-s-h-o-o-b/name.html
-$dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.DESSERT_SHOOB/ordinal/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-d-e-s-s-e-r-t_-s-h-o-o-b/ordinal.html
 $dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.JIGOKU_SHOUJO///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-j-i-g-o-k-u_-s-h-o-u-j-o/index.html
 $dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.JIGOKU_SHOUJO/drawableId/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-j-i-g-o-k-u_-s-h-o-u-j-o/drawable-id.html
 $dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.JIGOKU_SHOUJO/name/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-j-i-g-o-k-u_-s-h-o-u-j-o/name.html
@@ -243,6 +241,10 @@ $dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.LOBSTER_SHOOB///PointingT
 $dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.LOBSTER_SHOOB/drawableId/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-l-o-b-s-t-e-r_-s-h-o-o-b/drawable-id.html
 $dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.LOBSTER_SHOOB/name/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-l-o-b-s-t-e-r_-s-h-o-o-b/name.html
 $dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.LOBSTER_SHOOB/ordinal/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-l-o-b-s-t-e-r_-s-h-o-o-b/ordinal.html
+$dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.ROSE_COLORED_LIFE///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-r-o-s-e_-c-o-l-o-r-e-d_-l-i-f-e/index.html
+$dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.ROSE_COLORED_LIFE/drawableId/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-r-o-s-e_-c-o-l-o-r-e-d_-l-i-f-e/drawable-id.html
+$dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.ROSE_COLORED_LIFE/name/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-r-o-s-e_-c-o-l-o-r-e-d_-l-i-f-e/name.html
+$dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.ROSE_COLORED_LIFE/ordinal/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-r-o-s-e_-c-o-l-o-r-e-d_-l-i-f-e/ordinal.html
 $dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.YUKO_MARU_MORO///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-y-u-k-o_-m-a-r-u_-m-o-r-o/index.html
 $dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.YUKO_MARU_MORO/drawableId/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-y-u-k-o_-m-a-r-u_-m-o-r-o/drawable-id.html
 $dokka.location:com.gonzales.mark.n_puzzle/PuzzleImage.YUKO_MARU_MORO/name/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-puzzle-image/-y-u-k-o_-m-a-r-u_-m-o-r-o/name.html
@@ -313,6 +315,14 @@ $dokka.location:com.gonzales.mark.n_puzzle/SolveUtil/SolveUtil/#/PointingToDecla
 $dokka.location:com.gonzales.mark.n_puzzle/SpinnerAdapter///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-spinner-adapter/index.html
 $dokka.location:com.gonzales.mark.n_puzzle/SpinnerAdapter/SpinnerAdapter/#android.content.Context?#kotlin.Int#kotlin.Array[kotlin.String?]?/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-spinner-adapter/-spinner-adapter.html
 $dokka.location:com.gonzales.mark.n_puzzle/SpinnerAdapter/getDropDownView/#kotlin.Int#android.view.View?#android.view.ViewGroup/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-spinner-adapter/get-drop-down-view.html
+$dokka.location:com.gonzales.mark.n_puzzle/SplashScreenActivity///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-splash-screen-activity/index.html
+$dokka.location:com.gonzales.mark.n_puzzle/SplashScreenActivity/SplashScreenActivity/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-splash-screen-activity/-splash-screen-activity.html
+$dokka.location:com.gonzales.mark.n_puzzle/SplashScreenActivity/animateSplashScreen/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-splash-screen-activity/animate-splash-screen.html
+$dokka.location:com.gonzales.mark.n_puzzle/SplashScreenActivity/initSplashScreen/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-splash-screen-activity/init-splash-screen.html
+$dokka.location:com.gonzales.mark.n_puzzle/SplashScreenActivity/launchApp/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-splash-screen-activity/launch-app.html
+$dokka.location:com.gonzales.mark.n_puzzle/SplashScreenActivity/logoAnimation/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-splash-screen-activity/logo-animation.html
+$dokka.location:com.gonzales.mark.n_puzzle/SplashScreenActivity/onCreate/#android.os.Bundle?/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-splash-screen-activity/on-create.html
+$dokka.location:com.gonzales.mark.n_puzzle/SplashScreenActivity/onWindowFocusChanged/#kotlin.Boolean/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-splash-screen-activity/on-window-focus-changed.html
 $dokka.location:com.gonzales.mark.n_puzzle/StatePair///PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-state-pair/index.html
 $dokka.location:com.gonzales.mark.n_puzzle/StatePair/StatePair/#java.util.ArrayList[kotlin.Int]#kotlin.Int/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-state-pair/-state-pair.html
 $dokka.location:com.gonzales.mark.n_puzzle/StatePair/blankTilePos/#/PointingToDeclaration/app/com.gonzales.mark.n_puzzle/-state-pair/blank-tile-pos.html
