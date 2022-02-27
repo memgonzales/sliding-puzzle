@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <queries>
+
         <!-- Gallery -->
         <intent>
             <action android:name="android.intent.action.GET_CONTENT" />
@@ -19,7 +20,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NPuzzle">
-        <activity android:name="NPuzzleActivity"
+        <activity android:name=".NPuzzleActivity" />
+        <activity
+            android:name=".SplashScreenActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -28,6 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

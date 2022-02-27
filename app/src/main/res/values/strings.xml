@@ -45,4 +45,6 @@
 
     <!-- Image upload -->
     <string name="no_permission">Insufficient permission to access Gallery</string>
+    <string name="tv_splash_copyright">Copyright © 2022 Mark Edward M. Gonzales\nhttps://github.com/memgonzales/sliding-puzzle</string>
+    <string name="iv_splash_logo">Placeholder for logo</string>
 </resources>
