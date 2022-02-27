@@ -40,6 +40,9 @@ tasks.withType(dokkaHtml.getClass()).configureEach {
     )
 }
 
+tasks.dokkaHtml.configure {
+    outputDirectory.set(file("../docs"))
+}
 
 dokkaHtml.configure {
     dokkaSourceSets {
