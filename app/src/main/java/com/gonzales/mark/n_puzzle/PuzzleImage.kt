@@ -2,6 +2,8 @@ package com.gonzales.mark.n_puzzle
 
 /**
  * Enumeration class containing the puzzle images that come with the app.
+ *
+ * @constructor Creates an enumeration class containing the puzzle images that come with the app.
  * @param drawableId ID of the drawable corresponding to the puzzle image.
  */
 enum class PuzzleImage(val drawableId: Int) {

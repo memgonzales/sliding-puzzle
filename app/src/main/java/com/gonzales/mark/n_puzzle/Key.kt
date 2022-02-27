@@ -2,6 +2,8 @@ package com.gonzales.mark.n_puzzle
 
 /**
  * Enumeration class containing the keys used in handling bundles and shared preferences.
+ *
+ * @constructor Creates an enumeration class containing the keys used in handling bundles and shared preferences.
  */
 enum class Key {
     /**
