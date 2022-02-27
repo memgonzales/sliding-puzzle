@@ -22,10 +22,10 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Lint
-        uses: ./gradlew lint
+        uses: ./gradlew lintDebug
         
       - name: Upload lint results
         uses: actions/upload-artifact@v2
         with:
           name: index.html
-          path: app/build/reports/lint-results.html
+          path: app/build/reports/lint-results-debug.html
