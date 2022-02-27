@@ -4,7 +4,7 @@ package com.gonzales.mark.n_puzzle
  * Enumeration class containing the directions of the fling gestures registered by the app (namely,
  * the four cardinal directions) and an <code>INVALID</code> entry for unrecognized directions.
  *
- * @constructor Create an enumeration that contains the directions of the fling gestures registered
+ * @constructor Creates an enumeration that contains the directions of the fling gestures registered
  * by the app (namely, the four cardinal directions) and an <code>INVALID</code> entry for an
  * unrecognized direction.
  */

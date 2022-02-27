@@ -3,8 +3,14 @@ package com.gonzales.mark.n_puzzle
 import android.content.Context
 import android.graphics.*
 
+/**
+ * Utility class providing constants and methods for manipulating the puzzle image.
+ */
 class ImageUtil {
     companion object {
+        /**
+         * Color filter for distinguishing the blank tile from the rest of the tiles.
+         */
         private const val DARK_GRAY_FILTER = 0x121f1f
 
         fun drawableToBitmap(context: Context, drawableId: Int): Bitmap {
@@ -54,6 +60,7 @@ class ImageUtil {
                 )
 
                 chunks.add(chunk)
+                /* Darken the blank tile. */
                 blankChunks.add(darkenBitmap(chunk))
             }
 

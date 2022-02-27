@@ -16,7 +16,7 @@
     <string name="upload_picture">Upload Picture</string>
 
     <!-- Success message -->
-    <string name="user_solved">Great!</string>
+    <string name="user_solved">Nice!</string>
     <string name="high_score">Bravo!</string>
     <string name="computer_solved">Moves</string>
 
@@ -36,7 +36,7 @@
     <string name="default_image">Lobster Shoob</string>
     <string-array name="puzzle_images">
         <item>LOBSTER SHOOB</item>
-        <item>DESSERT SHOOB</item>
+        <item>ROSE-COLORED LIFE</item>
         <item>KIKYO &amp; INUYASHA</item>
         <item>YUKO, MARU &amp; MORO</item>
         <item>JIGOKU SHOUJO</item>
