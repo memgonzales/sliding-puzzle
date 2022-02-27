@@ -1,4 +1,10 @@
 # 8-Puzzle (Sliding Puzzle)
+![badge][badge-kotlin]
+![badge][badge-android] 
+![badge][badge-gradle]
+![badge][badge-junit]
+
+![badge][badge-github-actions]
 
 **8-Puzzle** is a **sliding puzzle game** that features a walkthrough of the optimal solution and allows users to customize the tiles using photos selected from their Gallery. In finding the optimal path from the current puzzle state to the goal state, the system employs the informed search algorithm A* and uses Manhattan distance as an admissible and consistent heuristic to estimate the cost. 
 
@@ -82,3 +88,10 @@ The <a href = "https://memgonzales.github.io/sliding-puzzle/">HTML documentation
   gonzales.markedward@gmail.com <br/>
   
 Assets (such as images and XML resource files) are properties of their respective owners. Attribution is found in the [credits](https://github.com/memgonzales/sliding-puzzle/blob/master/CREDITS.md) file. Technical references used in the implementation of algorithms are cited in the [code documentation](https://memgonzales.github.io/sliding-puzzle/) of the pertinent methods.
+
+
+[badge-android]: http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat
+[badge-kotlin]: https://img.shields.io/badge/kotlin-%230095D5.svg?&style=flat&logo=kotlin&logoColor=white
+[badge-gradle]: https://img.shields.io/badge/Gradle-02303A.svg?style=flate&logo=Gradle&logoColor=white
+[badge-github-actions]: https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat&logo=github-actions&logoColor=white
+[badge-junit]: https://img.shields.io/badge/Junit5-25A162?style=flat&logo=junit5&logoColor=white
