@@ -23,3 +23,25 @@ jobs:
         
       - name: Lint
         run: ./gradlew lint
+        
+      - name: Upload report
+        uses: actions/upload-artifact@v2
+        with:
+          name: lint.html
+          path: app/build/reports/lint-results.html
+          
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+        
+      - name: JUnit Test
+        run: ./gradlew test
+        
+      - name: Upload report
+        uses: actions/upload-artifact@v2
+        with:
+          name: test
+          path: app/build/test-results/testDebugUnitTest/
