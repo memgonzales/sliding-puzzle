@@ -65,6 +65,6 @@ class AnimationUtil {
          * This should be set to a value less than 3000 ms, per the recommendation of Campbell
          * (2018): https://uxdesign.cc/building-the-perfect-splash-screen-46e080395f06.
          */
-        const val SPLASH_SCREEN_TIMEOUT = 1800
+        const val SPLASH_SCREEN_TIMEOUT = 2000
     }
 }
