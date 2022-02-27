@@ -9,7 +9,14 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
+/**
+ * Utility class providing methods for choosing a photo from the Gallery as the custom puzzle image.
+ */
 class UploadUtil {
+    /**
+     * Companion object containing the methods for choosing a photo from the Gallery as the custom
+     * puzzle image.
+     */
     companion object {
         /**
          * Obtains the necessary permission for choosing an image from the Gallery. If this

@@ -1,12 +1,31 @@
 package com.gonzales.mark.n_puzzle
 
+/**
+ * Data class corresponding to a node.
+ *
+ * @param puzzleStatePair Current puzzle state (flattened into one dimension, following
+ * row-major order) and the position of the blank tile in the puzzle grid (zero-based,
+ * following row-major order).
+ * @param parent Parent of this node (<code>null</code> if this is the start node).
+ * @param g Cost of the path from the start node to this node (depth of this node).
+ * @param h Heuristic for estimating the cheapest path from this node to the goal (Manhattan distance).
+ */
 data class Node(
     val puzzleStatePair: StatePair,
     val parent: Node?,
     var g: Int,
     private var h: Int
 ) {
+    /**
+     * Companion object containing the method for hashing the puzzle state of this node.
+     */
     companion object {
+        /**
+         * Returns a hash code for the puzzle state of this node.
+         *
+         * To ensure uniqueness and maintain computational efficiency, the hash code is an integer
+         * formed from flattening the puzzle state into a single dimension, following row-major order.
+         */
         fun hashState(puzzleState: ArrayList<Int>): Int {
             var hash = 0
             for (tile in puzzleState) {
@@ -17,6 +36,11 @@ data class Node(
         }
     }
 
+    /**
+     * Computes the f-value of this node (in relation to the A* algorithm).
+     *
+     * The f-value is the sum of the g- and h-values.
+     */
     fun getF(): Int {
         return g + h
     }

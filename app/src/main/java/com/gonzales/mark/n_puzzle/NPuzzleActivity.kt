@@ -27,7 +27,9 @@ import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 
-
+/**
+ * Class handling the core functionalities of this 8-puzzle app, including the actual gameplay.
+ */
 class NPuzzleActivity : AppCompatActivity() {
     /**
      * Companion object containing constants related to the state, display, and statistics

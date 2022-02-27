@@ -23,8 +23,22 @@ class SolveUtil {
          * cardinal directions.
          */
         private const val MAX_NUM_CHILDREN = 4
+
+        /**
+         * Initial capacity of the priority queue storing the frontier nodes.
+         *
+         * Since the partial ordering of the elements in this priority queue relies on a custom
+         * comparator, its constructor is as follows:
+         * <code>PriorityQueue(int initialCapacity, Comparator<? super E> comparator)</code>.
+         *
+         * Technically, the given initial capacity is a dummy value meant only to supply the
+         * required arguments of this constructor.
+         */
         private const val FRONTIER_INITIAL_CAPACITY = 11
 
+        /**
+         * Stores the positions adjacent to the positions in the puzzle grid.
+         */
         private val childPositions: ArrayList<ArrayList<Int>> = getChildPositions()
 
         /**

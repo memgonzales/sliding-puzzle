@@ -8,6 +8,10 @@ import android.os.Looper
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 
+/**
+ * Class handling the display of the splash screen and the loading of initial resources needed during
+ * app startup.
+ */
 class SplashScreenActivity : AppCompatActivity() {
     /**
      * Animated logo of the app.
