@@ -14,7 +14,7 @@
 
     <item
         android:drawable="@drawable/logo3"
-        android:duration="300"
+        android:duration="450"
         android:zAdjustment="bottom" />
 
     <item
