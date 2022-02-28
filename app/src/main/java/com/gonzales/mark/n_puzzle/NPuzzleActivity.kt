@@ -280,6 +280,17 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Called after <code>onRestoreInstanceState(Bundle)</code>, <code>onRestart()</code>, or
+     * <code>onPause()</code>. This is usually a hint for your activity to start interacting with
+     * the user, which is a good indicator that the activity became active and ready to receive input.
+     * This sometimes could also be a transit state toward another resting state. For instance, an activity
+     * may be relaunched to <code>onPause()</code> due to configuration changes and the activity was visible,
+     * but was not the top-most activity of an activity task.
+     *
+     * <code>onResume()</code> is guaranteed to be called before <code>onPause()</code> in this case
+     * which honors the activity lifecycle policy and the activity eventually rests in <code>onPause()</code>.
+     */
     override fun onResume() {
         super.onResume()
 
