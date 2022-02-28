@@ -1,7 +1,8 @@
 package com.gonzales.mark.n_puzzle
 
 /**
- * Enumeration class containing the possible game statuses after the user solves the puzzle.
+ * Enumeration class containing the possible game statuses depending on whether user solves the puzzle
+ * or opts to play the solution walkthrough instead.
  *
  * @constructor Creates an enumeration class containing the possible game statuses after the user solves the puzzle.
  * @param successMessageId ID of the string corresponding to the success message displayed.

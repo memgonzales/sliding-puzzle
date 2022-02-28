@@ -184,8 +184,8 @@ class NPuzzleActivity : AppCompatActivity() {
     private var blankTilePos: Int = BLANK_TILE_MARKER
 
     /**
-     * <code>true</code> if the components of the puzzle grid (for example, the tiles) can be moved;
-     * <code>false</code>, otherwise.
+     * <code>true</code> if the components of the puzzle grid (for example, the tiles) can be moved
+     * or clicked; <code>false</code>, otherwise.
      */
     private var isPuzzleGridFrozen: Boolean = false
 
@@ -920,6 +920,12 @@ class NPuzzleActivity : AppCompatActivity() {
      * Methods Related to Moving Tiles *
      ***********************************/
 
+    /**
+     * Moves the specified tile in the given direction of the user's fling gesture.
+     *
+     * @param direction Direction of the user's fling gesture.
+     * @param position Position of the tile to be moved (zero-based, following row-major order).
+     */
     private fun moveTile(direction: FlingDirection, position: Int) {
         /* Use a flag to keep track of whether the success message can be removed. */
         var flag = false
@@ -952,6 +958,10 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Updates the game status depending on whether user solves the puzzle
+     * or opts to play the solution walkthrough instead.
+     */
     private fun updateGameStatus(): Boolean {
         if (isGameInSession) {
             trackMove()
@@ -981,11 +991,18 @@ class NPuzzleActivity : AppCompatActivity() {
         return false
     }
 
+    /**
+     * Updates and displays the number of movies every time a user moves a tile.
+     */
     private fun trackMove() {
         numMoves++
         tvMoveNumber.text = numMoves.toString()
     }
 
+    /**
+     * Launches and starts the timer when a game in session, updating its display every second
+     * until halted when the game ends.
+     */
     private fun launchTimer() {
         isTimerRunning = true
 
@@ -1092,12 +1109,18 @@ class NPuzzleActivity : AppCompatActivity() {
         enableClickables()
     }
 
+    /**
+     * Disables all the clickable components.
+     */
     private fun disableClickables() {
         isPuzzleGridFrozen = true
         btnShuffle.isEnabled = false
         spnPuzzle.isEnabled = false
     }
 
+    /**
+     * Enables all the clickable components.
+     */
     private fun enableClickables() {
         isPuzzleGridFrozen = false
         btnShuffle.isEnabled = true
@@ -1235,6 +1258,14 @@ class NPuzzleActivity : AppCompatActivity() {
      * Post-Game Methods *
      *********************/
 
+    /**
+     * Ends the game that is currently in session, in effect stopping the timer, displaying the
+     * pertinent success message, and resetting the variables in preparation for a new game
+     * if the user was able to solve the puzzle or for displaying the solution, otherwise.
+     *
+     * @param solveStatus Game status depending on whether the user solves the puzzle or opts
+     * to play the solution walkthrough instead.
+     */
     private fun endGame(solveStatus: SolveStatus) {
         /* Signal that the game is over. */
         isGameInSession = false
