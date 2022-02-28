@@ -48,7 +48,7 @@ dokkaHtml.configure {
     dokkaSourceSets {
         named("main") {
             includeNonPublic.set(true)
-            includes.from("Module.md")
+            includes.from("module.md")
         }
     }
 }
