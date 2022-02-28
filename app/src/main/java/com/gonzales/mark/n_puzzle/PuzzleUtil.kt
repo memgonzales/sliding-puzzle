@@ -36,6 +36,10 @@ class PuzzleUtil {
          *
          * An inversion refers to a pair of elements that are out of their natural order
          * (in this 8-puzzle, the natural order of the elements/positions is ascending).
+         *
+         * @param puzzleState Current puzzle state (flattened into one dimension, following row-major order).
+         * @param blankTileMarker Indicator that the tile is blank.
+         * @return Number of inversions in the puzzle state.
          */
         private fun countInversions(puzzleState: ArrayList<Int>, blankTileMarker: Int): Int {
             var numInversions = 0
