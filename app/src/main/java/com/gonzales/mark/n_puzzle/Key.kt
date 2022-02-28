@@ -12,7 +12,7 @@ enum class Key {
     KEY_TILE_POSITION,
 
     /**
-     * Key for handling bundles related to the progress of shuffling.
+     * Key for handling bundles related to the progress of the shuffling.
      */
     KEY_PROGRESS,
 
