@@ -7,7 +7,7 @@ All media files are properties of their respective owners, and attribution is pr
 The logo was created by Mark Edward M. Gonzales. The different variations of the launcher icon were generated from this logo using Roman Nurik's Android Asset Studio: https://romannurik.github.io/AndroidAssetStudio/
 
 ## Image and Icon Sources
-Unless otherwise credited, the icons are taken from Google's Material Design icon set: https://fonts.google.com/icons. Their usage is covered by Apache License 2.0.
+Unless otherwise credited, the icons were taken from Google's Material Design icon set: https://fonts.google.com/icons. Their usage is covered by Apache License 2.0.
 
 Images and icons were also downloaded from:
 - Background (black polygonal pattern):<br>
@@ -23,5 +23,5 @@ Images and icons were also downloaded from:
 - Yuko, Maru, and Moro (from the anime/manga *xxxHolic*):<br>
   https://static.zerochan.net/xxxHOLiC.full.1568772.jpg
 
-Some of these images and icons were edited to fit the theme of the website.
+Some of these images and icons were edited to fit the theme of the app.
 These edits include but are not limited to cropping, recoloring, rotating, and removing the background.
