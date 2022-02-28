@@ -25,9 +25,9 @@ The project consists of the following folders:
 
 Folder | Description
 -- | --
+<a href = "https://github.com/memgonzales/sliding-puzzle/tree/master/.github/workflows">`.github` | Contains the YML files defining the workflows that are included in the CI/CD pipeline
 <a href = "https://github.com/memgonzales/sliding-puzzle/tree/master/.idea">`.idea`</a> | Contains files used by Android Studio to load project-specific configurations
 <a href = "https://github.com/memgonzales/sliding-puzzle/tree/master/app">`app`</a> | Contains all the source code and resource files, the markdown file for the app- and package-level documentation, and files defining the module-specific dependencies, project-specific ProGuard rules, and developer credentials related to Google services
-<a href = "https://github.com/memgonzales/sliding-puzzle/tree/master/docs">`docs`</a> | Contains the HTML documentation of the project, generated from KDoc comments via Dokka
 <a href = "https://github.com/memgonzales/sliding-puzzle/tree/master/gradle/wrapper">`gradle`</a> | Contains files used by Gradle to run build automation tasks
 
 Several Gradle-related files are also included in its root directory.
@@ -79,10 +79,10 @@ This project uses the following languages and technologies:
 - **Logic**: <a href = "https://kotlinlang.org/">Kotlin</a>, a statically typed language endorsed by Google as the preferred language for Android development
 - **Layouts**: <a href = "https://developer.android.com/guide/topics/ui/declaring-layout">XML</a>, a lightweight markup language that is both human- and machine-readable
 
-The <a href = "https://memgonzales.github.io/sliding-puzzle/">HTML documentation</a> of the source code was generated from <a href = "https://kotlinlang.org/docs/kotlin-doc.html">KDoc</a> comments via the documentation engine <a href = "https://github.com/Kotlin/dokka">Dokka</a>.
-
-## CI/CD Pipeline
-
+[GitHub Actions](https://github.com/features/actions) serves as the **CI/CD platform** for automating these workflows (triggered by a push or pull request):
+- Linting, testing, and building the APK
+- Generating the HTML version of the API documentation from [KDoc](https://kotlinlang.org/docs/kotlin-doc.html) comments via [Dokka](https://github.com/Kotlin/dokka)
+- Publishing the API documentation with GitHub Pages
 
 ## Author
 - <b>Mark Edward M. Gonzales</b> <br/>
