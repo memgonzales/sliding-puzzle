@@ -812,6 +812,7 @@ class NPuzzleActivity : AppCompatActivity() {
         /* Display trivia in place of the upload button. */
         btnUpload.visibility = View.INVISIBLE
         tvTrivia.visibility = View.VISIBLE
+        tvTrivia.text = getString(R.string.trivia)
 
         /*
          * Handle the case when the shuffle button is clicked while the success message
