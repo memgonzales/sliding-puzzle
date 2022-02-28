@@ -737,10 +737,16 @@ class NPuzzleActivity : AppCompatActivity() {
      * Methods Related to Puzzle Grid *
      **********************************/
 
+    /**
+     * Sets the distance in pixels a touch can wander before it is registered as a fling gesture.
+     */
     private fun setTouchSlopThreshold() {
         gvgPuzzle.setTouchSlopThreshold(ViewConfiguration.get(this).scaledTouchSlop)
     }
 
+    /**
+     * Sets the listener for responding to detected fling gestures.
+     */
     private fun setOnFlingListener() {
         gvgPuzzle.setFlingListener(object : OnFlingListener {
             override fun onFling(direction: FlingDirection, position: Int) {
@@ -749,6 +755,9 @@ class NPuzzleActivity : AppCompatActivity() {
         })
     }
 
+    /**
+     * Sets the dimensions of the puzzle grid and its individual tiles.
+     */
     private fun setDimensions() {
         gvgPuzzle.viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
