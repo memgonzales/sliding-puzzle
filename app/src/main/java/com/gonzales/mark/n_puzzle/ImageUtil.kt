@@ -5,6 +5,8 @@ import android.graphics.*
 
 /**
  * Utility class providing constants and methods for manipulating the puzzle image.
+ *
+ * @constructor Creates an object that provides methods for manipulating the puzzle image.
  */
 class ImageUtil {
     /**

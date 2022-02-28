@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger
 /**
  * Runnable class related to shuffling the puzzle tiles.
  *
+ * @constructor Creates a runnable class related to shuffling the puzzle tiles.
  * @param handler Allows sending and processing <code>Message</code> and <code>Runnable</code> objects
  * associated with a thread's <code>MessageQueue</code>.
  * @param tilePosition Position of the tile (zero-based, following row-major order).

@@ -2,6 +2,8 @@ package com.gonzales.mark.n_puzzle
 
 /**
  * Utility class providing methods for shuffling the puzzle tiles.
+ *
+ * @constructor Creates an object that provides methods for shuffling the puzzle tiles.
  */
 class ShuffleUtil {
     /**

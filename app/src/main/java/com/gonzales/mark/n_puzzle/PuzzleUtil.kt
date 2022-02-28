@@ -6,6 +6,8 @@ import kotlin.math.abs
 
 /**
  * Utility class providing methods related to the puzzle state.
+ *
+ * @constructor Creates an object that provides methods related to the puzzle state.
  */
 class PuzzleUtil {
     /**

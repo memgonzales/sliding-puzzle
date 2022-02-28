@@ -2,6 +2,8 @@ package com.gonzales.mark.n_puzzle
 
 /**
  * Utility class providing methods for moving the tiles in the puzzle grid.
+ *
+ * @constructor Creates an object that provides methods for moving the tiles in the puzzle grid.
  */
 class MoveUtil {
     /**
