@@ -17,7 +17,7 @@ Inspired by an exercise in our Mobile Development class, I started creating this
 
 This project also utilizes a continuous integration/continuous delivery (CI/CD) pipeline — which is the focus of our third-year class Advanced Software Engineering.
 
-The **API documentation** can be viewed at [https://memgonzales.github.io/sliding-puzzle/](https://memgonzales.github.io/sliding-puzzle/)
+The API documentation can be viewed at [https://memgonzales.github.io/sliding-puzzle/](https://memgonzales.github.io/sliding-puzzle/)
 
 ## Project Structure
 The project consists of the following folders:
