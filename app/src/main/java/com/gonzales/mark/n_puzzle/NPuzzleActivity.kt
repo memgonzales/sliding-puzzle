@@ -1023,7 +1023,7 @@ class NPuzzleActivity : AppCompatActivity() {
      ********************************/
 
     /**
-     * Handles all the back-end and front-end operations when the puzzle tiles are shuffled.
+     * Handles the back-end and front-end operations when the puzzle tiles are shuffled.
      */
     private fun shuffle() {
         /* Display the progress bar, and update the message displayed */
@@ -1183,6 +1183,10 @@ class NPuzzleActivity : AppCompatActivity() {
      * Methods Related to Solution Display *
      ***************************************/
 
+    /**
+     * Handles the back-end and front-end operations when the user opts to display the solution
+     * found by the app via the A* algorithm implemented in <code>SolveUtil</code>.
+     */
     private fun solve() {
         puzzleSolution = SolveUtil.solve(
             StatePair(puzzleState, blankTilePos),
@@ -1199,6 +1203,9 @@ class NPuzzleActivity : AppCompatActivity() {
         endGame(SolveStatus.COMPUTER_SOLVED)
     }
 
+    /**
+     * Displays the solution found by the app via the A* algorithm implemented in <code>SolveUtil</code>.
+     */
     private fun displaySolution() {
         startSolution()
 
@@ -1208,6 +1215,12 @@ class NPuzzleActivity : AppCompatActivity() {
         animateSolution()
     }
 
+    /**
+     * Updates the display depending on whether the solution walkthrough is paused or resumed.
+     *
+     * This solution refers to the one found by the app via the A* algorithm implemented in
+     * <code>SolveUtil</code>.
+     */
     private fun controlSolutionDisplay() {
         if (isSolutionPlay) {
             pauseSolution()
@@ -1216,12 +1229,24 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Invoked when the solution walkthrough starts.
+     *
+     * This solution refers to the one found by the app via the A* algorithm implemented in
+     * <code>SolveUtil</code>.
+     */
     private fun startSolution() {
         isSolutionDisplay = true
         isSolutionPlay = true
         isPuzzleGridFrozen = true
     }
 
+    /**
+     * Handles the animation of the puzzle tiles during the solution walkthrough.
+     *
+     * This solution refers to the one found by the app via the A* algorithm implemented in
+     * <code>SolveUtil</code>.
+     */
     private fun animateSolution() {
         Handler(Looper.getMainLooper()).postDelayed({
             solveDisplayHandler.post(object : Runnable {
@@ -1259,6 +1284,12 @@ class NPuzzleActivity : AppCompatActivity() {
         }, AnimationUtil.FIRST_MOVE_SOLUTION_DELAY.toLong())
     }
 
+    /**
+     * Invoked when the solution walkthrough finishes.
+     *
+     * This solution refers to the one found by the app via the A* algorithm implemented in
+     * <code>SolveUtil</code>.
+     */
     private fun endSolution() {
         isSolutionDisplay = false
         isSolutionPlay = false
@@ -1266,11 +1297,23 @@ class NPuzzleActivity : AppCompatActivity() {
         isSolutionSkip = false
     }
 
+    /**
+     * Pauses the solution walkthrough.
+     *
+     * This solution refers to the one found by the app via the A* algorithm implemented in
+     * <code>SolveUtil</code>.
+     */
     private fun pauseSolution() {
         isSolutionPlay = false
         btnShuffle.text = getString(R.string.resume)
     }
 
+    /**
+     * Resumes playing the solution walkthrough.
+     *
+     * This solution refers to the one found by the app via the A* algorithm implemented in
+     * <code>SolveUtil</code>.
+     */
     private fun resumeSolution() {
         isSolutionPlay = true
         btnShuffle.text = getString(R.string.pause)
@@ -1278,6 +1321,12 @@ class NPuzzleActivity : AppCompatActivity() {
         animateSolution()
     }
 
+    /**
+     * Skips the solution walkthrough.
+     *
+     * This solution refers to the one found by the app via the A* algorithm implemented in
+     * <code>SolveUtil</code>.
+     */
     private fun skipSolution() {
         isSolutionSkip = true
         resumeSolution()
