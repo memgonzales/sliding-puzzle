@@ -2,7 +2,7 @@
 
 **8-Puzzle** is a sliding puzzle game that features a walkthrough of the optimal solution and allows users to customize the tiles using photos selected from their Gallery. In finding the optimal path from the current puzzle state to the goal state, the system employs the informed search algorithm A* and uses Manhattan distance as an admissible and consistent heuristic to estimate the cost. <br/> <br/>
 
-More details are provided in the [official project repository](https://github.com/memgonzales/sliding-puzzle). For queries or concerns related to the Artemis project, kindly email [mark_gonzales@dlsu.edu.ph](mailto:mark_gonzales@dlsu.edu.ph) or [gonzales.markedward@gmail.com](mailto:gonzales.markedward@gmail.com).
+More details are provided in the [official project repository](https://github.com/memgonzales/sliding-puzzle). For queries or concerns related to this project, kindly email [mark_gonzales@dlsu.edu.ph](mailto:mark_gonzales@dlsu.edu.ph) or [gonzales.markedward@gmail.com](mailto:gonzales.markedward@gmail.com).
 
 # Package com.gonzales.mark.n_puzzle
 
