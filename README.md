@@ -35,7 +35,7 @@ Several Gradle-related files are also included in its root directory.
 ***The minimum SDK supported is Android Lollipop (API Level 21), and the target SDK is Android 11 (API Level 30).***
 
 ### Using the APK
-Download and install the APK file from the [latest release](https://github.com/memgonzales/sliding-puzzle/releases/tag/1.0.0). You may have to modify the security settings of your device to allow the installation of third-party apps from unknown sources.
+Download and install the APK file from the [latest release](https://github.com/memgonzales/sliding-puzzle/releases/tag/v1.0.0). You may have to modify the security settings of your device to allow the installation of third-party apps from unknown sources.
    
 <img src="https://github.com/memgonzales/sliding-puzzle/blob/master/screenshots/screenshots.png?raw=True" alt="App Screenshots" width = 750> 
 
