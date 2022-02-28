@@ -674,6 +674,10 @@ class NPuzzleActivity : AppCompatActivity() {
      * Methods Related to Statistics Display *
      *****************************************/
 
+    /**
+     * Displays the game statistics (namely the fewest number of moves and the fastest time taken
+     * to solve the 8-puzzle).
+     */
     private fun displayStats() {
         displayFewestMoves()
         displayFastestTime()
