@@ -101,7 +101,7 @@ class NPuzzleActivity : AppCompatActivity() {
     private lateinit var pbShuffle: ProgressBar
 
     /**
-     * Text view for the current number of moves taken in solving the puzzle.
+     * Text view for the current number of moves taken in the current attempt to solve the puzzle.
      */
     private lateinit var tvMoveNumber: TextView
 
@@ -111,7 +111,7 @@ class NPuzzleActivity : AppCompatActivity() {
     private lateinit var tvFewestMoves: TextView
 
     /**
-     * Text view for the current time taken in solving the puzzle.
+     * Text view for the current time taken in the current attempt to solve the puzzle.
      */
     private lateinit var tvTimeTaken: TextView
 
@@ -632,7 +632,6 @@ class NPuzzleActivity : AppCompatActivity() {
     private fun setSpnPuzzleAction() {
         spnPuzzle.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             /**
-             *
              * Callback method to be invoked when an item in this view has been
              * selected. This callback is invoked only when the newly selected
              * position is different from the previously selected position or if
@@ -641,10 +640,10 @@ class NPuzzleActivity : AppCompatActivity() {
              * Implementers can call <code>getItemAtPosition(position)</code> if they need
              * to access the data associated with the selected item.
              *
-             * @param parent The <code>AdapterView</code> where the selection happened
-             * @param view The view within the <code>AdapterView</code> that was clicked
-             * @param position The position of the view in the adapter
-             * @param id The row id of the item that is selected
+             * @param parent <code>AdapterView</code> where the selection happened
+             * @param view View within the <code>AdapterView</code> that was clicked
+             * @param position Position of the view in the adapter
+             * @param id Row ID of the item that is selected
              */
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -897,6 +896,8 @@ class NPuzzleActivity : AppCompatActivity() {
 
     /**
      * Updates the puzzle image displayed on the grid when a new image is chosen via the spinner.
+     *
+     * @param position Position of the selected puzzle image in the spinner adapter.
      */
     private fun updatePuzzleImage(position: Int) {
         puzzleImageIndex = position
@@ -1359,6 +1360,9 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Handles the back-end and front-end operations in preparation for a new game.
+     */
     private fun prepareForNewGame() {
         /*
          * Revert the colors of the game title and the buttons, as well as the text displayed,
@@ -1390,6 +1394,10 @@ class NPuzzleActivity : AppCompatActivity() {
         spnPuzzle.isEnabled = true
     }
 
+    /**
+     * Updates the components in preparation for showing the solution found by the app via the
+     * A* algorithm implemented in <code>SolveUtil</code>.
+     */
     private fun prepareForSolution() {
         btnShuffle.text = getString(R.string.pause)
 
@@ -1398,6 +1406,11 @@ class NPuzzleActivity : AppCompatActivity() {
         tvTrivia.visibility = View.GONE
     }
 
+    /**
+     * Updates the saved statistics (namely the fewest number of moves and fastest time taken to
+     * solve the puzzle) at the end of a game provided that the user has set a new record for these
+     * statistics.
+     */
     private fun saveStats(solveStatus: SolveStatus) {
         when (solveStatus) {
             SolveStatus.FEWEST_MOVES -> saveFewestMoves()
@@ -1407,6 +1420,10 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Updates the saved fewest number of moves and fastest time taken to solve the puzzle
+     * by storing the new values in the shared preferences file.
+     */
     private fun saveFewestAndFastest() {
         fewestMoves = numMoves
         tvFewestMoves.text = fewestMoves.toString()
@@ -1425,6 +1442,10 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Updates the saved fewest number of moves taken to solve the puzzle by storing the new values
+     * in the shared preferences file.
+     */
     private fun saveFewestMoves() {
         fewestMoves = numMoves
         tvFewestMoves.text = fewestMoves.toString()
@@ -1439,6 +1460,10 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Updates the saved fastest time taken to solve the puzzle by storing the new values
+     * in the shared preferences file.
+     */
     private fun saveFastestTime() {
         fastestTime = timeTaken
         tvFastestTime.text = TimeUtil.displayTime(fastestTime)
@@ -1453,6 +1478,13 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Displays the pertinent success message based on the game status, which, in turn, depends
+     * on whether the user solves the puzzle or opts to play the solution walkthrough instead.
+     *
+     * @param solveStatus Game status depending on whether the user solves the puzzle or opts
+     * to play the solution walkthrough instead.
+     */
     private fun displaySuccessMessage(solveStatus: SolveStatus) {
         /* Display a message depending on how the goal state of the puzzle was reached. */
         tvSuccess.visibility = View.VISIBLE
