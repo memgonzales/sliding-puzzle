@@ -4,6 +4,8 @@
 ![badge][badge-gradle]
 ![badge][badge-junit]
 
+[![Actions Status](https://github.com/memgonzales/sliding-puzzle/workflows/CI%2FCD/badge.svg)](https://github.com/memgonzales/sliding-puzzle/actions)
+[![Actions Status](https://github.com/memgonzales/sliding-puzzle/workflows/Dokka%20Documentation/badge.svg)](https://github.com/memgonzales/sliding-puzzle/actions)
 ![badge][badge-github-actions]
 
 **8-Puzzle** is a **sliding puzzle game** that features a walkthrough of the optimal solution and allows users to customize the tiles using photos selected from their Gallery. In finding the optimal path from the current puzzle state to the goal state, the system employs the informed search algorithm A* and uses Manhattan distance as an admissible and consistent heuristic to estimate the cost. 
@@ -16,7 +18,7 @@ Inspired by an exercise in our Mobile Development class, I started creating this
 
 This project also utilizes a continuous integration/continuous delivery (CI/CD) pipeline — which is the focus of our third-year class Advanced Software Engineering.
 
-The **source code documentation** can be accessed through the following website: [https://memgonzales.github.io/sliding-puzzle/](https://memgonzales.github.io/sliding-puzzle/)
+The **API documentation** can be viewed at [https://memgonzales.github.io/sliding-puzzle/](https://memgonzales.github.io/sliding-puzzle/)
 
 ## Project Structure
 The project consists of the following folders:
@@ -74,7 +76,7 @@ Dependency | Version | Description | License
 
 ## Built Using
 This project uses the following languages and technologies:
-- **Logic**: <a href = "https://kotlinlang.org/">Kotlin</a>, a statically-typed language officially endorsed by Google as the preferred language for Android development
+- **Logic**: <a href = "https://kotlinlang.org/">Kotlin</a>, a statically typed language endorsed by Google as the preferred language for Android development
 - **Layouts**: <a href = "https://developer.android.com/guide/topics/ui/declaring-layout">XML</a>, a lightweight markup language that is both human- and machine-readable
 
 The <a href = "https://memgonzales.github.io/sliding-puzzle/">HTML documentation</a> of the source code was generated from <a href = "https://kotlinlang.org/docs/kotlin-doc.html">KDoc</a> comments via the documentation engine <a href = "https://github.com/Kotlin/dokka">Dokka</a>.
@@ -87,7 +89,7 @@ The <a href = "https://memgonzales.github.io/sliding-puzzle/">HTML documentation
   mark_gonzales@dlsu.edu.ph <br/>
   gonzales.markedward@gmail.com <br/>
   
-Assets (such as images and XML resource files) are properties of their respective owners. Attribution is found in the [credits](https://github.com/memgonzales/sliding-puzzle/blob/master/CREDITS.md) file. Technical references used in the implementation of algorithms are cited in the [code documentation](https://memgonzales.github.io/sliding-puzzle/) of the pertinent methods.
+Assets (such as images and XML resource files) are properties of their respective owners. Attribution is found in the [credits](https://github.com/memgonzales/sliding-puzzle/blob/master/CREDITS.md) file. Technical references used in the implementation of algorithms are cited in the [API documentation](https://memgonzales.github.io/sliding-puzzle/) of the pertinent methods.
 
 
 [badge-android]: http://img.shields.io/badge/platform-android-6EDB8D.svg?style=flat
