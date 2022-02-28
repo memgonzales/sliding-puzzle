@@ -15,46 +15,46 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v2
+#   lint:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout the code
+#         uses: actions/checkout@v2
         
-      - name: Lint
-        run: ./gradlew lint
+#       - name: Lint
+#         run: ./gradlew lint
         
-      - name: Upload report
-        uses: actions/upload-artifact@v2
-        with:
-          name: lint
-          path: app/build/reports/lint-results.html
+#       - name: Upload report
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: lint
+#           path: app/build/reports/lint-results.html
           
-  test:
-    needs: lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v2
+#   test:
+#     needs: lint
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout the code
+#         uses: actions/checkout@v2
         
-      - name: JUnit Test
-        run: ./gradlew test
+#       - name: JUnit Test
+#         run: ./gradlew test
         
-      - name: Upload report
-        uses: actions/upload-artifact@v2
-        with:
-          name: test
-          path: app/build/test-results/testDebugUnitTest/
+#       - name: Upload report
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: test
+#           path: app/build/test-results/testDebugUnitTest/
           
   generate-apk:
-    needs: test
+#     needs: test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
         
       - name: Set up JDK
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v1
         with:
           java-version: 11.0.8
           
