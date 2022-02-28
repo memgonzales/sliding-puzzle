@@ -1147,7 +1147,13 @@ class NPuzzleActivity : AppCompatActivity() {
         tvSuccess.text = getString(solveStatus.successMessageId)
 
         if (solveStatus == SolveStatus.COMPUTER_SOLVED) {
-            val message = "$numMovesSolution ${tvSuccess.text}"
+            var message = "$numMovesSolution ${tvSuccess.text}"
+
+            /* Display "1 Move" instead of "1 Moves". */
+            if (numMovesSolution == 1) {
+                message = message.substring(0, message.length - 1)
+            }
+
             tvSuccess.text = message
         }
 
