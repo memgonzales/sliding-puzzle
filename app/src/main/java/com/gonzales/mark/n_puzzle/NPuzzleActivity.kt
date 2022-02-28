@@ -152,47 +152,125 @@ class NPuzzleActivity : AppCompatActivity() {
      * Dimensions *
      **************/
 
+    /**
+     * Dimension of a (square) puzzle tile.
+     */
     private var tileDimen: Int = 0
+
+    /**
+     * Dimension of the entire (square) puzzle grid.
+     */
     private var puzzleDimen: Int = 0
 
     /*********
      * State *
      *********/
 
+    /**
+     * Goal puzzle state.
+     */
     private lateinit var goalPuzzleState: ArrayList<Int>
+
+    /**
+     * Current puzzle state.
+     */
     private lateinit var puzzleState: ArrayList<Int>
+
+    /**
+     * Position of the blank tile in the puzzle grid (zero-based, following row-major order).
+     */
     private var blankTilePos: Int = BLANK_TILE_MARKER
 
+    /**
+     * <code>true</code> if the components of the puzzle grid (for example, the tiles) can be moved;
+     * <code>false</code>, otherwise.
+     */
     private var isPuzzleGridFrozen: Boolean = false
+
+    /**
+     * <code>true</code> if a game is ongoing; <code>false</code>, otherwise.
+     */
     private var isGameInSession: Boolean = false
 
     /**********
      * Images *
      **********/
 
+    /**
+     * Puzzle image.
+     */
     private lateinit var puzzleImage: Bitmap
+
+    /**
+     * Split puzzle images.
+     */
     private lateinit var imageChunks: ArrayList<Bitmap>
+
+    /**
+     * Split puzzle images with dark color filter applied.
+     */
     private lateinit var blankImageChunks: ArrayList<Bitmap>
+
+    /**
+     * Puzzle tiles.
+     */
     private lateinit var tileImages: ArrayList<ImageButton>
 
+    /**
+     * Selection of puzzle images that come with the app.
+     */
     private lateinit var puzzleImageChoices: Array<PuzzleImage>
+
+    /**
+     * Index of the currently selected puzzle image.
+     */
     private var puzzleImageIndex: Int = 0
+
+    /**
+     * Index of the custom image (that is, the option that allows the user to select a photo
+     * from the Gallery) in the selection of puzzle images.
+     */
     private var indexOfCustom: Int = 0
+
+    /**
+     * <code>true</code> if the current puzzle image was selected from the user's Gallery;
+     * <code>false</code>, otherwise.
+     */
     private var isGalleryImageChosen: Boolean = false
 
     /********************************
      * Shuffling-Related Properties *
      ********************************/
 
+    /**
+     * Runnable related to shuffling the puzzle tiles.
+     */
     private lateinit var shuffleRunnable: ShuffleRunnable
+
+    /**
+     * Scheduled executor service for shuffling the puzzle tiles.
+     */
     private lateinit var shuffleScheduler: ScheduledExecutorService
+
+    /**
+     * Handler for shuffling the puzzle tiles.
+     */
     private lateinit var shuffleHandler: Handler
 
     /****************************
      * Timer-Related Properties *
      ****************************/
 
+    /**
+     * Handler for keeping track of the time since the user has made the first move (provided
+     * that a game is in session).
+     */
     private lateinit var timerHandler: Handler
+
+    /**
+     * <code>true</code> if the timer is running (that is, a game is in session and the first move
+     * has been made); <code>false</code>, otherwise.
+     */
     private var isTimerRunning: Boolean = false
 
     /**************
@@ -235,14 +313,55 @@ class NPuzzleActivity : AppCompatActivity() {
      * of the <code>solve()</code> method in the <code>SolveUtil</code> class.
      */
     private var puzzleSolution: Stack<StatePair>? = null
+
+    /**
+     * Number of moves in the solution found by the app via the A* algorithm implemented
+     * in <code>SolveUtil</code>.
+     */
     private var numMovesSolution: Int = 0
+
+    /**
+     * Handler for solving the 8-puzzle.
+     */
     private lateinit var solveHandler: Handler
+
+    /**
+     * Handler for displaying the solution to the 8-puzzle.
+     *
+     * This solution refers to the one found by the app via the A* algorithm implemented
+     * in <code>SolveUtil</code>.
+     */
     private lateinit var solveDisplayHandler: Handler
 
+    /**
+     * <code>true</code> if the solution is currently being played; <code>false</code>,
+     * otherwise.
+     *
+     * This solution refers to the one found by the app via the A* algorithm implemented
+     * in <code>SolveUtil</code>.
+     */
     private var isSolutionDisplay: Boolean = false
+
+    /**
+     * <code>true</code> if the solution resumes playing (after being paused); <code>false</code>,
+     * otherwise (that is, if the walkthrough of the solution is currently paused).
+     *
+     * This solution refers to the one found by the app via the A* algorithm implemented
+     * in <code>SolveUtil</code>.
+     */
     private var isSolutionPlay: Boolean = false
+
+    /**
+     * <code>true</code> if the solution is skipped; <code>false</code>, otherwise.
+     *
+     * This solution refers to the one found by the app via the A* algorithm implemented
+     * in <code>SolveUtil</code>.
+     */
     private var isSolutionSkip: Boolean = false
 
+    /**
+     * Activity result launcher related to choosing photos from the Gallery.
+     */
     private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
 
     /**
