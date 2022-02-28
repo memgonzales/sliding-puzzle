@@ -683,6 +683,9 @@ class NPuzzleActivity : AppCompatActivity() {
         displayFastestTime()
     }
 
+    /**
+     * Displays the fewest number of moves taken to solve the 8-puzzle.
+     */
     private fun displayFewestMoves() {
         tvFewestMoves.text = if (fewestMoves == DEFAULT_FEWEST_MOVES) {
             getString(R.string.default_move_count)
@@ -691,6 +694,9 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Displays the fewest time taken to solve the 8-puzzle.
+     */
     private fun displayFastestTime() {
         tvFastestTime.text = if (fastestTime == DEFAULT_FASTEST_TIME) {
             getString(R.string.default_timer)
@@ -699,6 +705,10 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Removes the statistics displayed (replacing them with hyphen placeholders) when the solution
+     * walkthrough is played.
+     */
     private fun blankDisplayedStats() {
         /* Remove the statistics for the number of moves, and display them. */
         numMoves = 0
@@ -709,6 +719,10 @@ class NPuzzleActivity : AppCompatActivity() {
         tvTimeTaken.text = getString(R.string.default_timer)
     }
 
+    /**
+     * Resets the statistics displayed (setting their values to 0) at the start of a game (that is,
+     * immediately after the shuffling animation finishes).
+     */
     private fun resetDisplayedStats() {
         /* Reset the statistics for the number of moves, and display them. */
         numMoves = 0
