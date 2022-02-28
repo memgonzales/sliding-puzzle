@@ -2,8 +2,7 @@
 ![badge][badge-kotlin]
 ![badge][badge-android] 
 ![badge][badge-gradle]
-![badge][badge-junit]
-
+![badge][badge-junit] <br>
 [![Actions Status](https://github.com/memgonzales/sliding-puzzle/workflows/CI%2FCD/badge.svg)](https://github.com/memgonzales/sliding-puzzle/actions)
 [![Actions Status](https://github.com/memgonzales/sliding-puzzle/workflows/Dokka%20Documentation/badge.svg)](https://github.com/memgonzales/sliding-puzzle/actions)
 ![badge][badge-github-actions]
@@ -18,7 +17,7 @@ Inspired by an exercise in our Mobile Development class, I started creating this
 
 This project also utilizes a continuous integration/continuous delivery (CI/CD) pipeline — which is the focus of our third-year class Advanced Software Engineering.
 
-The **API documentation** can be viewed at [https://memgonzales.github.io/sliding-puzzle/](https://memgonzales.github.io/sliding-puzzle/)
+The API documentation can be viewed at [https://memgonzales.github.io/sliding-puzzle/](https://memgonzales.github.io/sliding-puzzle/)
 
 ## Project Structure
 The project consists of the following folders:
@@ -36,6 +35,10 @@ Several Gradle-related files are also included in its root directory.
 ***The minimum SDK supported is Android Lollipop (API Level 21), and the target SDK is Android 11 (API Level 30).***
 
 ### Using the APK
+Download and install this APK file. You may have to modify the security settings of your device to allow the installation of third-party apps from unknown sources.
+   
+<img src="https://github.com/memgonzales/sliding-puzzle/blob/master/screenshots/screenshots.png?raw=True" alt="App Screenshots" width = 750> 
+
 
 ### Using the Source Code  
 1. Create a copy of this repository:
@@ -48,7 +51,9 @@ Several Gradle-related files are also included in its root directory.
    - If git is not installed, click the green <code>Code</code> button near the top right of the repository and choose [<code>Download ZIP</code>](https://github.com/memgonzales/sliding-puzzle/archive/refs/heads/master.zip). Once the zipped folder has been downloaded, extract its contents.
 
 2. Run the app using [Android Studio](https://developer.android.com/studio) (or any IDE that supports Android development). Alternatively, Android also provides a <a href = "https://developer.android.com/studio/build/building-cmdline">guide</a> on how to build the app from the command line.
-
+   
+   <img src="https://github.com/memgonzales/sliding-puzzle/blob/master/screenshots/comp_solve.gif?raw=True" alt="Walkthrough of Optimal Solution" width = 206> 
+   
 ## Dependencies
 This project uses the following project dependencies:
 
