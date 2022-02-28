@@ -788,7 +788,12 @@ class NPuzzleActivity : AppCompatActivity() {
      * Methods Related to Puzzle Image and Grid *
      ********************************************/
 
+    /**
+     * Sets the puzzle image to the most recently selected image (persists even when the app is closed)
+     * and resizes (crops) it to fit the dimensions of the puzzle grid.
+     */
     private fun initPuzzleImage() {
+        /* Retrieve the most recently displayed puzzle image. */
         puzzleImageIndex = sp.getInt(Key.KEY_PUZZLE_IMAGE.name, 0)
         spnPuzzle.setSelection(puzzleImageIndex)
 
@@ -802,6 +807,9 @@ class NPuzzleActivity : AppCompatActivity() {
         )
     }
 
+    /**
+     * Sets the image chunks displayed on the individual puzzle tiles.
+     */
     private fun initChunks() {
         /* Store copies of the tiles, alongside versions with dark filter applied (blank tiles). */
         imageChunks =
@@ -820,6 +828,10 @@ class NPuzzleActivity : AppCompatActivity() {
             ).second
     }
 
+    /**
+     * Displays the puzzle grid, with the correct tile images (8 tiles with no filter applied
+     * and 1 tile with a dark color filter applied to designate it as the blank tile).
+     */
     private fun displayPuzzle() {
         /*
          * Once this loop finished executing, there should be 9 distinct image chunks:
@@ -834,10 +846,19 @@ class NPuzzleActivity : AppCompatActivity() {
             }
         }
 
-        /* Set (or reset) the adapter of the grid view. */
+        /*
+         * Set (or reset) the adapter of the grid view.
+         * This data should persist even after the app is closed so that the same image is displayed
+         * on the next startup.
+         */
         gvgPuzzle.adapter = TileAdapter(tileImages, tileDimen, tileDimen)
     }
 
+    /**
+     * Display the puzzle grid with all 9 tiles having a dark color filter applied.
+     *
+     * This method is invoked at the start of the shuffling animation.
+     */
     private fun displayBlankPuzzle() {
         /*
          * Once this loop finished executing, there should be 9 image chunks, all of which have
@@ -857,6 +878,10 @@ class NPuzzleActivity : AppCompatActivity() {
         gvgPuzzle.adapter = TileAdapter(tileImages, tileDimen, tileDimen)
     }
 
+    /**
+     * Loads and displays the puzzle grid, with the correct tile images (8 tiles with no filter applied
+     * and 1 tile with a dark color filter applied to designate it as the blank tile).
+     */
     private fun loadPuzzle(position: Int) {
         /*
          * Handle the case when the spinner is clicked while the success message is still
@@ -870,6 +895,9 @@ class NPuzzleActivity : AppCompatActivity() {
         displayPuzzle()
     }
 
+    /**
+     * Updates the puzzle image displayed on the grid when a new image is chosen via the spinner.
+     */
     private fun updatePuzzleImage(position: Int) {
         puzzleImageIndex = position
 
@@ -881,6 +909,7 @@ class NPuzzleActivity : AppCompatActivity() {
             puzzleDimen
         )
 
+        /* Set this image as the most recently selected puzzle image. */
         with(sp.edit()) {
             putInt(Key.KEY_PUZZLE_IMAGE.name, puzzleImageIndex)
             commit()
