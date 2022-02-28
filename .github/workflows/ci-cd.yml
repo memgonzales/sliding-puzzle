@@ -45,3 +45,24 @@ jobs:
         with:
           name: test
           path: app/build/test-results/testDebugUnitTest/
+          
+  generate-apk:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+        
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11.0.8
+          
+      - name: Build debug APK
+        run: ./gradlew assembleDebug
+        
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: 8-puzzle
+          path: app/build/outputs/apk/debug/app-debug.apk
