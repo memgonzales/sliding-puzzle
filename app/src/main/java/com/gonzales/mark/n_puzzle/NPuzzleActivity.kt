@@ -509,6 +509,10 @@ class NPuzzleActivity : AppCompatActivity() {
         displayStats()
     }
 
+    /**
+     * Initializes the handlers related to shuffling the tiles, triggering the game timer, and
+     * displaying the solution.
+     */
     private fun initHandlers() {
         /* Initialize thread pool executor and handler related to the shuffling animation. */
         shuffleScheduler = Executors.newScheduledThreadPool(NUM_TILES)
@@ -531,6 +535,9 @@ class NPuzzleActivity : AppCompatActivity() {
         solveDisplayHandler = Handler(Looper.getMainLooper())
     }
 
+    /**
+     * Initializes the puzzle state and the images of the tiles in the grid.
+     */
     private fun initStateAndTileImages() {
         goalPuzzleState = ArrayList(NUM_TILES)
         puzzleState = ArrayList(NUM_TILES)
@@ -549,11 +556,17 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Resets the puzzle state back to the original state (that is, the goal state).
+     */
     private fun resetState() {
         puzzleState = goalPuzzleState.toMutableList() as ArrayList<Int>
         blankTilePos = BLANK_TILE_MARKER
     }
 
+    /**
+     * Initializes the dynamic components and listeners related to the puzzle grid.
+     */
     private fun initPuzzle() {
         setTouchSlopThreshold()
         setOnFlingListener()
@@ -1287,10 +1300,19 @@ class NPuzzleActivity : AppCompatActivity() {
      * Methods Related to Uploading a Puzzle Image *
      ***********************************************/
 
+    /**
+     * Obtains the necessary permission for choosing a photo from the Gallery as the puzzle image.
+     */
     private fun uploadPuzzleImage() {
         UploadUtil.chooseFromGallery(this, galleryLauncher)
     }
 
+    /**
+     * Sets the puzzle image to the photo chosen from the Gallery and performs the necessary
+     * bitmap manipulations to update the display on the puzzle grid.
+     *
+     * @param imagePath URI to the Gallery photo that will be set as the puzzle image.
+     */
     private fun loadPuzzle(imagePath: Uri?) {
         isGalleryImageChosen = true
         resetState()
@@ -1306,6 +1328,11 @@ class NPuzzleActivity : AppCompatActivity() {
         displayPuzzle()
     }
 
+    /**
+     * Sets the puzzle image to the photo chosen from the Gallery
+     *
+     * @param imagePath URI to the Gallery photo that will be set as the puzzle image.
+     */
     private fun updatePuzzleImage(imagePath: Uri?) {
         puzzleImage = ImageUtil.resizeToSquareBitmap(
             BitmapFactory.decodeStream(
