@@ -2,8 +2,7 @@
 ![badge][badge-kotlin]
 ![badge][badge-android] 
 ![badge][badge-gradle]
-![badge][badge-junit]
-
+![badge][badge-junit] <br>
 [![Actions Status](https://github.com/memgonzales/sliding-puzzle/workflows/CI%2FCD/badge.svg)](https://github.com/memgonzales/sliding-puzzle/actions)
 [![Actions Status](https://github.com/memgonzales/sliding-puzzle/workflows/Dokka%20Documentation/badge.svg)](https://github.com/memgonzales/sliding-puzzle/actions)
 ![badge][badge-github-actions]
@@ -36,7 +35,8 @@ Several Gradle-related files are also included in its root directory.
 ***The minimum SDK supported is Android Lollipop (API Level 21), and the target SDK is Android 11 (API Level 30).***
 
 ### Using the APK
-
+Download and install this APK file. You may have to modify the security settings of your device to allow the installation of third-party apps from unknown sources.
+   
 <img src="https://github.com/memgonzales/sliding-puzzle/blob/master/screenshots/screenshots.png?raw=True" alt="App Screenshots" width = 750> 
 
 
