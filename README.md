@@ -4,8 +4,8 @@
 ![badge][badge-gradle]
 ![badge][badge-junit]
 
-[![Actions Status](https://github.com/memgonzales/sliding-puzzle/workflows/CI/badge.svg)](https://github.com/memgonzales/sliding-puzzle/actions)
-[![Actions Status](https://github.com/memgonzales/sliding-puzzle/workflows/dokka/badge.svg)](https://github.com/memgonzales/sliding-puzzle/actions)
+[![Actions Status](https://github.com/memgonzales/sliding-puzzle/workflows/CI%2FCD/badge.svg)](https://github.com/memgonzales/sliding-puzzle/actions)
+[![Actions Status](https://github.com/memgonzales/sliding-puzzle/workflows/Dokka%20Documentation/badge.svg)](https://github.com/memgonzales/sliding-puzzle/actions)
 ![badge][badge-github-actions]
 
 **8-Puzzle** is a **sliding puzzle game** that features a walkthrough of the optimal solution and allows users to customize the tiles using photos selected from their Gallery. In finding the optimal path from the current puzzle state to the goal state, the system employs the informed search algorithm A* and uses Manhattan distance as an admissible and consistent heuristic to estimate the cost. 
