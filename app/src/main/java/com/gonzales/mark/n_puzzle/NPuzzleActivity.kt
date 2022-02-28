@@ -98,11 +98,29 @@ class NPuzzleActivity : AppCompatActivity() {
      */
     private lateinit var pbShuffle: ProgressBar
 
+    /**
+     * Text view for the current number of moves taken in solving the puzzle.
+     */
     private lateinit var tvMoveNumber: TextView
+
+    /**
+     * Text view for the fewest number of moves to solve the puzzle.
+     */
     private lateinit var tvFewestMoves: TextView
+
+    /**
+     * Text view for the current time taken in solving the puzzle.
+     */
     private lateinit var tvTimeTaken: TextView
+
+    /**
+     * Text view for the fastest time to solve the puzzle.
+     */
     private lateinit var tvFastestTime: TextView
 
+    /**
+     * Spinner for selecting the puzzle image.
+     */
     private lateinit var spnPuzzle: Spinner
 
     /**
