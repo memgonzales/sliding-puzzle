@@ -37,6 +37,8 @@ Several Gradle-related files are also included in its root directory.
 
 ### Using the APK
 
+<img src="https://github.com/memgonzales/sliding-puzzle/blob/master/screenshots/screenshots.png?raw=True" alt="App Screenshots" width = 750> 
+
 ### Using the Source Code  
 1. Create a copy of this repository:
    - If [git](https://git-scm.com/downloads) is installed, type the following command on the terminal:
@@ -48,7 +50,9 @@ Several Gradle-related files are also included in its root directory.
    - If git is not installed, click the green <code>Code</code> button near the top right of the repository and choose [<code>Download ZIP</code>](https://github.com/memgonzales/sliding-puzzle/archive/refs/heads/master.zip). Once the zipped folder has been downloaded, extract its contents.
 
 2. Run the app using [Android Studio](https://developer.android.com/studio) (or any IDE that supports Android development). Alternatively, Android also provides a <a href = "https://developer.android.com/studio/build/building-cmdline">guide</a> on how to build the app from the command line.
-
+   
+   <img src="https://github.com/memgonzales/sliding-puzzle/blob/master/screenshots/comp_solve.gif?raw=True" alt="Walkthrough of Optimal Solution" width = 200> 
+   
 ## Dependencies
 This project uses the following project dependencies:
 
