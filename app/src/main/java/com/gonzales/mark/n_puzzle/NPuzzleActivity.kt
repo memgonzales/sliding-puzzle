@@ -84,12 +84,14 @@ class NPuzzleActivity : AppCompatActivity() {
     private lateinit var gvgPuzzle: GridViewGesture
 
     /**
-     * Button for selecting a custom puzzle image from the Gallery.
+     * Button for selecting a custom puzzle image from the Gallery (if the game is not yet in session)
+     * or skipping the solution (if the solution walkthrough is currently being played).
      */
     private lateinit var btnUpload: Button
 
     /**
-     * Button for shuffling the puzzle tiles.
+     * Button for shuffling the puzzle tiles (if the game is not yet in session) or displaying
+     * the solution (if the game is already in session).
      */
     private lateinit var btnShuffle: Button
 
@@ -334,7 +336,7 @@ class NPuzzleActivity : AppCompatActivity() {
     private lateinit var solveDisplayHandler: Handler
 
     /**
-     * <code>true</code> if the solution is currently being played; <code>false</code>,
+     * <code>true</code> if the solution walkthrough is currently being played; <code>false</code>,
      * otherwise.
      *
      * This solution refers to the one found by the app via the A* algorithm implemented
@@ -343,8 +345,8 @@ class NPuzzleActivity : AppCompatActivity() {
     private var isSolutionDisplay: Boolean = false
 
     /**
-     * <code>true</code> if the solution resumes playing (after being paused); <code>false</code>,
-     * otherwise (that is, if the walkthrough of the solution is currently paused).
+     * <code>true</code> if the solution walkthrough resumes playing (after being paused);
+     * <code>false</code>, otherwise (that is, if the solution walkthrough is currently paused).
      *
      * This solution refers to the one found by the app via the A* algorithm implemented
      * in <code>SolveUtil</code>.
@@ -589,6 +591,10 @@ class NPuzzleActivity : AppCompatActivity() {
      * Methods Related to Button and Spinner Actions *
      *************************************************/
 
+    /**
+     * Sets the click event listener for the button for shuffling the tiles (if the game is not yet
+     * in session) or displaying the solution (if the game is already in session).
+     */
     private fun setBtnShuffleAction() {
         btnShuffle.setOnClickListener {
             if (isSolutionDisplay) {
@@ -601,6 +607,11 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Sets the click event listener for the button for selecting a custom puzzle image from the
+     * Gallery (if the game is not yet in session) or skipping the solution (if the solution
+     * walkthrough is currently being played).
+     */
     private fun setBtnUploadAction() {
         btnUpload.setOnClickListener {
             if (isSolutionDisplay) {
@@ -615,6 +626,9 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Sets the item selection event listener for the spinner.
+     */
     private fun setSpnPuzzleAction() {
         spnPuzzle.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             /**
