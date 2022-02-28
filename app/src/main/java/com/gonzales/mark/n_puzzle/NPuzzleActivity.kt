@@ -1022,6 +1022,9 @@ class NPuzzleActivity : AppCompatActivity() {
      * Methods Related to Shuffling *
      ********************************/
 
+    /**
+     * Handles all the back-end and front-end operations when the puzzle tiles are shuffled.
+     */
     private fun shuffle() {
         /* Display the progress bar, and update the message displayed */
         pbShuffle.visibility = View.VISIBLE
@@ -1053,6 +1056,12 @@ class NPuzzleActivity : AppCompatActivity() {
         startShowingTiles()
     }
 
+    /**
+     * Generates a valid shuffling of the puzzle tiles.
+     *
+     * A shuffling is considered valid if the resulting state is not equivalent to the goal
+     * state and if it is solvable (that is, it has an even number of inversions).
+     */
     private fun getValidShuffledState() {
         val shuffledState: StatePair =
             ShuffleUtil.getValidShuffledState(puzzleState, goalPuzzleState, BLANK_TILE_MARKER)
@@ -1061,6 +1070,10 @@ class NPuzzleActivity : AppCompatActivity() {
         blankTilePos = shuffledState.blankTilePos
     }
 
+    /**
+     * Updates the components depending on whether the shuffling animation is halfway finished
+     * or fully completed.
+     */
     private fun updateComponents() {
         when (pbShuffle.progress) {
             (NUM_TILES - 1) / 2 -> halfwayShuffling()
@@ -1068,10 +1081,16 @@ class NPuzzleActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Updates the components when the shuffling animation is halfway finished.
+     */
     private fun halfwayShuffling() {
         btnShuffle.text = getString(R.string.inversions)
     }
 
+    /**
+     * Updates the components when the shuffling animation is fully completed.
+     */
     private fun finishShuffling() {
         /* Signal the start of a new game. */
         isGameInSession = true
@@ -1126,6 +1145,12 @@ class NPuzzleActivity : AppCompatActivity() {
         btnShuffle.isEnabled = true
     }
 
+    /**
+     * Removes the dark color filter on the specified tile as part of the shuffling animation.
+     *
+     * @param position Position of the tile whose filter is to be removed (zero-based, following
+     * row-major order).
+     */
     private fun showTileAt(position: Int) {
         tileImages[position].setImageBitmap(imageChunks[puzzleState[position]])
 
@@ -1133,6 +1158,10 @@ class NPuzzleActivity : AppCompatActivity() {
         gvgPuzzle.adapter = TileAdapter(tileImages, tileDimen, tileDimen)
     }
 
+    /**
+     * Removes the dark color filter on the eight non-blank tiles at random intervals
+     * as part of the shuffling animation.
+     */
     private fun startShowingTiles() {
         /* Concurrently show the tiles with randomized delay and order of appearance. */
         for (position in 0 until tileImages.size) {
